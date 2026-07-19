@@ -1,6 +1,6 @@
 ---
 name: illustrator
-description: Generate and compose designed visuals from content, code, and supplied images. Use when creating article illustrations, social-media graphics, code images, photo treatments, image collages, or a temporary custom visual style.
+description: Create general-purpose illustrations and designed images from natural-language direction, content, code, and supplied images. Use for standalone illustrations, article and social visuals, code images, photo compositions, or any custom visual direction.
 ---
 
 # Illustrator
@@ -13,7 +13,7 @@ For every image, read [references/visual-direction.md](references/visual-directi
 
 Before generating a rendering module, read [references/rendering.md](references/rendering.md) for the installed Takumi contract, defaults, and limits.
 
-For article illustrations, covers, social-media graphics, and any composition using supplied images as visual material, read [references/illustration.md](references/illustration.md) before rendering.
+For general illustrations and any composition using supplied images as visual material, read [references/illustration.md](references/illustration.md) before rendering.
 
 For code images, read [references/code-image.md](references/code-image.md) before rendering.
 
@@ -47,4 +47,4 @@ Require Node.js 20 or newer. Use npm for the Skill runtime because it ships with
 6. Inspect the rendered image when viewing is available. Revise clipping, overflow, unreadable text, weak contrast, unclear hierarchy, or excessive empty space. When viewing is unavailable, follow the non-visual verification rules in [references/rendering.md](references/rendering.md).
 7. Keep only the requested output artifacts in the user's project.
 
-Do not add dependencies to the user's project, install packages globally, or retain generated source files. The individual built-in themes remain intentionally pending further design decisions.
+Do not add dependencies to the user's project, install packages globally, or retain generated source files. Treat built-in themes as optional starting points rather than a closed catalog.
