@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@takumi-rs/core':
+        specifier: 2.3.0
+        version: 2.3.0
       takumi-js:
         specifier: 2.3.0
         version: 2.3.0

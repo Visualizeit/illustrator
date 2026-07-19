@@ -1,5 +1,8 @@
+import { readFile } from "node:fs/promises";
+
+import { Renderer } from "@takumi-rs/core";
 import { render, renderSvg } from "takumi-js";
-import { describe, expect, it } from "vitest";
+import { beforeAll, describe, expect, it } from "vitest";
 
 const dimensions = {
   height: 630,
@@ -7,18 +10,32 @@ const dimensions = {
 };
 
 const markup = `
-  <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#f4efe6;color:#181713;">
-    <div style="font-size:72px;font-weight:700;">Hello Illustrator</div>
+  <div tw="w-full h-full flex items-center justify-center bg-slate-950 text-white">
+    <div tw="text-6xl font-bold" style="font-family:Noto Sans SC">
+      Illustrator 开箱即用
+    </div>
   </div>
 `;
 
 const pngSignature = [137, 80, 78, 71, 13, 10, 26, 10];
+const renderer = new Renderer();
 
 describe("Takumi rendering", () => {
+  beforeAll(async () => {
+    const font = await readFile(
+      new URL(
+        "../../skills/illustrator/assets/fonts/noto-sans-sc/NotoSansSC-VF.ttf",
+        import.meta.url
+      )
+    );
+    await renderer.registerFont({ data: font, name: "Noto Sans SC" });
+  });
+
   it("renders PNG output", async () => {
     const png = await render(markup, {
       ...dimensions,
-      format: "png",
+      fontFamilies: ["Noto Sans SC"],
+      renderer,
     });
 
     expect([...png.subarray(0, pngSignature.length)]).toEqual(pngSignature);
@@ -26,7 +43,11 @@ describe("Takumi rendering", () => {
   });
 
   it("renders SVG output", async () => {
-    const svg = await renderSvg(markup, dimensions);
+    const svg = await renderSvg(markup, {
+      ...dimensions,
+      fontFamilies: ["Noto Sans SC"],
+      renderer,
+    });
 
     expect(svg).toContain("<svg");
     expect(svg).toContain(`width="${dimensions.width}"`);
