@@ -1,6 +1,6 @@
 ---
 name: illustrator
-description: Generate designed images for general content and code. Use when creating article illustrations, social-media graphics, code images, or a temporary custom visual style.
+description: Generate and compose designed visuals from content, code, and supplied images. Use when creating article illustrations, social-media graphics, code images, photo treatments, image collages, or a temporary custom visual style.
 ---
 
 # Illustrator
@@ -13,7 +13,7 @@ For every image, read [references/visual-direction.md](references/visual-directi
 
 Before generating a rendering module, read [references/rendering.md](references/rendering.md) for the installed Takumi contract, defaults, and limits.
 
-For article illustrations, covers, and social-media graphics, read [references/illustration.md](references/illustration.md) before rendering.
+For article illustrations, covers, social-media graphics, and any composition using supplied images as visual material, read [references/illustration.md](references/illustration.md) before rendering.
 
 For code images, read [references/code-image.md](references/code-image.md) before rendering.
 

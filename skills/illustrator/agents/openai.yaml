@@ -1,4 +1,4 @@
 interface:
   display_name: "Illustrator"
-  short_description: "Create polished visuals for content and code"
-  default_prompt: "Use $illustrator to create a polished visual for this content."
+  short_description: "Create visuals from content, code, and images"
+  default_prompt: "Use $illustrator to turn this content and any supplied images into a polished visual."

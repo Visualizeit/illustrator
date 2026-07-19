@@ -1,6 +1,6 @@
 # Illustrator
 
-A lightweight Agent Skill for creating designed visuals and code images with local, browserless rendering.
+A lightweight Agent Skill for creating designed visuals from content, code, and supplied images with local, browserless rendering.
 
 > Work in progress. The public interface and runtime packaging are not finalized.
 

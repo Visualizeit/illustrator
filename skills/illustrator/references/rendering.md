@@ -19,6 +19,27 @@ Use `assets/fonts/noto-sans-sc/NotoSansSC-VF.ttf` for general text. Register oth
 
 Use a user-provided or system font only when explicitly requested. Missing glyphs can render as boxes without throwing, so set the family in the composition and inspect the result.
 
+## Local Images
+
+Read local images as bytes and pass them through the `images` render option under a stable in-memory source key. Use the same key in an HTML `src` or Takumi image node. Do not rely on `file:` URLs or the current working directory. The image helper may also receive bytes directly, but named sources are clearer when an HTML composition reuses an asset.
+
+```js
+import { readFile } from "node:fs/promises";
+
+const photo = await readFile(inputPath);
+const html = `
+  <div style="width:100%;height:100%;">
+    <img src="asset:hero" style="width:100%;height:100%;object-fit:cover;" />
+  </div>
+`;
+const png = await render(html, {
+  renderer,
+  width: 1200,
+  height: 630,
+  images: [{ data: photo, src: "asset:hero" }],
+});
+```
+
 Minimal HTML render:
 
 ```js
