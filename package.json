@@ -1,0 +1,28 @@
+{
+  "name": "illustrator",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "ultracite check",
+    "fix": "ultracite fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "validate": "pnpm run check && pnpm run typecheck && pnpm run test"
+  },
+  "dependencies": {
+    "takumi-js": "2.3.0"
+  },
+  "devDependencies": {
+    "@total-typescript/tsconfig": "1.0.4",
+    "@types/node": "26.1.1",
+    "oxfmt": "0.59.0",
+    "oxlint": "1.74.0",
+    "oxlint-tsgolint": "0.25.0",
+    "typescript": "6.0.3",
+    "ultracite": "7.9.4",
+    "vitest": "4.1.10"
+  },
+  "packageManager": "pnpm@11.9.0"
+}

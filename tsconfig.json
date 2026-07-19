@@ -1,0 +1,10 @@
+{
+  "extends": "@total-typescript/tsconfig/tsc/no-dom/app",
+  "compilerOptions": {
+    "checkJs": true,
+    "noEmit": true,
+    "sourceMap": false,
+    "types": ["node"]
+  },
+  "include": ["*.config.ts", "skills/**/*.mjs", "tests/**/*.mjs"]
+}
