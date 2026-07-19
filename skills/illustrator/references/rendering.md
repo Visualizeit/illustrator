@@ -6,6 +6,7 @@ Write plain ESM in the temporary `.mjs` module. Prefer an HTML string for genera
 
 - `render` accepts an HTML string, a React-like element, or a Takumi node tree.
 - Use the `tw` attribute for supported Tailwind utilities. Inline `style` and embedded stylesheets are also accepted.
+- Embed simple SVG inside HTML when custom vector paths are clearer than stacked CSS boxes.
 - Use `container`, `text`, and `image` from `takumi-js/helpers` when a node tree is clearer than HTML.
 - `render` supports PNG, JPEG, WebP, ICO, and raw pixels. Use `renderSvg` for SVG.
 - Width and height can be inferred from content, but always set both for a designed image. `devicePixelRatio` defaults to `1`.
@@ -27,6 +28,12 @@ HTML is converted into a Takumi node tree, not a browser DOM. A successful rende
 - Do not depend on exact DOM identity or child indexes. An element containing only text may become a Takumi text node.
 
 The locked HTML parser preserves whitespace between tags as text nodes. In the locked version, those whitespace siblings can cause an empty absolutely positioned decorative element to disappear even though rendering succeeds. Keep structural tags adjacent around empty or absolute decorations, or create those decorations with Takumi node helpers. Preserve deliberate spaces inside textual content; do not blindly minify prose.
+
+## Inline SVG
+
+Use HTML for layout and text, then embed a compact `<svg>` for focal marks, curved illustrations, and print textures that would otherwise require many positioned containers. Set explicit `width`, `height`, and `viewBox` values. Prefer `path`, `circle`, `ellipse`, `rect`, `line`, `polygon`, groups, transforms, fills, strokes, opacity, and simple patterns. Treat filters, masks, `foreignObject`, and other advanced SVG behavior as unverified until rendered and inspected.
+
+The locked renderer accepts inline SVG and carries it through as an image node. Keep important text in HTML so registered fonts, wrapping, and layout remain predictable. `renderSvg` controls the final output format; it is separate from using inline SVG as composition input.
 
 When image viewing is unavailable, keep to the conservative subset above and render a temporary SVG before the final raster image. Check its canvas dimensions and confirm that essential visual primitives are present—for example, expected fills, positioned rectangles, image elements, or paths. Delete the temporary SVG after verification. Do not treat a valid PNG signature or a successful exit code as visual verification.
 

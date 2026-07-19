@@ -2,12 +2,12 @@ import { readFile, writeFile } from "node:fs/promises";
 
 import { Renderer } from "@takumi-rs/core";
 import { render } from "takumi-js";
-import { container, text } from "takumi-js/helpers";
 
 const outputPath =
   process.argv[2] ??
   new URL("../../../docs/assets/flower-market.png", import.meta.url);
 const renderer = new Renderer();
+
 const fontDefinitions = [
   [
     "../../../skills/illustrator/assets/fonts/noto-sans-sc/NotoSansSC-VF.ttf",
@@ -28,344 +28,90 @@ await Promise.all(
 );
 
 const palette = {
-  butter: "#f4da54",
-  ink: "#17251c",
-  leaf: "#238c4a",
-  lilac: "#b69cff",
-  tomato: "#f0442e",
-  warmWhite: "#fff8de",
+  butter: "#F4DA54",
+  ink: "#17251C",
+  leaf: "#238C4A",
+  lilac: "#B69CFF",
+  tomato: "#F0442E",
+  warmWhite: "#FFF8DE",
 };
 
-const shape = (style) => container({ style });
-
-const petal = ({ color, height, left, rotate = 0, top, width }) =>
-  shape({
-    backgroundColor: color,
-    borderRadius: 999,
-    height,
-    left,
-    position: "absolute",
-    top,
-    transform: `rotate(${rotate}deg)`,
-    width,
-  });
-
-const flower = ({ center, color, left, size, top, turn = 0 }) => {
+const flower = ({ center, color, left, size, top, turn }) => {
   const petalWidth = Math.round(size * 0.38);
   const petalHeight = Math.round(size * 0.52);
   const centerSize = Math.round(size * 0.3);
-  return container({
-    children: [
-      petal({
-        color,
-        height: petalHeight,
-        left: size * 0.31,
-        top: 0,
-        width: petalWidth,
-      }),
-      petal({
-        color,
-        height: petalHeight,
-        left: size * 0.58,
-        rotate: 72,
-        top: size * 0.23,
-        width: petalWidth,
-      }),
-      petal({
-        color,
-        height: petalHeight,
-        left: size * 0.48,
-        rotate: 144,
-        top: size * 0.55,
-        width: petalWidth,
-      }),
-      petal({
-        color,
-        height: petalHeight,
-        left: size * 0.12,
-        rotate: 216,
-        top: size * 0.55,
-        width: petalWidth,
-      }),
-      petal({
-        color,
-        height: petalHeight,
-        left: 0,
-        rotate: 288,
-        top: size * 0.22,
-        width: petalWidth,
-      }),
-      shape({
-        backgroundColor: center,
-        borderColor: palette.ink,
-        borderRadius: 999,
-        borderStyle: "solid",
-        borderWidth: 5,
-        height: centerSize,
-        left: (size - centerSize) / 2,
-        position: "absolute",
-        top: (size - centerSize) / 2,
-        width: centerSize,
-      }),
-    ],
-    style: {
-      height: size,
-      left,
-      position: "absolute",
-      top,
-      transform: `rotate(${turn}deg)`,
-      width: size,
-    },
-  });
+  const petal = (x, y, rotate) => {
+    const centerX = x + petalWidth / 2;
+    const centerY = y + petalHeight / 2;
+    return `<rect x="${x}" y="${y}" width="${petalWidth}" height="${petalHeight}" rx="${petalWidth / 2}" fill="${color}" transform="rotate(${rotate} ${centerX} ${centerY})"/>`;
+  };
+  const petals = [
+    petal(size * 0.31, 0, 0),
+    petal(size * 0.58, size * 0.23, 72),
+    petal(size * 0.48, size * 0.55, 144),
+    petal(size * 0.12, size * 0.55, 216),
+    petal(0, size * 0.22, 288),
+  ].join("");
+
+  return `<g transform="translate(${left} ${top}) rotate(${turn} ${size / 2} ${size / 2})">${petals}<circle cx="${size / 2}" cy="${size / 2}" r="${centerSize / 2}" fill="${center}" stroke="${palette.ink}" stroke-width="5"/></g>`;
 };
 
-const canvas = container({
-  children: [
-    shape({
-      borderColor: palette.ink,
-      borderStyle: "solid",
-      borderWidth: 5,
-      bottom: 34,
-      left: 34,
-      position: "absolute",
-      right: 34,
-      top: 34,
-    }),
-    container({
-      children: [
-        text("FLOWER MARKET · NO.07", {
-          fontFamily: "JetBrains Mono",
-          fontSize: 18,
-          fontWeight: 700,
-          letterSpacing: 3,
-        }),
-      ],
-      style: {
-        alignItems: "center",
-        backgroundColor: palette.butter,
-        borderColor: palette.ink,
-        borderRadius: 999,
-        borderStyle: "solid",
-        borderWidth: 4,
-        display: "flex",
-        height: 58,
-        left: 76,
-        paddingLeft: 24,
-        paddingRight: 24,
-        position: "absolute",
-        top: 72,
-      },
-    }),
-    container({
-      children: [
-        text("¥24", {
-          fontFamily: "JetBrains Mono",
-          fontSize: 30,
-          fontWeight: 700,
-        }),
-      ],
-      style: {
-        alignItems: "center",
-        backgroundColor: palette.lilac,
-        borderColor: palette.ink,
-        borderRadius: 999,
-        borderStyle: "solid",
-        borderWidth: 4,
-        display: "flex",
-        height: 116,
-        justifyContent: "center",
-        position: "absolute",
-        right: 72,
-        top: 72,
-        transform: "rotate(8deg)",
-        width: 116,
-      },
-    }),
-    container({
-      children: [
-        text("把快乐", {
-          fontSize: 104,
-          fontWeight: 900,
-          letterSpacing: -5,
-          lineHeight: 0.96,
-        }),
-        text("种进今天", {
-          fontSize: 104,
-          fontWeight: 900,
-          letterSpacing: -5,
-          lineHeight: 0.96,
-        }),
-      ],
-      style: {
-        display: "flex",
-        flexDirection: "column",
-        left: 72,
-        position: "absolute",
-        top: 180,
-      },
-    }),
-    text("周末花市散步指南\n给普通的一天，加一点鲜艳。", {
-      fontSize: 27,
-      fontWeight: 600,
-      left: 78,
-      lineHeight: 1.5,
-      position: "absolute",
-      top: 430,
-      whiteSpace: "pre",
-    }),
-    shape({
-      backgroundColor: palette.tomato,
-      height: 16,
-      left: 82,
-      position: "absolute",
-      top: 575,
-      width: 290,
-    }),
-    text("SUN 10:30—17:00\n31.2304° N / 121.4737° E", {
-      fontFamily: "JetBrains Mono",
-      fontSize: 18,
-      fontWeight: 700,
-      left: 82,
-      letterSpacing: 2,
-      lineHeight: 1.7,
-      position: "absolute",
-      top: 610,
-      whiteSpace: "pre",
-    }),
-    shape({
-      backgroundColor: palette.leaf,
-      borderColor: palette.ink,
-      borderRadius: 999,
-      borderStyle: "solid",
-      borderWidth: 4,
-      height: 590,
-      left: 610,
-      position: "absolute",
-      top: 665,
-      transform: "rotate(-13deg)",
-      width: 18,
-    }),
-    shape({
-      backgroundColor: palette.leaf,
-      borderColor: palette.ink,
-      borderRadius: 999,
-      borderStyle: "solid",
-      borderWidth: 4,
-      height: 550,
-      left: 780,
-      position: "absolute",
-      top: 690,
-      transform: "rotate(12deg)",
-      width: 18,
-    }),
-    shape({
-      backgroundColor: palette.leaf,
-      borderColor: palette.ink,
-      borderRadius: "999px 10px 999px 10px",
-      borderStyle: "solid",
-      borderWidth: 4,
-      height: 84,
-      left: 510,
-      position: "absolute",
-      top: 900,
-      transform: "rotate(28deg)",
-      width: 190,
-    }),
-    shape({
-      backgroundColor: palette.leaf,
-      borderColor: palette.ink,
-      borderRadius: "10px 999px 10px 999px",
-      borderStyle: "solid",
-      borderWidth: 4,
-      height: 82,
-      left: 748,
-      position: "absolute",
-      top: 1020,
-      transform: "rotate(-24deg)",
-      width: 190,
-    }),
-    flower({
-      center: palette.butter,
-      color: palette.tomato,
-      left: 510,
-      size: 390,
-      top: 570,
-      turn: -8,
-    }),
-    flower({
-      center: palette.tomato,
-      color: palette.lilac,
-      left: 720,
-      size: 280,
-      top: 810,
-      turn: 11,
-    }),
-    flower({
-      center: palette.ink,
-      color: palette.butter,
-      left: 435,
-      size: 220,
-      top: 930,
-      turn: -16,
-    }),
-    container({
-      children: [
-        container({
-          children: [
-            text("PICK A COLOR.", {
-              color: palette.warmWhite,
-              fontSize: 24,
-              fontWeight: 800,
-              lineHeight: 1.25,
-            }),
-            text("TAKE HOME SOME JOY.", {
-              color: palette.warmWhite,
-              fontSize: 24,
-              fontWeight: 800,
-              lineHeight: 1.25,
-            }),
-          ],
-          style: { display: "flex", flexDirection: "column" },
-        }),
-      ],
-      style: {
-        backgroundColor: palette.tomato,
-        borderColor: palette.ink,
-        borderStyle: "solid",
-        borderWidth: 4,
-        bottom: 72,
-        left: 70,
-        padding: 22,
-        position: "absolute",
-        transform: "rotate(-2deg)",
-        width: 450,
-      },
-    }),
-    text("FRESH CUTS / BRIGHT DAYS", {
-      bottom: 90,
-      fontFamily: "JetBrains Mono",
-      fontSize: 17,
-      fontWeight: 700,
-      letterSpacing: 2,
-      position: "absolute",
-      right: 74,
-    }),
-  ],
-  style: {
-    backgroundColor: palette.warmWhite,
-    color: palette.ink,
-    fontFamily: "Noto Sans SC",
-    height: "100%",
-    overflow: "hidden",
-    position: "relative",
-    width: "100%",
-  },
-});
+const html = [
+  `<div tw="w-full h-full relative overflow-hidden" style="background:${palette.warmWhite};color:${palette.ink};font-family:Noto Sans SC">`,
+  '<svg width="1080" height="1350" viewBox="0 0 1080 1350" style="position:absolute;left:0;top:0;z-index:0">',
+  `<rect x="36" y="36" width="1008" height="1278" fill="none" stroke="${palette.ink}" stroke-width="5"/>`,
+  '<g stroke-linecap="round" stroke-linejoin="round">',
+  `<path d="M682 1205 C652 1097 637 925 681 788" fill="none" stroke="${palette.ink}" stroke-width="18"/>`,
+  `<path d="M682 1205 C652 1097 637 925 681 788" fill="none" stroke="${palette.leaf}" stroke-width="10"/>`,
+  `<path d="M759 1205 C787 1105 817 1027 847 958" fill="none" stroke="${palette.ink}" stroke-width="18"/>`,
+  `<path d="M759 1205 C787 1105 817 1027 847 958" fill="none" stroke="${palette.leaf}" stroke-width="10"/>`,
+  `<path d="M579 1205 C584 1137 570 1085 548 1038" fill="none" stroke="${palette.ink}" stroke-width="16"/>`,
+  `<path d="M579 1205 C584 1137 570 1085 548 1038" fill="none" stroke="${palette.leaf}" stroke-width="9"/>`,
+  "</g>",
+  flower({
+    center: palette.butter,
+    color: palette.tomato,
+    left: 510,
+    size: 390,
+    top: 570,
+    turn: -8,
+  }),
+  flower({
+    center: palette.tomato,
+    color: palette.lilac,
+    left: 720,
+    size: 280,
+    top: 810,
+    turn: 11,
+  }),
+  flower({
+    center: palette.ink,
+    color: palette.butter,
+    left: 435,
+    size: 220,
+    top: 930,
+    turn: -16,
+  }),
+  "</svg>",
+  '<div style="position:absolute;left:0;top:0;width:1080px;height:1350px;z-index:1">',
+  `<div style="position:absolute;left:76px;top:72px;height:58px;padding:0 24px;display:flex;align-items:center;background:${palette.butter};border:4px solid ${palette.ink};border-radius:999px;font-family:JetBrains Mono;font-size:18px;font-weight:700;letter-spacing:3px">FLOWER MARKET · NO.07</div>`,
+  `<div style="position:absolute;right:72px;top:72px;width:116px;height:116px;display:flex;align-items:center;justify-content:center;background:${palette.lilac};border:4px solid ${palette.ink};border-radius:999px;transform:rotate(8deg);font-family:JetBrains Mono;font-size:30px;font-weight:700">¥24</div>`,
+  '<div style="position:absolute;left:72px;top:180px;font-size:104px;font-weight:900;line-height:0.96;letter-spacing:-5px;white-space:pre-wrap">把快乐\n种进今天</div>',
+  '<div style="position:absolute;left:78px;top:430px;font-size:27px;font-weight:600;line-height:1.5;white-space:pre-wrap">周末花市散步指南\n给普通的一天，加一点鲜艳。</div>',
+  `<div style="position:absolute;left:82px;top:575px;width:290px;height:16px;background:${palette.tomato}"></div>`,
+  '<div style="position:absolute;left:82px;top:610px;font-family:JetBrains Mono;font-size:18px;font-weight:700;line-height:1.7;letter-spacing:2px;white-space:pre-wrap">SUN 10:30—17:00\n31.2304° N / 121.4737° E</div>',
+  `<div style="position:absolute;left:70px;bottom:72px;width:450px;padding:22px;background:${palette.tomato};border:4px solid ${palette.ink};transform:rotate(-2deg);color:${palette.warmWhite};font-size:24px;font-weight:800;line-height:1.25;white-space:pre-wrap">PICK A COLOR.\nTAKE HOME SOME JOY.</div>`,
+  '<div style="position:absolute;right:74px;bottom:68px;font-family:JetBrains Mono;font-size:17px;font-weight:700;letter-spacing:2px">FRESH CUTS / BRIGHT DAYS</div>',
+  "</div>",
+  "</div>",
+].join("");
 
-const png = await render(canvas, {
+const png = await render(html, {
+  fontFamilies: ["Noto Sans SC", "JetBrains Mono"],
   format: "png",
   height: 1350,
   renderer,
   width: 1080,
 });
+
 await writeFile(outputPath, png);

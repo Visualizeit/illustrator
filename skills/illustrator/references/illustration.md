@@ -13,6 +13,8 @@ Select a visual identity according to [themes.md](themes.md). Apply the selected
 
 Prefer concise copy and strong visual hierarchy. Preserve supplied names, titles, code, data, and brand assets exactly; do not invent factual claims. Use text only when it improves the image's purpose.
 
+Use HTML and CSS for composition and typography. For a custom focal mark, curved symbol, or other simple vector artwork, prefer a compact inline SVG over assembling the shape from many positioned containers. Keep the SVG subordinate to the art direction rather than adding detail because the format permits it.
+
 ## Supplied Images
 
 Treat photos, screenshots, logos, product images, and other supplied assets as first-class composition material. Infer whether each image is content to include or a style reference only; never place a reference-only image into the output without clear intent.
