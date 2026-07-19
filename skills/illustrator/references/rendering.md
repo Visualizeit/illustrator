@@ -15,6 +15,21 @@ Write plain ESM in the temporary `.mjs` module. Prefer an HTML string for genera
 
 Takumi is not a browser. Treat CSS and Tailwind as the renderer's supported subset, not as a complete DOM or Tailwind build pipeline. No Tailwind configuration or plugin hook is exposed by the installed rendering API. Prefer common layout, spacing, typography, color, border, and effect utilities; fall back to inline styles and simplify unsupported effects.
 
+## HTML and Style Compatibility
+
+Use the high-level `render` or `renderSvg` function for ordinary HTML. It performs the HTML-to-node conversion and forwards embedded stylesheets correctly. Do not call `fromHtml` and the low-level `Renderer` directly unless the task requires it; if you do, pass both returned values: `node` and `stylesheets`.
+
+HTML is converted into a Takumi node tree, not a browser DOM. A successful render does not prove that every browser CSS feature was applied.
+
+- Prefer flex, block, or absolute layout; explicit dimensions; spacing; typography; colors; backgrounds; borders; radii; and opacity.
+- Give decorative empty elements explicit width, height, and paint.
+- Treat grid, pseudo-elements, stateful selectors, filters, masks, blend modes, and browser-specific behavior as unverified until a minimal render confirms them.
+- Do not depend on exact DOM identity or child indexes. An element containing only text may become a Takumi text node.
+
+The locked HTML parser preserves whitespace between tags as text nodes. In the locked version, those whitespace siblings can cause an empty absolutely positioned decorative element to disappear even though rendering succeeds. Keep structural tags adjacent around empty or absolute decorations, or create those decorations with Takumi node helpers. Preserve deliberate spaces inside textual content; do not blindly minify prose.
+
+When image viewing is unavailable, keep to the conservative subset above and render a temporary SVG before the final raster image. Check its canvas dimensions and confirm that essential visual primitives are present—for example, expected fills, positioned rectangles, image elements, or paths. Delete the temporary SVG after verification. Do not treat a valid PNG signature or a successful exit code as visual verification.
+
 Use `assets/fonts/noto-sans-sc/NotoSansSC-VF.ttf` for general text. Register other bundled fonts only when the selected workflow calls for them.
 
 Use a user-provided or system font only when explicitly requested. Missing glyphs can render as boxes without throwing, so set the family in the composition and inspect the result.

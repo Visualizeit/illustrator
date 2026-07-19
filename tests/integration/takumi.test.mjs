@@ -53,4 +53,18 @@ describe("Takumi rendering", () => {
     expect(svg).toContain(`width="${dimensions.width}"`);
     expect(svg).toContain(`height="${dimensions.height}"`);
   });
+
+  it("renders compact HTML with an empty absolute decoration", async () => {
+    // Keep structural tags adjacent: fromHtml preserves formatting whitespace as text nodes.
+    const html = `<div style="position:relative;width:100%;height:100%;background:#fff8de"><div style="position:absolute;left:50px;top:60px;width:200px;height:100px;background:#f0442e"></div></div>`;
+    const svg = await renderSvg(html, {
+      height: 300,
+      renderer,
+      width: 400,
+    });
+
+    expect(svg).toContain(
+      '<rect x="50" y="60" width="200" height="100" fill="#f0442e"/>'
+    );
+  });
 });

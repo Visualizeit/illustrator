@@ -44,7 +44,7 @@ Require Node.js 20 or newer. Use npm for the Skill runtime because it ships with
 3. Use absolute paths for task inputs and outputs.
 4. Run the generated module with Node.js from `SKILL_ROOT`.
 5. Remove the generated module after execution, including after a failure.
-6. Inspect the rendered image when viewing is available. Revise clipping, overflow, unreadable text, weak contrast, unclear hierarchy, or excessive empty space.
+6. Inspect the rendered image when viewing is available. Revise clipping, overflow, unreadable text, weak contrast, unclear hierarchy, or excessive empty space. When viewing is unavailable, follow the non-visual verification rules in [references/rendering.md](references/rendering.md).
 7. Keep only the requested output artifacts in the user's project.
 
 Do not add dependencies to the user's project, install packages globally, or retain generated source files. The individual built-in themes remain intentionally pending further design decisions.
