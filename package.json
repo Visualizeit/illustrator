@@ -5,18 +5,20 @@
   "type": "module",
   "scripts": {
     "check": "ultracite check",
+    "check:designs": "node scripts/validate-designs.mjs",
     "fix": "ultracite fix",
     "pretest": "npm --prefix skills/illustrator ls --omit=dev --depth=0 || npm --prefix skills/illustrator ci --omit=dev --no-audit --no-fund",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
-    "validate": "pnpm run check && pnpm run typecheck && pnpm run test"
+    "validate": "pnpm run check && pnpm run typecheck && pnpm run check:designs && pnpm run test"
   },
   "dependencies": {
     "@takumi-rs/core": "2.3.0",
     "takumi-js": "2.3.0"
   },
   "devDependencies": {
+    "@google/design.md": "0.3.0",
     "@total-typescript/tsconfig": "1.0.4",
     "@types/node": "26.1.1",
     "oxfmt": "0.59.0",
