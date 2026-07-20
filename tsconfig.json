@@ -2,9 +2,15 @@
   "extends": "@total-typescript/tsconfig/tsc/no-dom/app",
   "compilerOptions": {
     "checkJs": true,
+    "lib": ["ES2023"],
     "noEmit": true,
     "sourceMap": false,
     "types": ["node"]
   },
-  "include": ["*.config.ts", "skills/**/*.mjs", "tests/**/*.mjs"]
+  "include": [
+    "*.config.ts",
+    "scripts/**/*.mjs",
+    "skills/**/*.mjs",
+    "tests/**/*.mjs"
+  ]
 }

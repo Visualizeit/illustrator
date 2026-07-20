@@ -1,6 +1,6 @@
 # Code Image Workflow
 
-Use conversation context and source files directly. Infer the language, presentation, and optional labels without requiring structured configuration. Treat natural-language instructions as overrides.
+Infer the language, presentation, and optional labels from the conversation and source files.
 
 ## Formatting
 
@@ -21,55 +21,8 @@ Preserve token content exactly. Map source lines to Takumi containers and tokens
 
 Register `JetBrainsMono-VF.ttf` and `JetBrainsMono-Italic-VF.ttf` from `assets/fonts/jetbrains-mono/` with normal and italic styles. Register Noto Sans SC on the same renderer as the CJK fallback, then set `fontFamily` to `JetBrains Mono, Noto Sans SC`.
 
-Treat the Shiki syntax theme and the Illustrator visual theme as separate concerns. Use Shiki for token colors and the selected `DESIGN.md` theme for the outer visual identity.
+Treat the Shiki syntax theme and the outer visual direction as separate concerns. Use Shiki for token styles and its foreground and background base colors. Its `fontStyle` value is a bitmask, so preserve combined italic, bold, underline, and strikethrough states. Derive window chrome, spacing, composition, and other visual-identity decisions separately.
 
-Minimal token mapping:
-
-```js
-import { codeToTokens } from "shiki";
-import { render } from "takumi-js";
-import { container, text } from "takumi-js/helpers";
-const highlighted = await codeToTokens(source, {
-  lang: language,
-  theme: syntaxTheme,
-});
-const fontStyleBits = {
-  bold: 2,
-  italic: 1,
-  strikethrough: 8,
-  underline: 4,
-};
-const tokenStyle = (token) => {
-  const fontStyle = token.fontStyle ?? 0;
-  const textDecoration = [
-    fontStyle & fontStyleBits.underline ? "underline" : "",
-    fontStyle & fontStyleBits.strikethrough ? "line-through" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-  return {
-    color: token.color ?? highlighted.fg ?? "#f0f6fc",
-    fontStyle: fontStyle & fontStyleBits.italic ? "italic" : undefined,
-    fontWeight: fontStyle & fontStyleBits.bold ? 700 : undefined,
-    textDecoration: textDecoration || undefined,
-  };
-};
-const node = container({
-  style: {
-    backgroundColor: highlighted.bg ?? "#0d1117",
-    color: highlighted.fg ?? "#f0f6fc",
-    display: "flex",
-    flexDirection: "column",
-    fontFamily: "JetBrains Mono, Noto Sans SC",
-    whiteSpace: "pre-wrap",
-  },
-  children: highlighted.tokens.map((line) =>
-    container({
-      children: line.map((token) => text(token.content, tokenStyle(token))),
-    })
-  ),
-});
-const png = await render(node, { renderer, width: 1200, height: 630 });
-```
+For token-to-node mapping, read [the basic Shiki implementation](../examples/shiki-code-image/render.mjs). Read the window or diff implementation only when that presentation is requested, following [examples.md](examples.md).
 
 Treat the declarations under `SKILL_ROOT/node_modules/@shikijs/types` as the source of truth for the locked Shiki version when a needed option is not covered here.

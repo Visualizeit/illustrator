@@ -4,7 +4,7 @@ Treat each image as a small piece of art direction, not a decorated template.
 
 ## Read the Context
 
-Infer the subject, audience, destination, and desired feeling from the available context. Draw visual cues from the subject's own language, materials, symbols, and environment. Respect supplied brand assets and natural-language direction.
+Use conversation context and source content directly. Do not require structured configuration or ask the user to restate available information. Infer the subject, audience, destination, and desired feeling. Draw visual cues from the subject's own language, materials, symbols, and environment. Respect supplied brand assets and natural-language direction.
 
 ## Commit to One Direction
 

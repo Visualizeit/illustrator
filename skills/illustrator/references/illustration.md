@@ -1,15 +1,6 @@
 # Illustration Workflow
 
-Use conversation context and source content directly. Do not require structured configuration or ask the user to restate information that is already available.
-
-Before writing rendering code, form a compact internal art direction:
-
-- Identify the single idea the image should communicate.
-- Choose one clear focal concept and supporting visual cues instead of representing every detail.
-- Infer the visual form, composition, amount of text, mood, and canvas from the user's intent, destination when known, and subject matter. Do not assume a publishing layout. Text is optional, and the illustration may carry the entire image.
-- Treat natural-language instructions as overrides for any inferred decision.
-
-Choose a visual direction from the user's natural-language instructions, references, supplied assets, or an optional theme according to [themes.md](themes.md). Treat the result as guidance rather than a fixed layout template.
+Do not assume a publishing layout. Infer the visual form and canvas from the intended destination and subject matter. Text is optional, and the illustration may carry the entire image.
 
 Prefer concise copy and strong visual hierarchy. Preserve supplied names, titles, code, data, and brand assets exactly; do not invent factual claims. Use text only when it improves the image's purpose.
 

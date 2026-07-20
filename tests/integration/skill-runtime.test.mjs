@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 
 import { describe, expect, it } from "vitest";
@@ -31,5 +32,25 @@ describe("Illustrator Skill runtime", () => {
 
     expect(result.stderr).toBe("");
     expect(result.status).toBe(0);
+  });
+
+  it("keeps development and Skill runtime versions aligned", async () => {
+    const [repositoryPackage, skillPackage] = await Promise.all([
+      readFile(new URL("../../package.json", import.meta.url)),
+      readFile(
+        new URL("../../skills/illustrator/package.json", import.meta.url)
+      ),
+    ]);
+    const repositoryManifest = JSON.parse(repositoryPackage.toString());
+    const skillManifest = JSON.parse(skillPackage.toString());
+
+    for (const dependency of Object.keys(skillManifest.dependencies)) {
+      const developmentVersion =
+        repositoryManifest.dependencies?.[dependency] ??
+        repositoryManifest.devDependencies?.[dependency];
+      expect(developmentVersion, dependency).toBe(
+        skillManifest.dependencies[dependency]
+      );
+    }
   });
 });

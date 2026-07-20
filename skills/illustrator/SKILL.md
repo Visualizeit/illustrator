@@ -5,7 +5,7 @@ description: Create general-purpose illustrations and designed images from natur
 
 # Illustrator
 
-Generate task-specific rendering code from the selected workflow and design references. Do not rely on a bundled renderer or CLI.
+Generate task-specific rendering code from the relevant workflow and the user's direction. Do not rely on a bundled renderer or CLI.
 
 ## Workflows
 
@@ -17,11 +17,11 @@ For general illustrations and any composition using supplied images as visual ma
 
 For code images, read [references/code-image.md](references/code-image.md) before rendering.
 
-Before selecting or applying a visual theme, read [references/themes.md](references/themes.md). Read only the selected theme file after making the selection.
+Before opening a bundled example, follow the routing and inspection rules in [references/examples.md](references/examples.md).
 
 ## Runtime
 
-Treat this Skill directory as `SKILL_ROOT`. Keep runtime dependencies isolated from the user's project.
+Treat this Skill directory as `SKILL_ROOT`. Keep runtime dependencies isolated from the user's project; do not add them to the user's project or install them globally.
 
 Before rendering, check the runtime:
 
@@ -46,5 +46,3 @@ Require Node.js 20 or newer. Use npm for the Skill runtime because it ships with
 5. Remove the generated module after execution, including after a failure.
 6. Inspect the rendered image when viewing is available. Revise clipping, overflow, unreadable text, weak contrast, unclear hierarchy, or excessive empty space. When viewing is unavailable, follow the non-visual verification rules in [references/rendering.md](references/rendering.md).
 7. Keep only the requested output artifacts in the user's project.
-
-Do not add dependencies to the user's project, install packages globally, or retain generated source files. Treat built-in themes as optional starting points rather than a closed catalog.
