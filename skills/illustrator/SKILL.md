@@ -40,11 +40,9 @@ Require Node.js 20 or newer. Use npm for the Skill runtime because it ships with
 ## Execution
 
 1. Default to PNG unless the user requests another format or the destination clearly benefits from one.
-2. Generate a task-specific `.mjs` module inside `SKILL_ROOT` so Node.js resolves the Skill's dependencies.
+2. Use `SKILL_ROOT/tmp/` for generated modules and intermediate artifacts, clean them up after rendering even on failure, and retain only the requested outputs.
 3. Use absolute paths for task inputs and outputs.
 4. Run the generated module with Node.js from `SKILL_ROOT`.
-5. Remove the generated module after execution, including after a failure.
-6. Inspect the rendered image when viewing is available. Revise clipping, overflow, unreadable text, weak contrast, unclear hierarchy, or excessive empty space. When viewing is unavailable, follow the non-visual verification rules in [references/rendering.md](references/rendering.md).
-7. Keep only the requested output artifacts in the user's project.
+5. Inspect the rendered image when viewing is available. Revise clipping, overflow, unreadable text, weak contrast, unclear hierarchy, or excessive empty space. When viewing is unavailable, follow the non-visual verification rules in [references/rendering.md](references/rendering.md).
 
-Do not add dependencies to the user's project, install packages globally, or retain generated source files. Treat built-in themes as optional starting points rather than a closed catalog.
+Do not add dependencies to the user's project or install packages globally. Treat built-in themes as optional starting points rather than a closed catalog.

@@ -35,7 +35,7 @@ Use HTML for layout and text, then embed a compact `<svg>` for focal marks, curv
 
 The locked renderer accepts inline SVG and carries it through as an image node. Keep important text in HTML so registered fonts, wrapping, and layout remain predictable. `renderSvg` controls the final output format; it is separate from using inline SVG as composition input.
 
-When image viewing is unavailable, keep to the conservative subset above and render a temporary SVG before the final raster image. Check its canvas dimensions and confirm that essential visual primitives are present—for example, expected fills, positioned rectangles, image elements, or paths. Delete the temporary SVG after verification. Do not treat a valid PNG signature or a successful exit code as visual verification.
+When image viewing is unavailable, keep to the conservative subset above and render a temporary SVG under `SKILL_ROOT/tmp/` before the final raster image. Check its canvas dimensions and confirm that essential visual primitives are present—for example, expected fills, positioned rectangles, image elements, or paths. Do not treat a valid PNG signature or a successful exit code as visual verification.
 
 Use `assets/fonts/noto-sans-sc/NotoSansSC-VF.ttf` for general text. Register other bundled fonts only when the selected workflow calls for them.
 
