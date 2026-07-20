@@ -22,6 +22,7 @@
     "oxfmt": "0.59.0",
     "oxlint": "1.74.0",
     "oxlint-tsgolint": "0.25.0",
+    "shiki": "4.3.1",
     "typescript": "6.0.3",
     "ultracite": "7.9.4",
     "vitest": "4.1.10"

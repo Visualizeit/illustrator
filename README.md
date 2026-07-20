@@ -18,3 +18,5 @@ The Skill source lives in [`skills/illustrator`](./skills/illustrator). Its isol
 Noto Sans SC and JetBrains Mono are bundled for consistent text and code rendering. Both are distributed under the SIL Open Font License 1.1.
 
 Confirmed built-in theme showcases keep their reproducible rendering source under `examples/themes/<slug>/`. Temporary rendering modules are removed only before a theme is accepted. Showcase source, inputs, and rendered previews remain repository development assets and are not included in the installed Skill.
+
+Standalone workflow examples live directly under `examples/<slug>/` and are not built-in themes.
