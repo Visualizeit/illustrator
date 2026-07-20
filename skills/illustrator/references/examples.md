@@ -20,10 +20,10 @@ For an example without `DESIGN.md`, treat `preview.png` as implementation output
 | Transparent supplied subject and annotations | `field-archive` | `render.mjs` |
 | Cropped supplied photograph | `flash-diary` | `render.mjs` |
 | Photograph combined with compact data | `paddock-blue` | `render.mjs` |
-| Simple vector silhouette and print texture | `apple-letter` | `render.mjs` |
 | Dominant color field and soft edge treatment | `chromatic-poster` | `render.mjs` |
 | Repeated vector forms | `flower-market` | `render.mjs` |
 | Structured interface-like SVG illustration | `grid-operator` | `render.mjs` |
 | Data-driven SVG paths and annotations | `refraction-atlas` | `render.mjs` |
+| Typographic construction and aligned glyph slices | `render-specimen` | `render.mjs` |
 
 Read a routed example's `DESIGN.md` instead when its visual rationale or tokens are the concrete subject. Read source material only to study how that input was incorporated.
