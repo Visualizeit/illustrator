@@ -61,7 +61,7 @@ const html = [
   `<div style="position:absolute;left:58px;top:736px;width:600px;height:8px;background:${palette.powder}"></div>`,
   `<div style="position:absolute;left:658px;top:736px;width:364px;height:8px;background:${palette.clay}"></div>`,
   `<div style="position:absolute;left:58px;top:762px;color:${palette.stone};font-family:JetBrains Mono;font-size:10px;font-weight:700;letter-spacing:0.13em">PHOTO / MICK WAANDERS · UNSPLASH</div>`,
-  `<div style="position:absolute;left:56px;top:814px;width:966px;color:${palette.denim};font-family:Noto Sans SC;font-size:88px;font-weight:700;line-height:0.94;letter-spacing:-0.045em;white-space:pre-wrap">THE LAST LAP\nTAKES EVERYTHING.</div>`,
+  `<div style="position:absolute;left:56px;top:814px;width:966px;color:${palette.denim};font-family:Noto Sans SC;font-size:88px;font-weight:700;line-height:0.94;letter-spacing:-0.045em;white-space:pre-wrap">HOLD THE LINE.\nTAKE THE LEAD.</div>`,
   metricHtml,
   `<div style="position:absolute;left:58px;top:1208px;width:580px;height:10px;background:${palette.powder}"></div>`,
   `<div style="position:absolute;left:638px;top:1208px;width:384px;height:10px;background:${palette.clay}"></div>`,
