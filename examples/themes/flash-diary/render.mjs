@@ -2,7 +2,6 @@ import { readFile, writeFile } from "node:fs/promises";
 
 import { Renderer } from "@takumi-rs/core";
 import { render } from "takumi-js";
-import { container, image, text } from "takumi-js/helpers";
 
 // Photo by Michele Tardivo on Unsplash:
 // https://unsplash.com/photos/a-building-with-a-blue-sky-AOsR4vK9KeQ
@@ -33,136 +32,19 @@ await Promise.all(
 );
 
 const photo = await readFile(photoPath);
-const node = container({
-  children: [
-    container({
-      style: {
-        backgroundColor: "#FFFFFF",
-        borderColor: "#171717",
-        borderStyle: "solid",
-        borderWidth: "2px",
-        height: "1110px",
-        left: "54px",
-        position: "absolute",
-        top: "54px",
-        width: "972px",
-      },
-    }),
-    image({
-      src: "asset:hero",
-      style: {
-        height: "1082px",
-        left: "68px",
-        objectFit: "cover",
-        objectPosition: "center center",
-        position: "absolute",
-        top: "68px",
-        width: "944px",
-      },
-    }),
-    container({
-      children: [
-        text("FLASH DIARY  /  02", {
-          color: "#FFFFFF",
-          fontFamily: "JetBrains Mono",
-          fontSize: "17px",
-          fontWeight: 700,
-          left: "24px",
-          letterSpacing: "0.1em",
-          position: "absolute",
-          top: "15px",
-        }),
-      ],
-      style: {
-        backgroundColor: "#2448D8",
-        borderRadius: "999px",
-        height: "52px",
-        left: "88px",
-        position: "absolute",
-        top: "92px",
-        width: "294px",
-      },
-    }),
-    text("晴天\n城市\n日记", {
-      color: "#171717",
-      fontFamily: "Noto Sans SC",
-      fontSize: "82px",
-      fontWeight: 900,
-      left: "670px",
-      letterSpacing: "-0.04em",
-      lineHeight: 1.14,
-      position: "absolute",
-      top: "178px",
-      whiteSpace: "pre-wrap",
-      width: "300px",
-    }),
-    container({
-      style: {
-        backgroundColor: "#FF8E68",
-        height: "14px",
-        left: "672px",
-        position: "absolute",
-        top: "514px",
-        width: "266px",
-      },
-    }),
-    container({
-      children: [
-        text("把晴天收进口袋", {
-          fontFamily: "Noto Sans SC",
-          fontSize: "36px",
-          fontWeight: 800,
-          left: "28px",
-          position: "absolute",
-          top: "24px",
-        }),
-        text("A BRIGHT NOTE FROM THE CITY", {
-          color: "#2448D8",
-          fontFamily: "JetBrains Mono",
-          fontSize: "15px",
-          fontWeight: 700,
-          left: "30px",
-          letterSpacing: "0.09em",
-          position: "absolute",
-          top: "88px",
-        }),
-      ],
-      style: {
-        backgroundColor: "#F7F3EA",
-        borderColor: "#171717",
-        borderStyle: "solid",
-        borderWidth: "2px",
-        height: "152px",
-        left: "82px",
-        position: "absolute",
-        top: "1056px",
-        width: "530px",
-      },
-    }),
-    text("SUN  15:40\n31.2304° N  /  121.4737° E", {
-      fontFamily: "JetBrains Mono",
-      fontSize: "16px",
-      fontWeight: 700,
-      left: "666px",
-      letterSpacing: "0.08em",
-      lineHeight: 1.65,
-      position: "absolute",
-      top: "1214px",
-      whiteSpace: "pre-wrap",
-      width: "360px",
-    }),
-  ],
-  style: {
-    backgroundColor: "#F7F3EA",
-    color: "#171717",
-    fontFamily: "Noto Sans SC",
-    height: "100%",
-    position: "relative",
-    width: "100%",
-  },
-});
+const html = [
+  '<div style="position:relative;width:100%;height:100%;background:#F7F3EA;color:#171717;font-family:Noto Sans SC">',
+  '<div style="position:absolute;left:54px;top:54px;width:972px;height:1110px;background:#FFFFFF;border:2px solid #171717"></div>',
+  '<img src="asset:hero" style="position:absolute;left:68px;top:68px;width:944px;height:1082px;object-fit:cover;object-position:center center"/>',
+  '<div style="position:absolute;left:88px;top:92px;width:294px;height:52px;background:#2448D8;border-radius:999px"><div style="position:absolute;left:24px;top:15px;color:#FFFFFF;font-family:JetBrains Mono;font-size:17px;font-weight:700;letter-spacing:0.1em">FLASH DIARY  /  02</div></div>',
+  '<div style="position:absolute;left:670px;top:178px;width:300px;color:#171717;font-family:Noto Sans SC;font-size:82px;font-weight:900;line-height:1.14;letter-spacing:-0.04em;white-space:pre-wrap">晴天\n城市\n日记</div>',
+  '<div style="position:absolute;left:672px;top:514px;width:266px;height:14px;background:#FF8E68"></div>',
+  '<div style="position:absolute;left:82px;top:1056px;width:530px;height:152px;background:#F7F3EA;border:2px solid #171717"><div style="position:absolute;left:28px;top:24px;font-family:Noto Sans SC;font-size:36px;font-weight:800">把晴天收进口袋</div><div style="position:absolute;left:30px;top:88px;color:#2448D8;font-family:JetBrains Mono;font-size:15px;font-weight:700;letter-spacing:0.09em">A BRIGHT NOTE FROM THE CITY</div></div>',
+  '<div style="position:absolute;left:666px;top:1214px;width:360px;font-family:JetBrains Mono;font-size:16px;font-weight:700;line-height:1.65;letter-spacing:0.08em;white-space:pre-wrap">SUN  15:40\n31.2304° N  /  121.4737° E</div>',
+  "</div>",
+].join("");
 
-const png = await render(node, {
+const png = await render(html, {
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],
   format: "png",
   height: 1350,
