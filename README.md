@@ -37,15 +37,15 @@ npx skills add Visualizeit/illustrator --skill illustrator
 After installation, describe the visual you want to your agent:
 
 ```text
-/illustration Create a 1600×900 editorial illustration about focus and deep work.
+/illustrator Create a 1600×900 editorial illustration about focus and deep work.
 ```
 
 ```text
-/illustration Redesign this content using the bundled Flash Diary example as a visual reference.
+/illustrator Redesign this content using the bundled Flash Diary example as a visual reference.
 ```
 
 ```text
-/illustration Turn this code into a clean, presentation-ready image.
+/illustrator Turn this code into a clean, presentation-ready image.
 ```
 
 ## Examples

@@ -37,15 +37,15 @@ npx skills add Visualizeit/illustrator --skill illustrator
 安装后，直接向 Agent 描述你想要的视觉作品：
 
 ```text
-/illustration 创建一张 1600×900、主题为专注与深度工作的编辑插画。
+/illustrator 创建一张 1600×900、主题为专注与深度工作的编辑插画。
 ```
 
 ```text
-/illustration 参考内置的 Flash Diary 示例，重新设计这份内容。
+/illustrator 参考内置的 Flash Diary 示例，重新设计这份内容。
 ```
 
 ```text
-/illustration 把这段代码制作成一张干净、适合演示的图片。
+/illustrator 把这段代码制作成一张干净、适合演示的图片。
 ```
 
 ## 示例
