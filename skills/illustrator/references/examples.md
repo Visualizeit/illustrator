@@ -24,6 +24,7 @@ For an example without `DESIGN.md`, treat `preview.png` as implementation output
 | Repeated vector forms | `flower-market` | `render.mjs` |
 | Structured interface-like SVG illustration | `grid-operator` | `render.mjs` |
 | Data-driven SVG paths and annotations | `refraction-atlas` | `render.mjs` |
+| Editorial cover with stacked system layers | `system-layers-cover` | `render.mjs` |
 | Typographic construction and aligned glyph slices | `render-specimen` | `render.mjs` |
 
 Read a routed example's `DESIGN.md` instead when its visual rationale or tokens are the concrete subject. Read source material only to study how that input was incorporated.

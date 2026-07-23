@@ -52,6 +52,18 @@ After installation, describe the visual you want to your agent:
 
 ### Illustration & Editorial
 
+#### [System Layers Cover](./skills/illustrator/examples/system-layers-cover)
+
+A square technical-article cover that turns Prompt, Context, Agent, Permission, and Shell into one layered system.
+
+**Published use:** [为什么我不推荐使用 OpenCode](https://mp.weixin.qq.com/s/YQVcEe0CJz2Ki57q5eaM8Q), a WeChat article whose cover and seven inline visuals were rendered locally with Illustrator.
+
+<p align="center">
+  <a href="./skills/illustrator/examples/system-layers-cover">
+    <img src="./skills/illustrator/examples/system-layers-cover/preview.png" alt="System Layers Cover example preview" width="560">
+  </a>
+</p>
+
 #### [Flash Diary](./skills/illustrator/examples/flash-diary)
 
 A bright, photo-led city diary built from supplied imagery, bold type, and compact editorial details.

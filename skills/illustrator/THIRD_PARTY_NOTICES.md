@@ -12,3 +12,7 @@
 - `examples/paddock-blue/source.jpg`: photograph by Mick Waanders from [Unsplash](https://unsplash.com/photos/race-car-speeding-on-a-track-with-motion-blur-k2NSPo9de-U), used under the [Unsplash License](https://unsplash.com/license).
 
 The corresponding `preview.png` files are rendered adaptations that incorporate these photographs.
+
+## Brand assets
+
+- `examples/system-layers-cover/source.svg`: OpenCode wordmark from the project's official brand asset pack, used to reproduce the published article cover. OpenCode names and marks belong to their respective owners; see the [OpenCode project](https://opencode.ai/).

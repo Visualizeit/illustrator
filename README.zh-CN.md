@@ -52,6 +52,18 @@ npx skills add Visualizeit/illustrator --skill illustrator
 
 ### 插画与编辑视觉
 
+#### [System Layers Cover](./skills/illustrator/examples/system-layers-cover)
+
+将 Prompt、Context、Agent、Permission 和 Shell 转化为一个分层系统的方形技术文章封面。
+
+**真实案例：**微信公众号文章[《为什么我不推荐使用 OpenCode》](https://mp.weixin.qq.com/s/YQVcEe0CJz2Ki57q5eaM8Q)的封面和七张正文配图均由 Illustrator 在本地渲染。
+
+<p align="center">
+  <a href="./skills/illustrator/examples/system-layers-cover">
+    <img src="./skills/illustrator/examples/system-layers-cover/preview.png" alt="System Layers Cover 示例预览" width="560">
+  </a>
+</p>
+
 #### [Flash Diary](./skills/illustrator/examples/flash-diary)
 
 以用户图片、醒目字体和精简编辑信息构成的明快城市日记。
