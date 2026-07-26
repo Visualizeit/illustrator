@@ -4,6 +4,7 @@
 
 - Noto Sans SC is distributed under the SIL Open Font License 1.1. See `assets/fonts/noto-sans-sc/OFL-1.1.txt`.
 - JetBrains Mono is distributed under the SIL Open Font License 1.1. See `assets/fonts/jetbrains-mono/OFL-1.1.txt`.
+- Lora is distributed under the SIL Open Font License 1.1. See `assets/fonts/lora/OFL-1.1.txt`.
 
 ## Example photographs
 

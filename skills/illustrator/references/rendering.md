@@ -34,9 +34,15 @@ The locked renderer accepts inline SVG and carries it through as an image node. 
 
 When image viewing is unavailable, keep to the conservative subset above and render a temporary SVG under `SKILL_ROOT/tmp/` before the final raster image. Check its canvas dimensions and confirm that essential visual primitives are present—for example, expected fills, positioned rectangles, image elements, or paths. Do not treat a valid PNG signature or a successful exit code as visual verification.
 
-Use `assets/fonts/noto-sans-sc/NotoSansSC-VF.ttf` for general text. Register other bundled fonts only when the selected workflow calls for them.
+## Fonts
 
-Use a user-provided or system font only when explicitly requested. Missing glyphs can render as boxes without throwing, so set the family in the composition and inspect the result.
+Register only the fonts used by the composition and include their family names in `fontFamilies`.
+
+- **Noto Sans SC** (`assets/fonts/noto-sans-sc/NotoSansSC-VF.ttf`): Chinese, general text, and CJK fallback.
+- **Lora** (`assets/fonts/lora/Lora-VF.ttf`): editorial Latin text. Register the italic file as `Lora Italic` and use it sparingly for artwork names or expressive emphasis.
+- **JetBrains Mono** (`assets/fonts/jetbrains-mono/`): code, commands, data, URLs, and technical metadata.
+
+For mixed Chinese and Latin text, use Noto Sans SC as the base and apply Lora only to Latin runs. Use user-provided or system fonts only when explicitly requested. Inspect the output because missing glyphs may render as boxes without errors.
 
 ## Local Images
 
