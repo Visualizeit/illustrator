@@ -6,14 +6,14 @@
 
 **Designed images from a regular code-capable LLM—no image-generation model required.**
 
-Illustrator is a lightweight, browserless Agent Skill that turns natural-language direction, content, code, and supplied images into reproducible visuals through local rendering. Start from the bundled examples or define a visual style entirely your own.
+Illustrator is a lightweight, browserless Agent Skill that turns natural-language direction, content, code, and supplied images into designed visuals through local rendering. Start from the bundled examples or define a visual style entirely your own.
 
 ## Why Illustrator
 
 - **No image-generation model** — a regular code-capable LLM can create visuals by generating local rendering code.
 - **Lightweight and browserless** — no Chromium, Puppeteer, or browser runtime.
 - **Examples included, styles unrestricted** — use the bundled examples as references or bring your own visual direction.
-- **Reproducible by design** — keep inputs, rendering code, and outputs together.
+- **Code-driven and locally rendered** — visuals are produced through generated rendering code rather than a black-box image model.
 
 ## What You Can Create
 
@@ -49,6 +49,8 @@ After installation, describe the visual you want to your agent:
 ```
 
 ## Examples
+
+Bundled examples include their rendering source, assets, and output previews, making them easy to inspect, modify, and render again.
 
 ### Illustration & Editorial
 
