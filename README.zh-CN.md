@@ -193,4 +193,5 @@ pnpm run validate
 
 Skill 源码位于 [`skills/illustrator`](./skills/illustrator)。项目内置 Noto Sans SC 和 JetBrains Mono，以确保文字和代码渲染效果一致；字体和图片来源见 [`THIRD_PARTY_NOTICES.md`](./skills/illustrator/THIRD_PARTY_NOTICES.md)。
 
-> 项目仍在开发中，公开接口和运行时打包方式可能发生变化。
+> [!IMPORTANT]
+> **公开 Alpha 阶段。** Illustrator 目前已经可以使用，但在 v1.0 前，Skill 接口和运行时打包方式仍可能变化。

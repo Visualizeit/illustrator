@@ -193,4 +193,5 @@ pnpm run validate
 
 The Skill source lives in [`skills/illustrator`](./skills/illustrator). Noto Sans SC and JetBrains Mono are bundled for consistent text and code rendering; see [`THIRD_PARTY_NOTICES.md`](./skills/illustrator/THIRD_PARTY_NOTICES.md) for font and image sources.
 
-> Work in progress. The public interface and runtime packaging may change.
+> [!IMPORTANT]
+> **Public alpha.** Illustrator is usable today, but its Skill interface and runtime packaging may change before v1.0.
