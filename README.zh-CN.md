@@ -8,6 +8,9 @@
 
 Illustrator 是一个轻量、无需浏览器的 Agent Skill，通过本地渲染，将自然语言描述、内容、代码和用户提供的图片转化为经过设计的视觉作品。你可以从预制示例开始，也可以完全自由地定义自己的视觉风格。
 
+> **项目介绍文章：**
+> [查看 Illustrator 的设计思路、使用方式和实际案例](https://mp.weixin.qq.com/s/Wi4zC5eW3RerVuToagChwQ)
+
 ## 为什么选择 Illustrator
 
 - **无需生图模型** — 普通的代码型 LLM 可以通过生成本地渲染代码来创建视觉作品。
