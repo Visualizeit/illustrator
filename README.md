@@ -8,6 +8,9 @@
 
 Illustrator is a lightweight, browserless Agent Skill that turns natural-language direction, content, code, and supplied images into designed visuals through local rendering. Start from the bundled examples or define a visual style entirely your own.
 
+> **Project article (Chinese):**
+> [Design rationale, usage, and real-world examples](https://mp.weixin.qq.com/s/Wi4zC5eW3RerVuToagChwQ)
+
 ## Why Illustrator
 
 - **No image-generation model** — a regular code-capable LLM can create visuals by generating local rendering code.
