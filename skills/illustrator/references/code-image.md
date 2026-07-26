@@ -23,6 +23,6 @@ Register `JetBrainsMono-VF.ttf` and `JetBrainsMono-Italic-VF.ttf` from `assets/f
 
 Treat the Shiki syntax theme and the outer visual direction as separate concerns. Use Shiki for token styles and its foreground and background base colors. Its `fontStyle` value is a bitmask, so preserve combined italic, bold, underline, and strikethrough states. Derive window chrome, spacing, composition, and other visual-identity decisions separately.
 
-For token-to-node mapping, read [the basic Shiki implementation](../examples/shiki-code-image/render.mjs). Read the window or diff implementation only when that presentation is requested, following [examples.md](examples.md).
+For token-to-node mapping, read [the basic Shiki implementation](../examples/shiki-code-image/render.js). Read the window or diff implementation only when that presentation is requested, following [examples.md](examples.md).
 
 Treat the declarations under `SKILL_ROOT/node_modules/@shikijs/types` as the source of truth for the locked Shiki version when a needed option is not covered here.

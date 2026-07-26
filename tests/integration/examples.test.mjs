@@ -46,7 +46,7 @@ describe("Illustrator examples", () => {
         exampleDirectories.map(async (exampleDirectory) => {
           const examplePath = path.join(examplesRoot, exampleDirectory.name);
           const files = await readdir(examplePath);
-          const renderPath = path.join(examplePath, "render.mjs");
+          const renderPath = path.join(examplePath, "render.js");
           const previewPath = path.join(examplePath, "preview.png");
           const outputPath = path.join(
             outputDirectory,
@@ -54,7 +54,7 @@ describe("Illustrator examples", () => {
           );
 
           expect(files, `${exampleDirectory.name} artifacts`).toContain(
-            "render.mjs"
+            "render.js"
           );
           expect(files, `${exampleDirectory.name} artifacts`).toContain(
             "preview.png"

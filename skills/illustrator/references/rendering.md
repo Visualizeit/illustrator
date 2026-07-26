@@ -1,6 +1,6 @@
 # Rendering
 
-Write plain ESM in the temporary `.mjs` module. Prefer an HTML string for general graphics and Takumi node helpers when mapping structured data. Do not introduce TSX or a build step.
+Write plain ESM in the temporary `.js` module. The Skill runtime declares `"type": "module"`. Prefer an HTML string for general graphics and Takumi node helpers when mapping structured data. Do not introduce TSX or a build step.
 
 ## Takumi
 
@@ -48,7 +48,7 @@ For mixed Chinese and Latin text, use Noto Sans SC as the base and apply Lora on
 
 Read local images as bytes and pass them through the `images` render option under a stable in-memory source key. Use the same key in an HTML `src` or Takumi image node. Do not rely on `file:` URLs or the current working directory. The image helper may also receive bytes directly, but named sources are clearer when an HTML composition reuses an asset.
 
-For complete local-image implementations, read the `render.mjs` from `field-archive` for a transparent subject or `flash-diary` for a cropped photograph, following [examples.md](examples.md).
+For complete local-image implementations, read the `render.js` from `field-archive` for a transparent subject or `flash-diary` for a cropped photograph, following [examples.md](examples.md).
 
 ## Installed API Discovery
 
