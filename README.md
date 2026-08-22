@@ -2,14 +2,13 @@
 
 [简体中文](./README.md) | [English](./README.en.md)
 
-![将 Illustrator 字标拆解为彩色渲染标本的封面](./skills/illustrator/examples/render-specimen/preview.png)
+![使用 Illustrator 制作的真实文章视觉拼图](./docs/readme/real-world-hero.png)
 
 **让具备代码执行能力的普通 LLM 也能生成设计图片——无需生图模型。**
 
 Illustrator 是一个轻量、无需浏览器的 Agent Skill，通过本地渲染，将自然语言描述、内容、代码和用户提供的图片转化为经过设计的视觉作品。你可以从预制示例开始，也可以完全自由地定义自己的视觉风格。
 
-> **项目介绍文章：**
-> [查看 Illustrator 的设计思路、使用方式和实际案例](https://mp.weixin.qq.com/s/Wi4zC5eW3RerVuToagChwQ)
+> **项目介绍文章：** [查看 Illustrator 的设计思路、使用方式和实际案例](https://mp.weixin.qq.com/s/Wi4zC5eW3RerVuToagChwQ)
 
 ## 为什么选择 Illustrator
 
@@ -51,23 +50,21 @@ npx skills add Visualizeit/illustrator --skill illustrator
 /illustrator 把这段代码制作成一张干净、适合演示的图片。
 ```
 
-## 示例
+## 真实文章视觉
+
+以下是使用 Illustrator 制作并实际发布的文章视觉案例。
+
+<p align="center">
+  <img src="./docs/readme/article-series-grid.png" alt="使用 Illustrator 制作的八组文章视觉" width="900">
+</p>
+
+相关文章：[《不用生图模型，我让 Agent“画”出了这些图》](https://mp.weixin.qq.com/s/KUa7gP7OJ3pKIBU96jihrQ)
+
+## 内置示例
 
 内置示例同时保留渲染源码、素材和输出预览，方便检查、修改和再次渲染。
 
 ### 插画与编辑视觉
-
-#### [System Layers Cover](./skills/illustrator/examples/system-layers-cover)
-
-将 Prompt、Context、Agent、Permission 和 Shell 转化为一个分层系统的方形技术文章封面。
-
-**真实案例：**微信公众号文章[《为什么我不推荐使用 OpenCode》](https://mp.weixin.qq.com/s/YQVcEe0CJz2Ki57q5eaM8Q)的封面和七张正文配图均由 Illustrator 在本地渲染。
-
-<p align="center">
-  <a href="./skills/illustrator/examples/system-layers-cover">
-    <img src="./skills/illustrator/examples/system-layers-cover/preview.png" alt="System Layers Cover 示例预览" width="560">
-  </a>
-</p>
 
 #### [Flash Diary](./skills/illustrator/examples/flash-diary)
 
@@ -198,5 +195,6 @@ pnpm run validate
 
 Skill 源码位于 [`skills/illustrator`](./skills/illustrator)。项目内置 Noto Sans SC 和 JetBrains Mono，以确保文字和代码渲染效果一致；字体和图片来源见 [`THIRD_PARTY_NOTICES.md`](./skills/illustrator/THIRD_PARTY_NOTICES.md)。
 
+<!-- prettier-ignore -->
 > [!IMPORTANT]
 > **公开 Alpha 阶段。** Illustrator 目前已经可以使用，但在 v1.0 前，Skill 接口和运行时打包方式仍可能变化。

@@ -2,14 +2,13 @@
 
 [简体中文](./README.md) | [English](./README.en.md)
 
-![Illustrator wordmark dissected as a colorful render specimen](./skills/illustrator/examples/render-specimen/preview.png)
+![A collage of real article visuals created with Illustrator](./docs/readme/real-world-hero.png)
 
 **Designed images from a regular code-capable LLM—no image-generation model required.**
 
 Illustrator is a lightweight, browserless Agent Skill that turns natural-language direction, content, code, and supplied images into designed visuals through local rendering. Start from the bundled examples or define a visual style entirely your own.
 
-> **Project article (Chinese):**
-> [Design rationale, usage, and real-world examples](https://mp.weixin.qq.com/s/Wi4zC5eW3RerVuToagChwQ)
+> **Project article (Chinese):** [Design rationale, usage, and real-world examples](https://mp.weixin.qq.com/s/Wi4zC5eW3RerVuToagChwQ)
 
 ## Why Illustrator
 
@@ -51,23 +50,21 @@ After installation, describe the visual you want to your agent:
 /illustrator Turn this code into a clean, presentation-ready image.
 ```
 
-## Examples
+## Real-world Article Visuals
+
+Below are published article visuals created with Illustrator.
+
+<p align="center">
+  <img src="./docs/readme/article-series-grid.png" alt="Eight article visual systems created with Illustrator" width="900">
+</p>
+
+Related article: [不用生图模型，我让 Agent “画”出了这些图](https://mp.weixin.qq.com/s/KUa7gP7OJ3pKIBU96jihrQ) (Chinese)
+
+## Bundled Examples
 
 Bundled examples include their rendering source, assets, and output previews, making them easy to inspect, modify, and render again.
 
 ### Illustration & Editorial
-
-#### [System Layers Cover](./skills/illustrator/examples/system-layers-cover)
-
-A square technical-article cover that turns Prompt, Context, Agent, Permission, and Shell into one layered system.
-
-**Published use:** [为什么我不推荐使用 OpenCode](https://mp.weixin.qq.com/s/YQVcEe0CJz2Ki57q5eaM8Q), a WeChat article whose cover and seven inline visuals were rendered locally with Illustrator.
-
-<p align="center">
-  <a href="./skills/illustrator/examples/system-layers-cover">
-    <img src="./skills/illustrator/examples/system-layers-cover/preview.png" alt="System Layers Cover example preview" width="560">
-  </a>
-</p>
 
 #### [Flash Diary](./skills/illustrator/examples/flash-diary)
 
@@ -198,5 +195,6 @@ pnpm run validate
 
 The Skill source lives in [`skills/illustrator`](./skills/illustrator). Noto Sans SC and JetBrains Mono are bundled for consistent text and code rendering; see [`THIRD_PARTY_NOTICES.md`](./skills/illustrator/THIRD_PARTY_NOTICES.md) for font and image sources.
 
+<!-- prettier-ignore -->
 > [!IMPORTANT]
 > **Public alpha.** Illustrator is usable today, but its Skill interface and runtime packaging may change before v1.0.
