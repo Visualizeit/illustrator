@@ -3,22 +3,40 @@ import { readFile, writeFile } from "node:fs/promises";
 import { Renderer } from "@takumi-rs/core";
 import { render } from "takumi-js";
 
+import { loadTheme } from "../theme.js";
+
 const canvas = { height: 900, width: 1600 };
 const outputPath = process.argv[2] ?? new URL("preview.png", import.meta.url);
 const renderer = new Renderer();
 
+const theme = await loadTheme(new URL("theme.css", import.meta.url));
+const type = {
+  body: theme.number("text-body"),
+  flow: theme.number("text-flow"),
+  label: theme.number("text-label"),
+  meta: theme.number("text-meta"),
+  task: theme.number("text-task"),
+};
 const palette = {
-  body: "#536158",
-  canvas: "#F3F5F0",
-  coral: "#FF7958",
-  green: "#218B57",
-  greenDark: "#12623C",
-  grid: "#CAD4CC",
-  gridSoft: "#E7ECE8",
-  ink: "#14241B",
-  lime: "#BDF36B",
-  paper: "#FFFFFF",
-  sheetChrome: "#EEF3EF",
+  body: theme.color("body"),
+  canvas: theme.color("canvas"),
+  coral: theme.color("coral"),
+  green: theme.color("green"),
+  greenDark: theme.color("green-dark"),
+  grid: theme.color("grid"),
+  gridSoft: theme.color("grid-soft"),
+  ink: theme.color("ink"),
+  lime: theme.color("lime"),
+  paper: theme.color("paper"),
+  sheetActive: theme.color("sheet-active"),
+  sheetChrome: theme.color("sheet-chrome"),
+  sheetHighlight: theme.color("sheet-highlight"),
+  sheetLine: theme.color("sheet-line"),
+  sheetLineSoft: theme.color("sheet-line-soft"),
+  sheetPaper: theme.color("sheet-paper"),
+  sheetStatus: theme.color("sheet-status"),
+  sheetStatusSoft: theme.color("sheet-status-soft"),
+  sheetWarning: theme.color("sheet-warning"),
 };
 
 /** @type {Array<[string, string]>} */
@@ -98,7 +116,7 @@ const headerCells = columnHeaders
       svgText({
         color: palette.body,
         letterSpacing: 0.09,
-        size: 10,
+        size: type.label,
         text: header,
         weight: 700,
         x: x + 14,
@@ -111,16 +129,16 @@ const headerCells = columnHeaders
 const sheetRows = Array.from({ length: rowCount }, (_rowValue, rowIndex) => {
   const y = dataY + rowIndex * rowHeight;
   const isSelectedRow = rowIndex === selectedRowIndex;
-  let rowFill = rowIndex % 2 === 0 ? palette.paper : "#FBFCFB";
+  let rowFill = rowIndex % 2 === 0 ? palette.paper : palette.sheetPaper;
   if (isSelectedRow) {
-    rowFill = "#F8FDEB";
+    rowFill = palette.sheetActive;
   }
   const rowHeader = [
-    `<rect x="${sheet.x}" y="${y}" width="${sheet.rowHeaderWidth}" height="${rowHeight}" fill="${isSelectedRow ? "#E4F5CA" : palette.sheetChrome}" stroke="${palette.grid}" stroke-width="1"/>`,
+    `<rect x="${sheet.x}" y="${y}" width="${sheet.rowHeaderWidth}" height="${rowHeight}" fill="${isSelectedRow ? palette.sheetHighlight : palette.sheetChrome}" stroke="${palette.grid}" stroke-width="1"/>`,
     svgText({
       anchor: "middle",
       color: isSelectedRow ? palette.greenDark : palette.body,
-      size: 10,
+      size: type.label,
       text: String(rowIndex + 1).padStart(2, "0"),
       weight: isSelectedRow ? 800 : 650,
       x: sheet.x + sheet.rowHeaderWidth / 2,
@@ -201,11 +219,11 @@ const automationCells = automationRows
     const isReview = row.state === "REVIEW";
     const isQueued = row.state === "QUEUED";
     const stateColor = isReview ? palette.coral : palette.green;
-    let stateBackground = "#DDF3E5";
+    let stateBackground = palette.sheetStatus;
     if (isReview) {
-      stateBackground = "#FFE7E0";
+      stateBackground = palette.sheetWarning;
     } else if (isRunning) {
-      stateBackground = "#E8F8C9";
+      stateBackground = palette.sheetActive;
     }
     const triggerX = getColumnX(0);
     const taskX = getColumnX(1);
@@ -230,7 +248,7 @@ const automationCells = automationRows
           anchor: "middle",
           color: stateColor,
           letterSpacing: 0.04,
-          size: 9,
+          size: type.meta,
           text: row.state,
           weight: 800,
           x: statusX + 14 + statusPillWidth / 2,
@@ -240,7 +258,7 @@ const automationCells = automationRows
       ? svgText({
           color: palette.body,
           letterSpacing: 0.04,
-          size: 9,
+          size: type.meta,
           text: "QUEUED",
           weight: 750,
           x: statusX + 39,
@@ -252,7 +270,7 @@ const automationCells = automationRows
       `<circle cx="${triggerX + 18}" cy="${centerY}" r="6" fill="${triggerFill}" stroke="${triggerStroke}" stroke-width="2"/>`,
       svgText({
         color: palette.body,
-        size: 9,
+        size: type.meta,
         text: row.source,
         weight: 700,
         x: triggerX + 32,
@@ -260,7 +278,7 @@ const automationCells = automationRows
       }),
       svgText({
         family: "Noto Sans SC",
-        size: 14,
+        size: type.task,
         text: row.task,
         weight: 620,
         x: taskX + 16,
@@ -269,7 +287,7 @@ const automationCells = automationRows
       svgText({
         color: palette.body,
         letterSpacing: 0.08,
-        size: 8,
+        size: type.flow,
         text: `FLOW / ${String(rowIndex + 1).padStart(2, "0")}`,
         x: taskX + 16,
         y: centerY + 13,
@@ -279,7 +297,7 @@ const automationCells = automationRows
         anchor: "middle",
         color: palette.greenDark,
         letterSpacing: 0.04,
-        size: 9,
+        size: type.meta,
         text: row.owner,
         weight: 750,
         x: ownerX + 49,
@@ -292,7 +310,7 @@ const automationCells = automationRows
       `<rect x="${progressX + 16}" y="${centerY - 12}" width="${progressWidth}" height="7" rx="4" fill="${stateColor}" opacity="${isQueued ? 0 : 0.78}"/>`,
       svgText({
         color: isReview ? palette.coral : palette.body,
-        size: 9,
+        size: type.meta,
         text: row.progressLabel,
         weight: 700,
         x: progressX + 16,
@@ -301,7 +319,7 @@ const automationCells = automationRows
       svgText({
         color: resultColor,
         letterSpacing: 0.04,
-        size: 9,
+        size: type.meta,
         text: row.result,
         weight: isRunning ? 800 : 680,
         x: resultX + 16,
@@ -331,7 +349,7 @@ const spreadsheetSvg = [
   svgText({
     color: palette.paper,
     letterSpacing: 0.1,
-    size: 10,
+    size: type.label,
     text: "AUTOMATION RUN / 024",
     weight: 750,
     x: sheet.x + 57,
@@ -339,20 +357,20 @@ const spreadsheetSvg = [
   }),
   `<circle cx="${sheet.x + sheetWidth - 302}" cy="${sheet.y - 25}" r="6" fill="${palette.lime}"/>`,
   svgText({
-    color: "#D9F0E2",
+    color: palette.sheetLine,
     letterSpacing: 0.1,
-    size: 9,
+    size: type.meta,
     text: "LIVE / 09:41:08",
     weight: 700,
     x: sheet.x + sheetWidth - 286,
     y: sheet.y - 25,
   }),
-  `<rect x="${sheet.x}" y="${sheet.y}" width="${sheetWidth}" height="${sheet.formulaBarHeight}" fill="#F8FAF8" stroke="${palette.grid}" stroke-width="1"/>`,
+  `<rect x="${sheet.x}" y="${sheet.y}" width="${sheetWidth}" height="${sheet.formulaBarHeight}" fill="" stroke="${palette.grid}" stroke-width="1"/>`,
   `<rect x="${sheet.x + 14}" y="${sheet.y + 10}" width="76" height="30" fill="${palette.paper}" stroke="${palette.grid}" stroke-width="1"/>`,
   svgText({
     anchor: "middle",
     color: palette.greenDark,
-    size: 10,
+    size: type.label,
     text: "D04:E04",
     weight: 750,
     x: sheet.x + 52,
@@ -361,7 +379,7 @@ const spreadsheetSvg = [
   svgText({
     color: palette.green,
     family: "Noto Sans SC",
-    size: 18,
+    size: type.body,
     text: "ƒx",
     weight: 750,
     x: sheet.x + 105,
@@ -371,7 +389,7 @@ const spreadsheetSvg = [
   svgText({
     color: palette.body,
     letterSpacing: 0.02,
-    size: 10,
+    size: type.label,
     text: "=AUTOFLOW(Feedback_digest, RUN_024)",
     weight: 650,
     x: sheet.x + 158,
@@ -384,13 +402,13 @@ const spreadsheetSvg = [
   `<rect x="${selection.x}" y="${selection.y}" width="${selection.width}" height="${selection.height}" fill="${palette.lime}" fill-opacity="0.1" stroke="${palette.green}" stroke-width="4"/>`,
   `<rect x="${selection.x + selection.width - 7}" y="${selection.y + selection.height - 7}" width="14" height="14" fill="${palette.green}" stroke="${palette.paper}" stroke-width="2"/>`,
   `<line x1="${sheet.x}" y1="${dataY}" x2="${sheet.x + sheetWidth}" y2="${dataY}" stroke="${palette.greenDark}" stroke-width="2" opacity="0.28"/>`,
-  `<rect x="${sheet.x}" y="${tabBarY}" width="${sheetWidth}" height="46" fill="#F7F9F7" stroke="${palette.grid}" stroke-width="1"/>`,
+  `<rect x="${sheet.x}" y="${tabBarY}" width="${sheetWidth}" height="46" fill="" stroke="${palette.grid}" stroke-width="1"/>`,
   `<rect x="${sheet.x + 66}" y="${tabBarY}" width="148" height="46" fill="${palette.paper}"/>`,
   `<rect x="${sheet.x + 66}" y="${tabBarY + 42}" width="148" height="4" fill="${palette.green}"/>`,
   svgText({
     color: palette.greenDark,
     letterSpacing: 0.05,
-    size: 9,
+    size: type.meta,
     text: "ACTIVE FLOWS",
     weight: 750,
     x: sheet.x + 88,
@@ -434,7 +452,7 @@ const label = ({
   x,
   y,
 }) =>
-  `<div style="position:absolute;left:${x}px;top:${y}px;width:${width}px;color:${color};font-family:JetBrains Mono;font-size:${size}px;font-weight:700;line-height:1.2;letter-spacing:${letterSpacing}em;white-space:nowrap">${text}</div>`;
+  `<div style="position:absolute;left:${x}px;top:${y}px;width:${width}px;color:${color};font-family:var(--font-mono);font-size:${size}px;font-weight:700;line-height:1.2;letter-spacing:${letterSpacing}em;white-space:nowrap">${text}</div>`;
 
 /** @type {(options: { align?: "center" | "left" | "right"; color?: string; family?: string; letterSpacing?: number; size?: number; text: string; weight?: number; width?: number; x: number; y: number }) => string} */
 const sheetHtmlText = ({
@@ -456,7 +474,7 @@ const sheetHeaderText = columnHeaders
     sheetHtmlText({
       color: palette.body,
       letterSpacing: 0.09,
-      size: 10,
+      size: type.label,
       text: header,
       weight: 700,
       width: (columnWidths[columnIndex] ?? 0) - 28,
@@ -485,7 +503,7 @@ const sheetRowText = automationRows
       sheetHtmlText({
         align: "center",
         color: isSelected ? palette.greenDark : palette.body,
-        size: 10,
+        size: type.label,
         text: String(rowIndex + 1).padStart(2, "0"),
         weight: isSelected ? 800 : 650,
         width: sheet.rowHeaderWidth,
@@ -494,7 +512,7 @@ const sheetRowText = automationRows
       }),
       sheetHtmlText({
         color: palette.body,
-        size: 9,
+        size: type.meta,
         text: row.source,
         weight: 700,
         width: 92,
@@ -503,7 +521,7 @@ const sheetRowText = automationRows
       }),
       sheetHtmlText({
         family: "Noto Sans SC",
-        size: 14,
+        size: type.task,
         text: row.task,
         weight: 620,
         width: 196,
@@ -513,7 +531,7 @@ const sheetRowText = automationRows
       sheetHtmlText({
         color: palette.body,
         letterSpacing: 0.08,
-        size: 8,
+        size: type.flow,
         text: `FLOW / ${String(rowIndex + 1).padStart(2, "0")}`,
         width: 120,
         x: getColumnX(1) + 16,
@@ -523,7 +541,7 @@ const sheetRowText = automationRows
         align: "center",
         color: palette.greenDark,
         letterSpacing: 0.04,
-        size: 9,
+        size: type.meta,
         text: row.owner,
         weight: 750,
         width: 62,
@@ -534,7 +552,7 @@ const sheetRowText = automationRows
         align: "center",
         color: row.state === "QUEUED" ? palette.body : stateColor,
         letterSpacing: 0.04,
-        size: 9,
+        size: type.meta,
         text: row.state,
         weight: 800,
         width: statusPillWidth,
@@ -543,7 +561,7 @@ const sheetRowText = automationRows
       }),
       sheetHtmlText({
         color: isReview ? palette.coral : palette.body,
-        size: 9,
+        size: type.meta,
         text: row.progressLabel,
         weight: 700,
         width: 90,
@@ -553,7 +571,7 @@ const sheetRowText = automationRows
       sheetHtmlText({
         color: resultColor,
         letterSpacing: 0.04,
-        size: 9,
+        size: type.meta,
         text: row.result,
         weight: isRunning ? 800 : 680,
         width: 150,
@@ -568,7 +586,7 @@ const sheetChromeText = [
   sheetHtmlText({
     color: palette.paper,
     letterSpacing: 0.1,
-    size: 10,
+    size: type.label,
     text: "AUTOMATION RUN / 024",
     weight: 750,
     width: 190,
@@ -576,9 +594,9 @@ const sheetChromeText = [
     y: sheet.y - 30,
   }),
   sheetHtmlText({
-    color: "#D9F0E2",
+    color: palette.sheetLine,
     letterSpacing: 0.1,
-    size: 9,
+    size: type.meta,
     text: "LIVE / 09:41:08",
     weight: 700,
     width: 140,
@@ -588,7 +606,7 @@ const sheetChromeText = [
   sheetHtmlText({
     align: "center",
     color: palette.greenDark,
-    size: 10,
+    size: type.label,
     text: "D04:E04",
     weight: 750,
     width: 76,
@@ -598,7 +616,7 @@ const sheetChromeText = [
   sheetHtmlText({
     color: palette.body,
     letterSpacing: 0.02,
-    size: 10,
+    size: type.label,
     text: "=AUTOFLOW(Feedback_digest, RUN_024)",
     width: 410,
     x: sheet.x + 158,
@@ -607,7 +625,7 @@ const sheetChromeText = [
   sheetHtmlText({
     color: palette.greenDark,
     letterSpacing: 0.05,
-    size: 9,
+    size: type.meta,
     text: "ACTIVE FLOWS",
     weight: 750,
     width: 112,
@@ -625,7 +643,7 @@ const metrics = [
 ]
   .map(
     ([value, metricLabel], index) =>
-      `<div style="position:absolute;left:${80 + index * 174}px;top:438px;width:148px;border-top:2px solid ${index === 0 ? palette.green : palette.grid};padding-top:16px"><div style="font-family:JetBrains Mono;font-size:27px;font-weight:760;line-height:1;color:${index === 0 ? palette.greenDark : palette.ink};letter-spacing:-0.035em">${value}</div><div style="margin-top:11px;font-family:JetBrains Mono;font-size:9px;font-weight:700;line-height:1.2;color:${palette.body};letter-spacing:0.11em">${metricLabel}</div></div>`
+      `<div style="position:absolute;left:${80 + index * 174}px;top:438px;width:148px;border-top:2px solid ${index === 0 ? palette.green : palette.grid};padding-top:16px"><div style="font-family:var(--font-mono);font-size:var(--text-stat);font-weight:760;line-height:1;color:${index === 0 ? palette.greenDark : palette.ink};letter-spacing:-0.035em">${value}</div><div style="margin-top:11px;font-family:var(--font-mono);font-size:var(--text-meta);font-weight:700;line-height:1.2;color:${palette.body};letter-spacing:0.11em">${metricLabel}</div></div>`
   )
   .join("");
 
@@ -637,14 +655,14 @@ const textLayer = [
     x: 80,
     y: 70,
   }),
-  `<div style="position:absolute;left:76px;top:130px;width:650px;color:${palette.ink};font-family:Noto Sans SC;font-size:82px;font-weight:820;line-height:0.98;letter-spacing:-0.055em;white-space:nowrap">让工作自己流转</div>`,
-  `<div style="position:absolute;left:80px;top:260px;width:600px;color:${palette.greenDark};font-family:Noto Sans SC;font-size:34px;font-weight:650;line-height:1.2;letter-spacing:-0.025em">一次编排，持续执行</div>`,
-  `<div style="position:absolute;left:80px;top:330px;width:530px;color:${palette.body};font-family:Noto Sans SC;font-size:18px;font-weight:450;line-height:1.6">邮件触发任务，表格记录进度，文档自动交付。<br/>每一步都在同一条流程里继续发生。</div>`,
+  '<div style="position:absolute;left:76px;top:130px;width:650px;color:var(--color-ink);font-family:var(--font-display);font-size:var(--text-title);font-weight:var(--font-weight-display);line-height:var(--leading-display);letter-spacing:var(--tracking-display);white-space:nowrap">让工作自己流转</div>',
+  '<div style="position:absolute;left:80px;top:260px;width:600px;color:var(--color-green-dark);font-family:var(--font-display);font-size:var(--text-subtitle);font-weight:var(--font-weight-headline);line-height:var(--leading-headline);letter-spacing:-0.025em">一次编排，持续执行</div>',
+  '<div style="position:absolute;left:80px;top:330px;width:530px;color:var(--color-body);font-family:var(--font-display);font-size:var(--text-body);font-weight:var(--font-weight-body);line-height:1.6">邮件触发任务，表格记录进度，文档自动交付。<br/>每一步都在同一条流程里继续发生。</div>',
   metrics,
   `<div style="position:absolute;left:80px;top:592px;width:496px;border-left:3px solid ${palette.lime};padding-left:18px">`,
-  `<div style="font-family:JetBrains Mono;font-size:10px;font-weight:750;line-height:1.2;letter-spacing:0.12em;color:${palette.greenDark}">CURRENT / FEEDBACK DIGEST</div>`,
-  `<div style="margin-top:12px;font-family:Noto Sans SC;font-size:20px;font-weight:620;line-height:1.25;color:${palette.ink}">正在处理客户反馈</div>`,
-  `<div style="margin-top:8px;font-family:JetBrains Mono;font-size:11px;font-weight:700;line-height:1.2;letter-spacing:0.06em;color:${palette.body}">18 OF 24 RECORDS · 6 LEFT</div>`,
+  '<div style="font-family:var(--font-mono);font-size:var(--text-label);font-weight:750;line-height:1.2;letter-spacing:0.12em;color:var(--color-green-dark)">CURRENT / FEEDBACK DIGEST</div>',
+  '<div style="margin-top:12px;font-family:var(--font-display);font-size:var(--text-note);font-weight:620;line-height:1.25;color:var(--color-ink)">正在处理客户反馈</div>',
+  '<div style="margin-top:8px;font-family:var(--font-mono);font-size:var(--text-kicker);font-weight:700;line-height:1.2;letter-spacing:0.06em;color:var(--color-body)">18 OF 24 RECORDS · 6 LEFT</div>',
   `<div style="margin-top:18px;width:360px;height:6px;border-radius:3px;background:${palette.gridSoft}"><div style="width:270px;height:6px;border-radius:3px;background:${palette.green}"></div></div>`,
   "</div>",
   label({
@@ -662,9 +680,10 @@ const textLayer = [
   }),
 ].join("");
 
-const html = `<div style="position:relative;width:100%;height:100%;overflow:hidden;background:${palette.canvas};color:${palette.ink};font-family:Noto Sans SC">${illustrationSvg}${sheetTextLayer}${textLayer}</div>`;
+const html = `<div style="position:relative;width:100%;height:100%;overflow:hidden;background:var(--color-canvas);color:var(--color-ink);font-family:var(--font-display)">${illustrationSvg}${sheetTextLayer}${textLayer}</div>`;
 
 const png = await render(html, {
+  css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],
   format: "png",
   height: canvas.height,

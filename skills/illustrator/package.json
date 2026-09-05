@@ -5,11 +5,11 @@
   "license": "Apache-2.0",
   "type": "module",
   "dependencies": {
-    "@takumi-rs/core": "2.3.0",
+    "@takumi-rs/core": "2.13.6",
     "shiki": "4.3.1",
-    "takumi-js": "2.3.0"
+    "takumi-js": "2.13.6"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.19"
   }
 }

@@ -3,21 +3,36 @@ import { readFile, writeFile } from "node:fs/promises";
 import { Renderer } from "@takumi-rs/core";
 import { render } from "takumi-js";
 
+import { loadTheme } from "../theme.js";
+
 const canvas = { height: 1000, width: 1600 };
 const outputPath = process.argv[2] ?? new URL("preview.png", import.meta.url);
 const renderer = new Renderer();
 
+const theme = await loadTheme(new URL("theme.css", import.meta.url));
+const type = {
+  caption: theme.number("text-caption"),
+  kicker: theme.number("text-kicker"),
+  label: theme.number("text-label"),
+  meta: theme.number("text-meta"),
+  metric: theme.number("text-metric"),
+  section: theme.number("text-section"),
+  statLarge: theme.number("text-stat-large"),
+  statMedium: theme.number("text-stat-medium"),
+  statSmall: theme.number("text-stat-small"),
+  title: theme.number("text-title"),
+};
 const palette = {
-  body: "#4F5664",
-  canvas: "#FFFFFF",
-  cobalt: "#315CF5",
-  coral: "#FF6B78",
-  cyan: "#42C7DB",
-  ice: "#EAF3FF",
-  ink: "#11131A",
-  muted: "#9298A8",
-  rule: "#E8EAF0",
-  violet: "#846CFF",
+  body: theme.color("body"),
+  canvas: theme.color("canvas"),
+  cobalt: theme.color("cobalt"),
+  coral: theme.color("coral"),
+  cyan: theme.color("cyan"),
+  ice: theme.color("ice"),
+  ink: theme.color("ink"),
+  muted: theme.color("muted"),
+  rule: theme.color("rule"),
+  violet: theme.color("violet"),
 };
 
 /** @type {Array<[string, string]>} */
@@ -71,7 +86,7 @@ const railX = 1240;
 const htmlText = ({
   align = "left",
   color = palette.ink,
-  family = "Noto Sans SC",
+  family = theme.font("display"),
   letterSpacing = 0,
   size = 14,
   text,
@@ -163,8 +178,8 @@ const xAxisLabels = months
     return htmlText({
       align: "center",
       color: palette.muted,
-      family: "JetBrains Mono",
-      size: 10,
+      family: theme.font("mono"),
+      size: type.meta,
       text: month,
       width: 48,
       x,
@@ -178,8 +193,8 @@ const yAxisLabels = [0, 25, 50, 75, 100]
     htmlText({
       align: "right",
       color: palette.muted,
-      family: "JetBrains Mono",
-      size: 10,
+      family: theme.font("mono"),
+      size: type.meta,
       text: String(value),
       width: 34,
       x: plot.x - 50,
@@ -245,9 +260,9 @@ const svg = [
   `<path d="${upperLine}" fill="none" stroke="${palette.cobalt}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>`,
   `<path d="${signalLine}" fill="none" stroke="${palette.violet}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>`,
   `<path d="${lowerLine}" fill="none" stroke="${palette.cyan}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>`,
-  `<circle cx="${lastUpperPoint.x}" cy="${lastUpperPoint.y}" r="5.5" fill="#FFFFFF" stroke="${palette.cobalt}" stroke-width="2.2"/>`,
-  `<circle cx="${lastSignalPoint.x}" cy="${lastSignalPoint.y}" r="5.5" fill="#FFFFFF" stroke="${palette.violet}" stroke-width="2.2"/>`,
-  `<circle cx="${lastLowerPoint.x}" cy="${lastLowerPoint.y}" r="5.5" fill="#FFFFFF" stroke="${palette.cyan}" stroke-width="2.2"/>`,
+  `<circle cx="${lastUpperPoint.x}" cy="${lastUpperPoint.y}" r="5.5" fill="${palette.canvas}" stroke="${palette.cobalt}" stroke-width="2.2"/>`,
+  `<circle cx="${lastSignalPoint.x}" cy="${lastSignalPoint.y}" r="5.5" fill="${palette.canvas}" stroke="${palette.violet}" stroke-width="2.2"/>`,
+  `<circle cx="${lastLowerPoint.x}" cy="${lastLowerPoint.y}" r="5.5" fill="${palette.canvas}" stroke="${palette.cyan}" stroke-width="2.2"/>`,
   detailGridLines,
   `<path d="${detailUpperArea}" fill="url(#upper-field)"/>`,
   `<path d="${detailSignalArea}" fill="url(#signal-field)"/>`,
@@ -255,9 +270,9 @@ const svg = [
   `<path d="${detailUpperLine}" fill="none" stroke="${palette.cobalt}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`,
   `<path d="${detailSignalLine}" fill="none" stroke="${palette.violet}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`,
   `<path d="${detailLowerLine}" fill="none" stroke="${palette.cyan}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`,
-  `<circle cx="${lastDetailUpperPoint.x}" cy="${lastDetailUpperPoint.y}" r="4.5" fill="#FFFFFF" stroke="${palette.cobalt}" stroke-width="2"/>`,
-  `<circle cx="${lastDetailSignalPoint.x}" cy="${lastDetailSignalPoint.y}" r="4.5" fill="#FFFFFF" stroke="${palette.violet}" stroke-width="2"/>`,
-  `<circle cx="${lastDetailLowerPoint.x}" cy="${lastDetailLowerPoint.y}" r="4.5" fill="#FFFFFF" stroke="${palette.cyan}" stroke-width="2"/>`,
+  `<circle cx="${lastDetailUpperPoint.x}" cy="${lastDetailUpperPoint.y}" r="4.5" fill="${palette.canvas}" stroke="${palette.cobalt}" stroke-width="2"/>`,
+  `<circle cx="${lastDetailSignalPoint.x}" cy="${lastDetailSignalPoint.y}" r="4.5" fill="${palette.canvas}" stroke="${palette.violet}" stroke-width="2"/>`,
+  `<circle cx="${lastDetailLowerPoint.x}" cy="${lastDetailLowerPoint.y}" r="4.5" fill="${palette.canvas}" stroke="${palette.cyan}" stroke-width="2"/>`,
   `<line x1="48" y1="930" x2="1552" y2="930" stroke="${palette.ink}" stroke-width="1.5"/>`,
   "</svg>",
 ].join("");
@@ -265,9 +280,9 @@ const svg = [
 const textLayer = [
   htmlText({
     color: palette.muted,
-    family: "JetBrains Mono",
+    family: theme.font("mono"),
     letterSpacing: 0.13,
-    size: 11,
+    size: type.label,
     text: "REFRACTION ATLAS / VOL. 01",
     width: 390,
     x: 48,
@@ -275,7 +290,7 @@ const textLayer = [
   }),
   htmlText({
     letterSpacing: -0.05,
-    size: 54,
+    size: type.title,
     text: "MOMENTUM, RANGE & CHANGE",
     weight: 700,
     width: 980,
@@ -284,7 +299,7 @@ const textLayer = [
   }),
   htmlText({
     color: palette.body,
-    size: 14,
+    size: type.section,
     text: "THREE CRISP SIGNALS / OVERLAPPING FIELDS / ONE SHARED SCALE",
     width: 620,
     x: 48,
@@ -293,9 +308,9 @@ const textLayer = [
   htmlText({
     align: "right",
     color: palette.muted,
-    family: "JetBrains Mono",
+    family: theme.font("mono"),
     letterSpacing: 0.08,
-    size: 11,
+    size: type.label,
     text: "REPORT / 2026",
     width: 220,
     x: 1330,
@@ -303,9 +318,9 @@ const textLayer = [
   }),
   htmlText({
     align: "right",
-    family: "JetBrains Mono",
+    family: theme.font("mono"),
     letterSpacing: -0.04,
-    size: 28,
+    size: type.metric,
     text: "12 / MONTHS",
     weight: 700,
     width: 260,
@@ -314,16 +329,16 @@ const textLayer = [
   }),
   htmlText({
     color: palette.muted,
-    family: "JetBrains Mono",
+    family: theme.font("mono"),
     letterSpacing: 0.1,
-    size: 11,
+    size: type.label,
     text: "01 / MOMENTUM FIELD",
     width: 260,
     x: 80,
     y: 226,
   }),
   htmlText({
-    size: 27,
+    size: type.statSmall,
     text: "THREE-SIGNAL FIELD",
     weight: 700,
     width: 440,
@@ -333,8 +348,8 @@ const textLayer = [
   htmlText({
     align: "right",
     color: palette.muted,
-    family: "JetBrains Mono",
-    size: 10,
+    family: theme.font("mono"),
+    size: type.meta,
     text: "COBALT / UPPER · VIOLET / SIGNAL · CYAN / LOWER",
     width: 360,
     x: 840,
@@ -345,28 +360,28 @@ const textLayer = [
   htmlText({
     align: "right",
     color: palette.coral,
-    family: "JetBrains Mono",
-    size: 9,
+    family: theme.font("mono"),
+    size: type.caption,
     text: "TARGET / 80",
     width: 100,
     x: plot.x + plot.width - 100,
     y: targetY - 17,
   }),
-  `<div style="position:absolute;left:${lastUpperPoint.x - 60}px;top:${lastUpperPoint.y - 58}px;width:80px;height:34px;border:1px solid ${palette.rule};border-radius:999px;background:rgba(255,255,255,0.9);box-shadow:7px 9px 0 ${palette.cobalt}12;display:flex;align-items:center;justify-content:center;color:${palette.ink};font-family:JetBrains Mono;font-size:12px;font-weight:700">91.0</div>`,
+  `<div style="position:absolute;left:${lastUpperPoint.x - 60}px;top:${lastUpperPoint.y - 58}px;width:80px;height:34px;border:1px solid ${palette.rule};border-radius:999px;background:rgba(255,255,255,0.9);box-shadow:7px 9px 0 ${palette.cobalt}12;display:flex;align-items:center;justify-content:center;color:${palette.ink};font-family:var(--font-mono);font-size:var(--text-kicker);font-weight:700">91.0</div>`,
   htmlText({
     color: palette.muted,
-    family: "JetBrains Mono",
+    family: theme.font("mono"),
     letterSpacing: 0.1,
-    size: 11,
+    size: type.label,
     text: "02 / FIELD SUMMARY",
     width: 260,
     x: 1280,
     y: 226,
   }),
   htmlText({
-    family: "JetBrains Mono",
+    family: theme.font("mono"),
     letterSpacing: -0.055,
-    size: 46,
+    size: type.statLarge,
     text: "+24.8%",
     weight: 700,
     width: 280,
@@ -375,17 +390,17 @@ const textLayer = [
   }),
   htmlText({
     color: palette.muted,
-    family: "JetBrains Mono",
-    size: 11,
+    family: theme.font("mono"),
+    size: type.label,
     text: "MOMENTUM",
     width: 160,
     x: 1280,
     y: 322,
   }),
   htmlText({
-    family: "JetBrains Mono",
+    family: theme.font("mono"),
     letterSpacing: -0.05,
-    size: 36,
+    size: type.statMedium,
     text: "14.2",
     weight: 700,
     width: 200,
@@ -394,8 +409,8 @@ const textLayer = [
   }),
   htmlText({
     color: palette.muted,
-    family: "JetBrains Mono",
-    size: 11,
+    family: theme.font("mono"),
+    size: type.label,
     text: "RANGE WIDTH",
     width: 180,
     x: 1280,
@@ -403,9 +418,9 @@ const textLayer = [
   }),
   htmlText({
     color: palette.muted,
-    family: "JetBrains Mono",
+    family: theme.font("mono"),
     letterSpacing: 0.1,
-    size: 11,
+    size: type.label,
     text: "03 / DETAIL WINDOW",
     width: 260,
     x: 1280,
@@ -413,9 +428,9 @@ const textLayer = [
   }),
   htmlText({
     color: palette.ink,
-    family: "JetBrains Mono",
+    family: theme.font("mono"),
     letterSpacing: -0.035,
-    size: 22,
+    size: type.statSmall,
     text: "LAST 8 / SERIES",
     weight: 700,
     width: 250,
@@ -424,8 +439,8 @@ const textLayer = [
   }),
   htmlText({
     color: palette.muted,
-    family: "JetBrains Mono",
-    size: 9,
+    family: theme.font("mono"),
+    size: type.caption,
     text: "T−7",
     width: 70,
     x: detailPlot.x,
@@ -434,8 +449,8 @@ const textLayer = [
   htmlText({
     align: "right",
     color: palette.cobalt,
-    family: "JetBrains Mono",
-    size: 9,
+    family: theme.font("mono"),
+    size: type.caption,
     text: "NOW / 91",
     width: 90,
     x: detailPlot.x + detailPlot.width - 90,
@@ -443,8 +458,8 @@ const textLayer = [
   }),
   htmlText({
     color: palette.muted,
-    family: "JetBrains Mono",
-    size: 9,
+    family: theme.font("mono"),
+    size: type.caption,
     text: "THREE SERIES / SAME SCALE",
     width: 250,
     x: detailPlot.x,
@@ -452,8 +467,8 @@ const textLayer = [
   }),
   htmlText({
     color: palette.muted,
-    family: "JetBrains Mono",
-    size: 10,
+    family: theme.font("mono"),
+    size: type.meta,
     text: "SOURCE / SAMPLE DATA · NORMALIZED 0—100",
     width: 430,
     x: 48,
@@ -462,8 +477,8 @@ const textLayer = [
   htmlText({
     align: "right",
     color: palette.muted,
-    family: "JetBrains Mono",
-    size: 10,
+    family: theme.font("mono"),
+    size: type.meta,
     text: "SOLID STROKES / 2.6PX · FIELD OPACITY / 00—18%",
     width: 430,
     x: 1122,
@@ -471,9 +486,9 @@ const textLayer = [
   }),
 ].join("");
 
-const html = `<div style="position:relative;width:100%;height:100%;overflow:hidden;background:${palette.canvas};color:${palette.ink};font-family:Noto Sans SC">${svg}${textLayer}</div>`;
-
+const html = `<div style="position:relative;width:100%;height:100%;overflow:hidden;background:var(--color-canvas);color:var(--color-ink);font-family:var(--font-display)">${svg}${textLayer}</div>`;
 const png = await render(html, {
+  css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],
   format: "png",
   height: canvas.height,

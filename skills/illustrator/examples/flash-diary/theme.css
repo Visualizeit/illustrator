@@ -1,0 +1,34 @@
+/* Sunlit city diary: photo-led, bright, editorial, with compact captions. */
+@theme {
+  --color-primary: #ff8e68;
+  --color-secondary: #a9d9e8;
+  --color-accent: #2448d8;
+  --color-paper: #f7f3ea;
+  --color-ink: #171717;
+  --color-white: #ffffff;
+  --font-display: "Noto Sans SC";
+  --font-mono: "JetBrains Mono";
+  --text-display: 96px;
+  --text-display--line-height: 0.96;
+  --text-display--font-weight: 900;
+  --text-display--letter-spacing: -0.04em;
+  --font-weight-display: 900;
+  --leading-display: 1.14;
+  --tracking-display: -0.04em;
+  --text-title: 82px;
+  --text-headline: 52px;
+  --text-headline--line-height: 1.05;
+  --text-headline--font-weight: 800;
+  --font-weight-headline: 800;
+  --leading-headline: 1.1;
+  --text-caption: 15px;
+  --text-meta: 16px;
+  --text-kicker: 17px;
+  --text-body: 36px;
+  --font-weight-meta: 700;
+  --font-weight-kicker: 700;
+  --font-weight-body: 800;
+  --leading-meta: 1.65;
+  --tracking-meta: 0.08em;
+  --tracking-kicker: 0.1em;
+}

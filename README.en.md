@@ -28,7 +28,7 @@ Illustrator is a lightweight, browserless Agent Skill that turns natural-languag
 
 ## Install
 
-Requires Node.js 20 or newer and an Agent Skills-compatible coding agent.
+Requires Node.js 20.19 or newer and an Agent Skills-compatible coding agent.
 
 ```sh
 npx skills add Visualizeit/illustrator --skill illustrator
@@ -186,7 +186,7 @@ Using Illustrator does not by itself require attribution on generated images. Bu
 
 ## Development
 
-Requires Node.js and pnpm.
+Requires Node.js 20.19 or newer and pnpm.
 
 ```sh
 pnpm install

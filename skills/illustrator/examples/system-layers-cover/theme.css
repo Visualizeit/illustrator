@@ -1,0 +1,47 @@
+/* Operational stack: square editorial cover with descending labeled system layers. */
+@theme {
+  --color-paper: #f1ecec;
+  --color-ink: #211e1e;
+  --color-graphite: #656161;
+  --color-rule: #c7c1c1;
+  --color-signal: #e65a47;
+  --color-signal-dark: #b93c2f;
+  --color-white: #faf8f7;
+  --color-layer-top: #e5e0e0;
+  --color-layer-one: #d8d3d3;
+  --color-layer-one-front: #bbb5b5;
+  --color-layer-two: #aaa5a5;
+  --color-layer-two-front: #8a8585;
+  --color-layer-three: #716d6d;
+  --color-layer-three-front: #4b4747;
+  --color-layer-four: #4a4646;
+  --color-layer-four-front: #2d2929;
+  --color-shadow: #d7d1d1;
+  --color-mid: #989292;
+  --font-display: "Noto Sans SC";
+  --font-mono: "JetBrains Mono";
+  --text-display: 68px;
+  --text-display--line-height: 1.1;
+  --text-display--font-weight: 780;
+  --text-display--letter-spacing: -0.045em;
+  --font-weight-display: 780;
+  --leading-display: 1.1;
+  --tracking-display: -0.045em;
+  --text-layer: 21px;
+  --text-layer--line-height: 1;
+  --text-layer--font-weight: 750;
+  --font-weight-layer: 750;
+  --tracking-layer: 3.1px;
+  --text-meta: 11px;
+  --text-label: 12px;
+  --text-kicker: 14px;
+  --text-header: 17px;
+  --font-weight-meta: 700;
+  --font-weight-label: 700;
+  --font-weight-kicker: 700;
+  --font-weight-header: 700;
+  --tracking-meta: 0.18em;
+  --tracking-label: 0.16em;
+  --tracking-kicker: 0.22em;
+  --text-layer-label: 14px;
+}

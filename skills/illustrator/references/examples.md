@@ -1,14 +1,14 @@
 # Examples
 
-Bundled examples live under `SKILL_ROOT/examples/<slug>/`. Each may contain a reproducible `render.js`, rendered `preview.png`, source material, and a standard `DESIGN.md`.
+Bundled examples live under `SKILL_ROOT/examples/<slug>/`. Each may contain a reproducible `render.js`, rendered `preview.png`, source material, and a `theme.css` file with compact Tailwind `@theme` tokens.
 
 ## Artifact roles
 
 Use `render.js` as implementation evidence whenever a concrete rendering question arises. Read only the relevant portion and reuse the technique, not the example's composition.
 
-Treat `DESIGN.md` and its accompanying preview as visual-identity evidence. Form the task-specific visual premise first, then default to one relevant identity example. Inspect more only when the user requests comparison or each example answers a distinct visual question. A named example remains non-binding unless the user explicitly asks to follow its `DESIGN.md` or reproduce its identity.
+Treat `theme.css` and its accompanying preview as visual-identity evidence. Form the task-specific visual premise first, then default to one relevant identity example. Inspect more only when the user requests comparison or each example answers a distinct visual question. A named example remains non-binding unless the user explicitly asks to follow its theme or reproduce its identity.
 
-For an example without `DESIGN.md`, treat `preview.png` as implementation output that may be inspected while validating the relevant technique. View any preview only when image inspection is available and its rendered appearance would answer a concrete question. Otherwise rely on the routing table and available text artifacts.
+For an example without `theme.css`, treat `preview.png` as implementation output that may be inspected while validating the relevant technique. View any preview only when image inspection is available and its rendered appearance would answer a concrete question. Otherwise rely on the routing table and available text artifacts.
 
 ## Routing
 
@@ -27,4 +27,4 @@ For an example without `DESIGN.md`, treat `preview.png` as implementation output
 | Editorial cover with stacked system layers | `system-layers-cover` | `render.js` |
 | Typographic construction and aligned glyph slices | `render-specimen` | `render.js` |
 
-Read a routed example's `DESIGN.md` instead when its visual rationale or tokens are the concrete subject. Read source material only to study how that input was incorporated.
+Read a routed example's `theme.css` when its visual tokens are the concrete subject. Read source material only to study how that input was incorporated.

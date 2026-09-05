@@ -55,8 +55,10 @@ describe("Takumi rendering", () => {
   });
 
   it("renders compact HTML with an empty absolute decoration", async () => {
-    // Keep structural tags adjacent: fromHtml preserves formatting whitespace as text nodes.
-    const html = `<div style="position:relative;width:100%;height:100%;background:#fff8de"><div style="position:absolute;left:50px;top:60px;width:200px;height:100px;background:#f0442e"></div></div>`;
+    // Takumi 2.13.6 keeps empty absolute decorations stable across formatting whitespace.
+    const html = `<div style="position:relative;width:100%;height:100%;background:#fff8de">
+      <div style="position:absolute;left:50px;top:60px;width:200px;height:100px;background:#f0442e"></div>
+    </div>`;
     const svg = await renderSvg(html, {
       height: 300,
       renderer,

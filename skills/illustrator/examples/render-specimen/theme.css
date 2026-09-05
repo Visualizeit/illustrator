@@ -1,0 +1,41 @@
+/* Measured type specimen: the wordmark becomes a color-coded construction. */
+@theme {
+  --color-paper: #fafaf8;
+  --color-ink: #121713;
+  --color-graphite: #6f746f;
+  --color-rule: #d7d9d5;
+  --color-yellow: #f3d34a;
+  --color-coral: #f05a45;
+  --color-blue: #315ef5;
+  --color-cyan: #35b7a5;
+  --font-display: "Noto Sans SC";
+  --font-mono: "JetBrains Mono";
+  --text-display: 178px;
+  --text-display--line-height: 0.9;
+  --text-display--font-weight: 860;
+  --text-display--letter-spacing: -0.061em;
+  --font-weight-display: 860;
+  --leading-display: 0.9;
+  --tracking-display: -0.061em;
+  --text-statement: 42px;
+  --text-statement--line-height: 1.05;
+  --text-statement--font-weight: 660;
+  --font-weight-statement: 660;
+  --leading-statement: 1.05;
+  --tracking-statement: -0.038em;
+  --text-meta: 9px;
+  --text-label: 10px;
+  --text-kicker: 11px;
+  --text-caption: 12px;
+  --text-body: 15px;
+  --text-intro: 29px;
+  --font-weight-meta: 700;
+  --font-weight-label: 700;
+  --font-weight-kicker: 700;
+  --font-weight-caption: 700;
+  --font-weight-body: 430;
+  --font-weight-intro: 620;
+  --tracking-meta: 0.1em;
+  --tracking-label: 0.12em;
+  --tracking-kicker: 0.1em;
+}

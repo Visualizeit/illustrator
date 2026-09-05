@@ -5,7 +5,7 @@ Write plain ESM in the temporary `.js` module. The Skill runtime declares `"type
 ## Takumi
 
 - `render` accepts an HTML string, a React-like element, or a Takumi node tree.
-- Use the `tw` attribute for supported Tailwind utilities. Inline `style` and embedded stylesheets are also accepted.
+- Use the `tw` attribute for supported Tailwind utilities. Inline `style` and embedded CSS are also accepted.
 - Use `container`, `text`, and `image` from `takumi-js/helpers` when a node tree is clearer than HTML.
 - `render` supports PNG, JPEG, WebP, ICO, and raw pixels. Use `renderSvg` for SVG.
 - Width and height can be inferred from content, but always set both for a designed image. `devicePixelRatio` defaults to `1`.
@@ -15,16 +15,16 @@ Write plain ESM in the temporary `.js` module. The Skill runtime declares `"type
 
 ## HTML and Style Compatibility
 
-Use the high-level `render` or `renderSvg` function for ordinary HTML. It performs the HTML-to-node conversion and forwards embedded stylesheets correctly. Do not call `fromHtml` and the low-level `Renderer` directly unless the task requires it; if you do, pass both returned values: `node` and `stylesheets`.
+Use the high-level `render` or `renderSvg` function for ordinary HTML. It performs the HTML-to-node conversion and forwards embedded CSS correctly. Pass CSS strings or rule objects through the `css` option. Avoid low-level HTML conversion and renderer calls unless the task requires them.
 
-Takumi converts HTML into a node tree rather than a browser DOM. Treat CSS and Tailwind as supported subsets: no Tailwind configuration or plugin hook is exposed, and a successful render does not prove that every browser feature was applied. Prefer common layout, spacing, typography, color, border, and effect utilities; fall back to inline styles and simplify unsupported effects.
+Takumi converts HTML into a node tree rather than a browser DOM. Its Tailwind subset supports custom CSS themes: define `@theme` tokens (or `:root` custom properties) in a CSS string passed through `css`, then use the resulting `tw` utilities such as `bg-brand`, `text-display`, or `p-gutter`. `@config`, `@plugin`, `@utility`, `@custom-variant`, and `@source` still require an external Tailwind build. Prefer common layout, spacing, typography, color, border, and effect utilities; fall back to inline styles and simplify unsupported effects.
 
 - Prefer flex, block, or absolute layout; explicit dimensions; spacing; typography; colors; backgrounds; borders; radii; and opacity.
 - Give decorative empty elements explicit width, height, and paint.
-- Treat grid, pseudo-elements, stateful selectors, filters, masks, blend modes, and browser-specific behavior as unverified until a minimal render confirms them.
+- Treat pseudo-elements, stateful selectors, filters, masks, blend modes, and browser-specific behavior as unverified until a minimal render confirms them. Basic grid layouts are supported in the locked runtime, but verify complex track sizing and overlap before relying on it.
 - Do not depend on exact DOM identity or child indexes. An element containing only text may become a Takumi text node.
 
-The locked HTML parser preserves whitespace between tags as text nodes. In the locked version, those whitespace siblings can cause an empty absolutely positioned decorative element to disappear even though rendering succeeds. Keep structural tags adjacent around empty or absolute decorations, or create those decorations with Takumi node helpers. Preserve deliberate spaces inside textual content; do not blindly minify prose.
+Preserve deliberate spaces inside textual content; do not blindly minify prose. The locked 2.13 renderer handles whitespace around empty absolutely positioned decorations correctly, so structural tags no longer need to be adjacent for that case.
 
 ## Inline SVG
 

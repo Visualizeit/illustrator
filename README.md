@@ -28,7 +28,7 @@ Illustrator 是一个轻量、无需浏览器的 Agent Skill，通过本地渲�
 
 ## 安装
 
-需要 Node.js 20 或更高版本，以及兼容 Agent Skills 的代码 Agent。
+需要 Node.js 20.19 或更高版本，以及兼容 Agent Skills 的代码 Agent。
 
 ```sh
 npx skills add Visualizeit/illustrator --skill illustrator
@@ -186,7 +186,7 @@ Copyright 2026 Visualizeit。本项目采用 [Apache License 2.0](./LICENSE)；�
 
 ## 开发
 
-需要 Node.js 和 pnpm。
+需要 Node.js 20.19 或更高版本，以及 pnpm。
 
 ```sh
 pnpm install

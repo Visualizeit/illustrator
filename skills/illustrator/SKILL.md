@@ -17,7 +17,7 @@ For general illustrations and any composition using supplied images as visual ma
 
 For code images, read [references/code-image.md](references/code-image.md) before rendering.
 
-Before opening a bundled example, follow the routing and inspection rules in [references/examples.md](references/examples.md).
+Before opening a bundled example, follow the routing and inspection rules in [references/examples.md](references/examples.md). A routed visual example may include a `theme.css` file containing its Tailwind theme tokens.
 
 ## Runtime
 
@@ -35,7 +35,7 @@ If the check fails, install the locked dependencies:
 npm --prefix "$SKILL_ROOT" ci --omit=dev --no-audit --no-fund
 ```
 
-Require Node.js 20 or newer. Use npm for the Skill runtime because it ships with Node.js; do not require the user to install pnpm.
+Require Node.js 20.19 or newer. Use npm for the Skill runtime because it ships with Node.js; do not require the user to install pnpm.
 
 ## Execution
 

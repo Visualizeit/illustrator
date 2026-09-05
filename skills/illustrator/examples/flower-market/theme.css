@@ -1,0 +1,36 @@
+/* Controlled dopamine: flower-stall color, wrapping paper, tags, and fresh stems. */
+@theme {
+  --color-primary: #f0442e;
+  --color-secondary: #238c4a;
+  --color-tertiary: #b69cff;
+  --color-butter: #f4da54;
+  --color-neutral: #fff8de;
+  --color-ink: #17251c;
+  --font-display: "Noto Sans SC";
+  --font-mono: "JetBrains Mono";
+  --text-display: 104px;
+  --text-display--line-height: 0.94;
+  --text-display--font-weight: 900;
+  --text-display--letter-spacing: -0.04em;
+  --font-weight-display: 900;
+  --leading-display: 0.96;
+  --tracking-display: -0.04em;
+  --text-headline: 56px;
+  --text-headline--line-height: 1.05;
+  --text-headline--font-weight: 800;
+  --font-weight-headline: 600;
+  --leading-headline: 1.5;
+  --text-label: 18px;
+  --text-meta: 17px;
+  --text-body: 27px;
+  --text-price: 30px;
+  --text-callout: 24px;
+  --font-weight-meta: 700;
+  --font-weight-body: 600;
+  --font-weight-label: 700;
+  --font-weight-callout: 800;
+  --leading-body: 1.5;
+  --leading-callout: 1.25;
+  --tracking-label: 3px;
+  --tracking-meta: 2px;
+}

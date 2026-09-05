@@ -1,0 +1,47 @@
+/* Natural history: one specimen, measured annotation, restrained catalog metadata. */
+@theme {
+  --color-paper: #f1ebdd;
+  --color-specimen: #31533c;
+  --color-moss: #66715a;
+  --color-ink: #20241f;
+  --color-graphite: #8a897f;
+  --color-rule: #c9c1b0;
+  --color-label: #ddd2b9;
+  --color-signal: #c94b3c;
+  --color-white: #fffdf7;
+  --font-display: "Noto Sans SC";
+  --font-mono: "JetBrains Mono";
+  --text-display: 72px;
+  --text-display--line-height: 1.02;
+  --text-display--font-weight: 650;
+  --text-display--letter-spacing: -0.04em;
+  --font-weight-display: 650;
+  --leading-display: 1.02;
+  --tracking-display: -0.04em;
+  --text-title: 61px;
+  --font-weight-title: 650;
+  --leading-title: 1.08;
+  --tracking-title: -0.042em;
+  --text-headline: 38px;
+  --text-headline--line-height: 1.2;
+  --text-headline--font-weight: 650;
+  --font-weight-headline: 650;
+  --leading-headline: 1.08;
+  --tracking-headline: -0.042em;
+  --text-meta: 10px;
+  --text-label: 12px;
+  --text-kicker: 13px;
+  --text-body: 19px;
+  --text-footer: 17px;
+  --font-weight-meta: 650;
+  --font-weight-label: 650;
+  --font-weight-kicker: 600;
+  --font-weight-body: 420;
+  --font-weight-footer: 500;
+  --leading-body: 1.55;
+  --tracking-body: 0.035em;
+  --tracking-meta: 0.1em;
+  --tracking-label: 0.11em;
+  --tracking-kicker: 0.14em;
+  --tracking-footer: 0.04em;
+}

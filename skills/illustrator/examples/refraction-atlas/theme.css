@@ -1,0 +1,39 @@
+/* Analytical white field: crisp polylines, translucent overlaps, chromatic shadows. */
+@theme {
+  --color-canvas: #ffffff;
+  --color-ink: #11131a;
+  --color-body: #4f5664;
+  --color-muted: #9298a8;
+  --color-rule: #e8eaf0;
+  --color-cobalt: #315cf5;
+  --color-violet: #846cff;
+  --color-cyan: #42c7db;
+  --color-coral: #ff6b78;
+  --color-ice: #eaf3ff;
+  --font-display: "Noto Sans SC";
+  --font-mono: "JetBrains Mono";
+  --text-display: 58px;
+  --text-display--line-height: 1;
+  --text-display--font-weight: 700;
+  --text-display--letter-spacing: -0.05em;
+  --font-weight-display: 700;
+  --leading-display: 1;
+  --tracking-display: -0.05em;
+  --text-headline: 30px;
+  --text-headline--line-height: 1.2;
+  --text-headline--font-weight: 650;
+  --font-weight-headline: 650;
+  --text-meta: 10px;
+  --text-kicker: 12px;
+  --text-title: 54px;
+  --text-section: 14px;
+  --text-metric: 28px;
+  --text-stat-large: 46px;
+  --text-stat-medium: 36px;
+  --text-stat-small: 22px;
+  --text-label: 11px;
+  --text-caption: 9px;
+  --font-weight-meta: 700;
+  --font-weight-kicker: 700;
+  --tracking-meta: 0.1em;
+}

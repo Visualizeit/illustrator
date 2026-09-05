@@ -3,19 +3,22 @@ import { readFile, writeFile } from "node:fs/promises";
 import { Renderer } from "@takumi-rs/core";
 import { render } from "takumi-js";
 
+import { loadTheme } from "../theme.js";
+
 const canvas = { height: 900, width: 1600 };
 const outputPath = process.argv[2] ?? new URL("preview.png", import.meta.url);
 const renderer = new Renderer();
+const theme = await loadTheme(new URL("theme.css", import.meta.url));
 
 const palette = {
-  blue: "#315EF5",
-  coral: "#F05A45",
-  cyan: "#35B7A5",
-  graphite: "#6F746F",
-  ink: "#121713",
-  paper: "#FAFAF8",
-  rule: "#D7D9D5",
-  yellow: "#F3D34A",
+  blue: theme.color("blue"),
+  coral: theme.color("coral"),
+  cyan: theme.color("cyan"),
+  graphite: theme.color("graphite"),
+  ink: theme.color("ink"),
+  paper: theme.color("paper"),
+  rule: theme.color("rule"),
+  yellow: theme.color("yellow"),
 };
 
 /** @type {Array<[string, string]>} */
@@ -38,11 +41,11 @@ const titleStyle = [
   "left:70px",
   "top:251px",
   "width:1460px",
-  "font-family:Noto Sans SC",
-  "font-size:178px",
-  "font-weight:860",
-  "line-height:0.9",
-  "letter-spacing:-0.061em",
+  "font-family:var(--font-display)",
+  "font-size:var(--text-display)",
+  "font-weight:var(--font-weight-display)",
+  "line-height:var(--leading-display)",
+  "letter-spacing:var(--tracking-display)",
   "white-space:nowrap",
 ].join(";");
 
@@ -102,14 +105,14 @@ const guideSvg = [
 ].join("");
 
 const swatches = [
-  ["SIGNAL 01", palette.yellow, "#F3D34A"],
-  ["SIGNAL 02", palette.coral, "#F05A45"],
-  ["SIGNAL 03", palette.blue, "#315EF5"],
-  ["SIGNAL 04", palette.cyan, "#35B7A5"],
+  ["SIGNAL 01", palette.yellow, palette.yellow],
+  ["SIGNAL 02", palette.coral, palette.coral],
+  ["SIGNAL 03", palette.blue, palette.blue],
+  ["SIGNAL 04", palette.cyan, palette.cyan],
 ]
   .map(
     ([name, color, value], index) =>
-      `<div style="position:absolute;left:${70 + index * 154}px;top:735px;width:136px"><div style="width:136px;height:18px;background:${color}"></div><div style="margin-top:11px;font-family:JetBrains Mono;font-size:10px;font-weight:650;line-height:1.45;letter-spacing:0.08em;color:${palette.graphite}">${name}<br/>${value}</div></div>`
+      `<div style="position:absolute;left:${70 + index * 154}px;top:735px;width:136px"><div style="width:136px;height:18px;background:${color}"></div><div style="margin-top:11px;font-family:var(--font-mono);font-size:var(--text-label);font-weight:650;line-height:1.45;letter-spacing:0.08em;color:${palette.graphite}">${name}<br/>${value}</div></div>`
   )
   .join("");
 
@@ -121,17 +124,17 @@ const metricColumns = [
 ]
   .map(
     ([label, value], index) =>
-      `<div style="position:absolute;left:${736 + index * 204}px;top:735px;width:188px;border-top:2px solid ${index === 3 ? palette.coral : palette.ink};padding-top:11px"><div style="font-family:JetBrains Mono;font-size:10px;font-weight:700;letter-spacing:0.12em;color:${palette.graphite}">${label}</div><div style="margin-top:8px;font-family:JetBrains Mono;font-size:12px;font-weight:700;letter-spacing:0.05em;color:${palette.ink}">${value}</div></div>`
+      `<div style="position:absolute;left:${736 + index * 204}px;top:735px;width:188px;border-top:2px solid ${index === 3 ? palette.coral : palette.ink};padding-top:11px"><div style="font-family:var(--font-mono);font-size:var(--text-label);font-weight:700;letter-spacing:0.12em;color:${palette.graphite}">${label}</div><div style="margin-top:8px;font-family:var(--font-mono);font-size:var(--text-caption);font-weight:700;letter-spacing:0.05em;color:${palette.ink}">${value}</div></div>`
   )
   .join("");
 
 const html = [
-  `<div style="width:100%;height:100%;position:relative;overflow:hidden;background:${palette.paper};color:${palette.ink};font-family:Noto Sans SC">`,
+  `<div style="width:100%;height:100%;position:relative;overflow:hidden;background:${palette.paper};color:${palette.ink};font-family:var(--font-display)">`,
   guideSvg,
-  `<div style="position:absolute;left:70px;top:49px;font-family:JetBrains Mono;font-size:12px;font-weight:700;letter-spacing:0.15em">ILLUSTRATOR / RENDER SPECIMEN 001</div>`,
-  `<div style="position:absolute;right:70px;top:49px;width:430px;font-family:JetBrains Mono;font-size:11px;font-weight:650;letter-spacing:0.12em;text-align:right;color:${palette.graphite}">CODE-DRIVEN · BROWSERLESS · REPRODUCIBLE</div>`,
-  `<div style="position:absolute;left:70px;top:137px;width:680px;font-size:29px;font-weight:620;line-height:1.25;letter-spacing:-0.026em">A designed image, shown as its own construction.</div>`,
-  `<div style="position:absolute;right:70px;top:139px;width:500px;font-size:15px;font-weight:430;line-height:1.55;text-align:right;color:${palette.graphite}">Natural-language direction becomes a precise, local and repeatable<br/>visual system.</div>`,
+  `<div style="position:absolute;left:70px;top:49px;font-family:var(--font-mono);font-size:var(--text-caption);font-weight:700;letter-spacing:0.15em">ILLUSTRATOR / RENDER SPECIMEN 001</div>`,
+  `<div style="position:absolute;right:70px;top:49px;width:430px;font-family:var(--font-mono);font-size:var(--text-kicker);font-weight:650;letter-spacing:0.12em;text-align:right;color:${palette.graphite}">CODE-DRIVEN · BROWSERLESS · REPRODUCIBLE</div>`,
+  '<div style="position:absolute;left:70px;top:137px;width:680px;font-size:var(--text-intro);font-weight:var(--font-weight-intro);line-height:1.25;letter-spacing:-0.026em">A designed image, shown as its own construction.</div>',
+  '<div style="position:absolute;right:70px;top:139px;width:500px;font-size:var(--text-body);font-weight:var(--font-weight-body);line-height:1.55;text-align:right;color:var(--color-graphite)">Natural-language direction becomes a precise, local and repeatable<br/>visual system.</div>',
   `<div style="${titleStyle};color:${palette.ink}">ILLUSTRATOR</div>`,
   alignedFragment({
     color: palette.yellow,
@@ -161,23 +164,23 @@ const html = [
     top: 378,
     width: 255,
   }),
-  `<div style="position:absolute;left:68px;top:212px;font-family:JetBrains Mono;font-size:9px;font-weight:700;letter-spacing:0.1em;color:${palette.graphite}">000</div>`,
-  `<div style="position:absolute;right:68px;top:212px;font-family:JetBrains Mono;font-size:9px;font-weight:700;letter-spacing:0.1em;color:${palette.graphite};text-align:right">1460</div>`,
-  `<div style="position:absolute;left:83px;top:252px;font-family:JetBrains Mono;font-size:9px;font-weight:700;letter-spacing:0.12em;color:${palette.blue}">CAP HEIGHT</div>`,
-  `<div style="position:absolute;left:83px;top:407px;font-family:JetBrains Mono;font-size:9px;font-weight:700;letter-spacing:0.12em;color:${palette.coral}">BASELINE</div>`,
-  `<div style="position:absolute;left:70px;top:485px;width:250px;font-family:JetBrains Mono;font-size:11px;font-weight:700;line-height:1.55;letter-spacing:0.1em;color:${palette.coral}">01 / GLYPH SLICE<br/><span style="color:${palette.graphite}">ALIGNED CROP</span></div>`,
-  `<div style="position:absolute;left:696px;top:510px;width:240px;font-family:JetBrains Mono;font-size:11px;font-weight:700;line-height:1.55;letter-spacing:0.1em;color:${palette.blue};text-align:center">02 / TYPE SYSTEM<br/><span style="color:${palette.graphite}">WEIGHT 860</span></div>`,
-  `<div style="position:absolute;right:70px;top:493px;width:260px;font-family:JetBrains Mono;font-size:11px;font-weight:700;line-height:1.55;letter-spacing:0.1em;color:${palette.cyan};text-align:right">03 / OUTPUT LAYER<br/><span style="color:${palette.graphite}">RENDER / PNG</span></div>`,
-  `<div style="position:absolute;left:70px;top:596px;width:1030px;font-size:42px;font-weight:660;line-height:1.05;letter-spacing:-0.038em">From direction to designed image.</div>`,
-  `<div style="position:absolute;right:70px;top:596px;width:390px;font-family:JetBrains Mono;font-size:11px;font-weight:650;line-height:1.65;letter-spacing:0.08em;text-align:right;color:${palette.graphite}">DIRECTION → STRUCTURE → RENDER<br/>NO IMAGE-GENERATION MODEL REQUIRED</div>`,
+  `<div style="position:absolute;left:68px;top:212px;font-family:var(--font-mono);font-size:var(--text-meta);font-weight:700;letter-spacing:0.1em;color:${palette.graphite}">000</div>`,
+  `<div style="position:absolute;right:68px;top:212px;font-family:var(--font-mono);font-size:var(--text-meta);font-weight:700;letter-spacing:0.1em;color:${palette.graphite};text-align:right">1460</div>`,
+  `<div style="position:absolute;left:83px;top:252px;font-family:var(--font-mono);font-size:var(--text-meta);font-weight:700;letter-spacing:0.12em;color:${palette.blue}">CAP HEIGHT</div>`,
+  `<div style="position:absolute;left:83px;top:407px;font-family:var(--font-mono);font-size:var(--text-meta);font-weight:700;letter-spacing:0.12em;color:${palette.coral}">BASELINE</div>`,
+  `<div style="position:absolute;left:70px;top:485px;width:250px;font-family:var(--font-mono);font-size:var(--text-kicker);font-weight:700;line-height:1.55;letter-spacing:0.1em;color:${palette.coral}">01 / GLYPH SLICE<br/><span style="color:${palette.graphite}">ALIGNED CROP</span></div>`,
+  `<div style="position:absolute;left:696px;top:510px;width:240px;font-family:var(--font-mono);font-size:var(--text-kicker);font-weight:700;line-height:1.55;letter-spacing:0.1em;color:${palette.blue};text-align:center">02 / TYPE SYSTEM<br/><span style="color:${palette.graphite}">WEIGHT 860</span></div>`,
+  `<div style="position:absolute;right:70px;top:493px;width:260px;font-family:var(--font-mono);font-size:var(--text-kicker);font-weight:700;line-height:1.55;letter-spacing:0.1em;color:${palette.cyan};text-align:right">03 / OUTPUT LAYER<br/><span style="color:${palette.graphite}">RENDER / PNG</span></div>`,
+  '<div style="position:absolute;left:70px;top:596px;width:1030px;font-size:var(--text-statement);font-weight:var(--font-weight-statement);line-height:var(--leading-statement);letter-spacing:var(--tracking-statement)">From direction to designed image.</div>',
+  `<div style="position:absolute;right:70px;top:596px;width:390px;font-family:var(--font-mono);font-size:var(--text-kicker);font-weight:650;line-height:1.65;letter-spacing:0.08em;text-align:right;color:${palette.graphite}">DIRECTION → STRUCTURE → RENDER<br/>NO IMAGE-GENERATION MODEL REQUIRED</div>`,
   swatches,
   metricColumns,
-  `<div style="position:absolute;left:70px;bottom:34px;font-family:JetBrains Mono;font-size:10px;font-weight:650;letter-spacing:0.12em;color:${palette.graphite}">VISUALIZEIT / ILLUSTRATOR</div>`,
-  `<div style="position:absolute;right:70px;bottom:34px;font-family:JetBrains Mono;font-size:10px;font-weight:650;letter-spacing:0.12em;text-align:right;color:${palette.graphite}">DESIGNED IMAGES · LOCALLY RENDERED</div>`,
+  `<div style="position:absolute;left:70px;bottom:34px;font-family:var(--font-mono);font-size:var(--text-label);font-weight:650;letter-spacing:0.12em;color:${palette.graphite}">VISUALIZEIT / ILLUSTRATOR</div>`,
+  `<div style="position:absolute;right:70px;bottom:34px;font-family:var(--font-mono);font-size:var(--text-label);font-weight:650;letter-spacing:0.12em;text-align:right;color:${palette.graphite}">DESIGNED IMAGES · LOCALLY RENDERED</div>`,
   "</div>",
 ].join("");
-
 const png = await render(html, {
+  css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],
   format: "png",
   height: canvas.height,

@@ -1,0 +1,30 @@
+/* Calm color study: one dominant field, soft watercolor edges, concise type. */
+@theme {
+  --color-primary: #008c8c;
+  --color-wash: #55aaa5;
+  --color-paper: #f7f4ed;
+  --color-ink: #173e3b;
+  --color-body: #426965;
+  --color-metadata: #39706b;
+  --font-display: "Noto Sans SC";
+  --font-mono: "JetBrains Mono";
+  --text-display: 68px;
+  --text-display--line-height: 1.15;
+  --text-display--font-weight: 640;
+  --text-display--letter-spacing: -0.03em;
+  --font-weight-display: 640;
+  --leading-display: 1.15;
+  --tracking-display: -0.03em;
+  --text-label: 30px;
+  --text-label--line-height: 1.2;
+  --text-label--font-weight: 560;
+  --font-weight-label: 560;
+  --leading-label: 1.2;
+  --text-meta: 15px;
+  --font-weight-meta: 600;
+  --tracking-meta: 0.13em;
+  --text-body: 25px;
+  --font-weight-body: 390;
+  --leading-body: 1.8;
+  --tracking-body: 0.035em;
+}
