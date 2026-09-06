@@ -1,0 +1,29 @@
+/* Syntax selection, canvas, typography, and layout for this code presentation. */
+@theme {
+  --syntax-theme: catppuccin-latte;
+  --color-canvas: #eff1f5;
+  --color-foreground: #4c4f69;
+  --color-metadata: #9ca0b0;
+  --color-title-ink: #6c6f85;
+  --color-title-bar: #e6e9ef;
+  --color-title-bar-border: #dce0e8;
+  --color-close: #ff5f57;
+  --color-minimize: #febc2e;
+  --color-maximize: #28c840;
+  --font-display: JetBrains Mono, Noto Sans SC;
+  --font-mono: JetBrains Mono;
+  --spacing-line-number-character: 27px;
+  --text-code: 44px;
+  --leading-code: 1.5;
+  --spacing-page: 72px;
+  --spacing-title-bar: 88px;
+  --spacing-control: 24px;
+  --spacing-canvas: 1600px;
+  --spacing-line-number-gap: 28px;
+  --text-title: 28px;
+  --font-weight-code: 400;
+  --font-weight-label: 600;
+  --spacing-header-inset: 52px;
+  --spacing-divider: 2px;
+  --spacing-control-gap: 20px;
+}

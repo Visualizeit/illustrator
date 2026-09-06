@@ -3,7 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { Renderer } from "@takumi-rs/core";
 import { render } from "takumi-js";
 
-import { loadTheme } from "../theme.js";
+import { loadTheme } from "../theme.mjs";
 
 const canvas = { height: 900, width: 1600 };
 const outputPath = process.argv[2] ?? new URL("preview.png", import.meta.url);
@@ -18,7 +18,7 @@ const type = {
   task: theme.number("text-task"),
 };
 const palette = {
-  body: theme.color("body"),
+  body: theme.color("muted-ink"),
   canvas: theme.color("canvas"),
   coral: theme.color("coral"),
   green: theme.color("green"),
@@ -32,10 +32,8 @@ const palette = {
   sheetChrome: theme.color("sheet-chrome"),
   sheetHighlight: theme.color("sheet-highlight"),
   sheetLine: theme.color("sheet-line"),
-  sheetLineSoft: theme.color("sheet-line-soft"),
   sheetPaper: theme.color("sheet-paper"),
   sheetStatus: theme.color("sheet-status"),
-  sheetStatusSoft: theme.color("sheet-status-soft"),
   sheetWarning: theme.color("sheet-warning"),
 };
 
@@ -93,7 +91,7 @@ const svgText = ({
   letterSpacing = 0,
   size = 12,
   text,
-  weight = 650,
+  weight = theme.number("font-weight-kicker"),
   x,
   y,
 }) =>
@@ -118,7 +116,7 @@ const headerCells = columnHeaders
         letterSpacing: 0.09,
         size: type.label,
         text: header,
-        weight: 700,
+        weight: theme.number("font-weight-meta"),
         x: x + 14,
         y: gridY + sheet.columnHeaderHeight / 2,
       }),
@@ -250,7 +248,7 @@ const automationCells = automationRows
           letterSpacing: 0.04,
           size: type.meta,
           text: row.state,
-          weight: 800,
+          weight: theme.number("font-weight-extrabold"),
           x: statusX + 14 + statusPillWidth / 2,
           y: centerY,
         });
@@ -260,7 +258,7 @@ const automationCells = automationRows
           letterSpacing: 0.04,
           size: type.meta,
           text: "QUEUED",
-          weight: 750,
+          weight: theme.number("font-weight-heavy"),
           x: statusX + 39,
           y: centerY,
         })
@@ -272,7 +270,7 @@ const automationCells = automationRows
         color: palette.body,
         size: type.meta,
         text: row.source,
-        weight: 700,
+        weight: theme.number("font-weight-meta"),
         x: triggerX + 32,
         y: centerY,
       }),
@@ -280,7 +278,7 @@ const automationCells = automationRows
         family: "Noto Sans SC",
         size: type.task,
         text: row.task,
-        weight: 620,
+        weight: theme.number("font-weight-note"),
         x: taskX + 16,
         y: centerY - 7,
       }),
@@ -299,7 +297,7 @@ const automationCells = automationRows
         letterSpacing: 0.04,
         size: type.meta,
         text: row.owner,
-        weight: 750,
+        weight: theme.number("font-weight-heavy"),
         x: ownerX + 49,
         y: centerY,
       }),
@@ -312,7 +310,7 @@ const automationCells = automationRows
         color: isReview ? palette.coral : palette.body,
         size: type.meta,
         text: row.progressLabel,
-        weight: 700,
+        weight: theme.number("font-weight-meta"),
         x: progressX + 16,
         y: centerY + 11,
       }),
@@ -351,7 +349,7 @@ const spreadsheetSvg = [
     letterSpacing: 0.1,
     size: type.label,
     text: "AUTOMATION RUN / 024",
-    weight: 750,
+    weight: theme.number("font-weight-heavy"),
     x: sheet.x + 57,
     y: sheet.y - 25,
   }),
@@ -361,7 +359,7 @@ const spreadsheetSvg = [
     letterSpacing: 0.1,
     size: type.meta,
     text: "LIVE / 09:41:08",
-    weight: 700,
+    weight: theme.number("font-weight-meta"),
     x: sheet.x + sheetWidth - 286,
     y: sheet.y - 25,
   }),
@@ -372,7 +370,7 @@ const spreadsheetSvg = [
     color: palette.greenDark,
     size: type.label,
     text: "D04:E04",
-    weight: 750,
+    weight: theme.number("font-weight-heavy"),
     x: sheet.x + 52,
     y: sheet.y + 25,
   }),
@@ -381,7 +379,7 @@ const spreadsheetSvg = [
     family: "Noto Sans SC",
     size: type.body,
     text: "ƒx",
-    weight: 750,
+    weight: theme.number("font-weight-heavy"),
     x: sheet.x + 105,
     y: sheet.y + 25,
   }),
@@ -391,7 +389,7 @@ const spreadsheetSvg = [
     letterSpacing: 0.02,
     size: type.label,
     text: "=AUTOFLOW(Feedback_digest, RUN_024)",
-    weight: 650,
+    weight: theme.number("font-weight-kicker"),
     x: sheet.x + 158,
     y: sheet.y + 25,
   }),
@@ -410,7 +408,7 @@ const spreadsheetSvg = [
     letterSpacing: 0.05,
     size: type.meta,
     text: "ACTIVE FLOWS",
-    weight: 750,
+    weight: theme.number("font-weight-heavy"),
     x: sheet.x + 88,
     y: tabBarY + 23,
   }),
@@ -444,7 +442,7 @@ const illustrationSvg = [
 
 /** @type {(options: { color?: string; letterSpacing?: number; size?: number; text: string; width?: number; x: number; y: number }) => string} */
 const label = ({
-  color = palette.body,
+  color = "muted-ink",
   letterSpacing = 0.11,
   size = 11,
   text,
@@ -452,31 +450,31 @@ const label = ({
   x,
   y,
 }) =>
-  `<div style="position:absolute;left:${x}px;top:${y}px;width:${width}px;color:${color};font-family:var(--font-mono);font-size:${size}px;font-weight:700;line-height:1.2;letter-spacing:${letterSpacing}em;white-space:nowrap">${text}</div>`;
+  `<div tw="absolute font-mono whitespace-nowrap text-${color}" style="left:${x}px;top:${y}px;width:${width}px;font-size:${size}px;font-weight:var(--font-weight-meta);line-height:var(--leading-headline);letter-spacing:${letterSpacing}em">${text}</div>`;
 
 /** @type {(options: { align?: "center" | "left" | "right"; color?: string; family?: string; letterSpacing?: number; size?: number; text: string; weight?: number; width?: number; x: number; y: number }) => string} */
 const sheetHtmlText = ({
   align = "left",
-  color = palette.ink,
-  family = "JetBrains Mono",
+  color = "ink",
+  family = "mono",
   letterSpacing = 0,
   size = 10,
   text,
-  weight = 650,
+  weight = theme.number("font-weight-kicker"),
   width = 160,
   x,
   y,
 }) =>
-  `<div style="position:absolute;left:${x}px;top:${y}px;width:${width}px;color:${color};font-family:${family};font-size:${size}px;font-weight:${weight};line-height:1;letter-spacing:${letterSpacing}em;text-align:${align};white-space:nowrap">${text}</div>`;
+  `<div tw="absolute whitespace-nowrap text-${color} font-${family} text-${align}" style="left:${x}px;top:${y}px;width:${width}px;font-size:${size}px;font-weight:${weight};line-height:var(--leading-solid);letter-spacing:${letterSpacing}em">${text}</div>`;
 
 const sheetHeaderText = columnHeaders
   .map((header, columnIndex) =>
     sheetHtmlText({
-      color: palette.body,
+      color: "muted-ink",
       letterSpacing: 0.09,
       size: type.label,
       text: header,
-      weight: 700,
+      weight: theme.number("font-weight-meta"),
       width: (columnWidths[columnIndex] ?? 0) - 28,
       x: getColumnX(columnIndex) + 14,
       y: gridY + 16,
@@ -490,19 +488,19 @@ const sheetRowText = automationRows
     const isRunning = row.state === "RUNNING";
     const isReview = row.state === "REVIEW";
     const isSelected = rowIndex === selectedRowIndex;
-    let stateColor = palette.green;
-    let resultColor = palette.body;
+    let stateColor = "green";
+    let resultColor = "muted-ink";
     if (isReview) {
-      stateColor = palette.coral;
-      resultColor = palette.coral;
+      stateColor = "coral";
+      resultColor = "coral";
     } else if (isRunning) {
-      resultColor = palette.greenDark;
+      resultColor = "green-dark";
     }
     const statusPillWidth = isRunning ? 104 : 86;
     return [
       sheetHtmlText({
         align: "center",
-        color: isSelected ? palette.greenDark : palette.body,
+        color: isSelected ? "green-dark" : "muted-ink",
         size: type.label,
         text: String(rowIndex + 1).padStart(2, "0"),
         weight: isSelected ? 800 : 650,
@@ -511,25 +509,25 @@ const sheetRowText = automationRows
         y: centerY - 5,
       }),
       sheetHtmlText({
-        color: palette.body,
+        color: "muted-ink",
         size: type.meta,
         text: row.source,
-        weight: 700,
+        weight: theme.number("font-weight-meta"),
         width: 92,
         x: getColumnX(0) + 32,
         y: centerY - 5,
       }),
       sheetHtmlText({
-        family: "Noto Sans SC",
+        family: "display",
         size: type.task,
         text: row.task,
-        weight: 620,
+        weight: theme.number("font-weight-note"),
         width: 196,
         x: getColumnX(1) + 16,
         y: centerY - 15,
       }),
       sheetHtmlText({
-        color: palette.body,
+        color: "muted-ink",
         letterSpacing: 0.08,
         size: type.flow,
         text: `FLOW / ${String(rowIndex + 1).padStart(2, "0")}`,
@@ -539,31 +537,31 @@ const sheetRowText = automationRows
       }),
       sheetHtmlText({
         align: "center",
-        color: palette.greenDark,
+        color: "green-dark",
         letterSpacing: 0.04,
         size: type.meta,
         text: row.owner,
-        weight: 750,
+        weight: theme.number("font-weight-heavy"),
         width: 62,
         x: getColumnX(2) + 18,
         y: centerY - 5,
       }),
       sheetHtmlText({
         align: "center",
-        color: row.state === "QUEUED" ? palette.body : stateColor,
+        color: row.state === "QUEUED" ? "muted-ink" : stateColor,
         letterSpacing: 0.04,
         size: type.meta,
         text: row.state,
-        weight: 800,
+        weight: theme.number("font-weight-extrabold"),
         width: statusPillWidth,
         x: getColumnX(3) + 14,
         y: centerY - 5,
       }),
       sheetHtmlText({
-        color: isReview ? palette.coral : palette.body,
+        color: isReview ? "coral" : "muted-ink",
         size: type.meta,
         text: row.progressLabel,
-        weight: 700,
+        weight: theme.number("font-weight-meta"),
         width: 90,
         x: getColumnX(4) + 16,
         y: centerY + 6,
@@ -584,37 +582,37 @@ const sheetRowText = automationRows
 
 const sheetChromeText = [
   sheetHtmlText({
-    color: palette.paper,
+    color: "paper",
     letterSpacing: 0.1,
     size: type.label,
     text: "AUTOMATION RUN / 024",
-    weight: 750,
+    weight: theme.number("font-weight-heavy"),
     width: 190,
     x: sheet.x + 57,
     y: sheet.y - 30,
   }),
   sheetHtmlText({
-    color: palette.sheetLine,
+    color: "sheet-line",
     letterSpacing: 0.1,
     size: type.meta,
     text: "LIVE / 09:41:08",
-    weight: 700,
+    weight: theme.number("font-weight-meta"),
     width: 140,
     x: sheet.x + sheetWidth - 286,
     y: sheet.y - 30,
   }),
   sheetHtmlText({
     align: "center",
-    color: palette.greenDark,
+    color: "green-dark",
     size: type.label,
     text: "D04:E04",
-    weight: 750,
+    weight: theme.number("font-weight-heavy"),
     width: 76,
     x: sheet.x + 14,
     y: sheet.y + 20,
   }),
   sheetHtmlText({
-    color: palette.body,
+    color: "muted-ink",
     letterSpacing: 0.02,
     size: type.label,
     text: "=AUTOFLOW(Feedback_digest, RUN_024)",
@@ -623,18 +621,18 @@ const sheetChromeText = [
     y: sheet.y + 20,
   }),
   sheetHtmlText({
-    color: palette.greenDark,
+    color: "green-dark",
     letterSpacing: 0.05,
     size: type.meta,
     text: "ACTIVE FLOWS",
-    weight: 750,
+    weight: theme.number("font-weight-heavy"),
     width: 112,
     x: sheet.x + 88,
     y: tabBarY + 18,
   }),
 ].join("");
 
-const sheetTextLayer = `<div style="position:absolute;left:0;top:0;width:${canvas.width}px;height:${canvas.height}px;transform:rotate(-3deg);transform-origin:1240px 445px">${sheetChromeText}${sheetHeaderText}${sheetRowText}</div>`;
+const sheetTextLayer = `<div tw="absolute" style="left:0;top:0;width:${canvas.width}px;height:${canvas.height}px;transform:rotate(-3deg);transform-origin:1240px 445px">${sheetChromeText}${sheetHeaderText}${sheetRowText}</div>`;
 
 const metrics = [
   ["42 / 48", "TASKS COMPLETE"],
@@ -643,27 +641,27 @@ const metrics = [
 ]
   .map(
     ([value, metricLabel], index) =>
-      `<div style="position:absolute;left:${80 + index * 174}px;top:438px;width:148px;border-top:2px solid ${index === 0 ? palette.green : palette.grid};padding-top:16px"><div style="font-family:var(--font-mono);font-size:var(--text-stat);font-weight:760;line-height:1;color:${index === 0 ? palette.greenDark : palette.ink};letter-spacing:-0.035em">${value}</div><div style="margin-top:11px;font-family:var(--font-mono);font-size:var(--text-meta);font-weight:700;line-height:1.2;color:${palette.body};letter-spacing:0.11em">${metricLabel}</div></div>`
+      `<div tw="absolute border-t-${index === 0 ? "green" : "grid"} border-t-2" style="left:${80 + index * 174}px;top:438px;width:148px;padding-top:16px"><div tw="font-mono text-stat text-${index === 0 ? "green-dark" : "ink"}" style="font-weight:var(--font-weight-headline);line-height:var(--leading-solid);letter-spacing:var(--tracking-stat)">${value}</div><div tw="font-mono text-meta text-muted-ink" style="margin-top:11px;font-weight:var(--font-weight-meta);line-height:var(--leading-headline);letter-spacing:var(--tracking-optical-label)">${metricLabel}</div></div>`
   )
   .join("");
 
 const textLayer = [
   label({
-    color: palette.greenDark,
+    color: "green-dark",
     text: "GRID OPERATOR / RUN 024",
     width: 390,
     x: 80,
     y: 70,
   }),
-  '<div style="position:absolute;left:76px;top:130px;width:650px;color:var(--color-ink);font-family:var(--font-display);font-size:var(--text-title);font-weight:var(--font-weight-display);line-height:var(--leading-display);letter-spacing:var(--tracking-display);white-space:nowrap">让工作自己流转</div>',
-  '<div style="position:absolute;left:80px;top:260px;width:600px;color:var(--color-green-dark);font-family:var(--font-display);font-size:var(--text-subtitle);font-weight:var(--font-weight-headline);line-height:var(--leading-headline);letter-spacing:-0.025em">一次编排，持续执行</div>',
-  '<div style="position:absolute;left:80px;top:330px;width:530px;color:var(--color-body);font-family:var(--font-display);font-size:var(--text-body);font-weight:var(--font-weight-body);line-height:1.6">邮件触发任务，表格记录进度，文档自动交付。<br/>每一步都在同一条流程里继续发生。</div>',
+  '<div tw="absolute text-ink font-display text-title leading-display tracking-display whitespace-nowrap" style="left:76px;top:130px;width:650px;font-weight:var(--font-weight-display)">让工作自己流转</div>',
+  '<div tw="absolute left-gutter text-green-dark font-display text-subtitle leading-headline" style="top:260px;width:600px;font-weight:var(--font-weight-headline);letter-spacing:var(--tracking-heading)">一次编排，持续执行</div>',
+  '<div tw="absolute left-gutter text-body font-display text-muted-ink" style="top:330px;width:530px;font-weight:var(--font-weight-body);line-height:var(--leading-relaxed)">邮件触发任务，表格记录进度，文档自动交付。<br/>每一步都在同一条流程里继续发生。</div>',
   metrics,
-  `<div style="position:absolute;left:80px;top:592px;width:496px;border-left:3px solid ${palette.lime};padding-left:18px">`,
-  '<div style="font-family:var(--font-mono);font-size:var(--text-label);font-weight:750;line-height:1.2;letter-spacing:0.12em;color:var(--color-green-dark)">CURRENT / FEEDBACK DIGEST</div>',
-  '<div style="margin-top:12px;font-family:var(--font-display);font-size:var(--text-note);font-weight:620;line-height:1.25;color:var(--color-ink)">正在处理客户反馈</div>',
-  '<div style="margin-top:8px;font-family:var(--font-mono);font-size:var(--text-kicker);font-weight:700;line-height:1.2;letter-spacing:0.06em;color:var(--color-body)">18 OF 24 RECORDS · 6 LEFT</div>',
-  `<div style="margin-top:18px;width:360px;height:6px;border-radius:3px;background:${palette.gridSoft}"><div style="width:270px;height:6px;border-radius:3px;background:${palette.green}"></div></div>`,
+  `<div tw="absolute left-gutter border-l-lime border-l-3" style="top:592px;width:496px;padding-left:18px">`,
+  '<div tw="font-mono text-label text-green-dark" style="font-weight:var(--font-weight-heavy);line-height:var(--leading-headline);letter-spacing:var(--tracking-meta)">CURRENT / FEEDBACK DIGEST</div>',
+  '<div tw="font-display text-note text-ink" style="margin-top:12px;font-weight:var(--font-weight-note);line-height:var(--leading-note)">正在处理客户反馈</div>',
+  '<div tw="font-mono text-kicker text-muted-ink" style="margin-top:8px;font-weight:var(--font-weight-meta);line-height:var(--leading-headline);letter-spacing:var(--tracking-note)">18 OF 24 RECORDS · 6 LEFT</div>',
+  `<div style="margin-top:18px;width:360px;height:6px;border-radius:3px" tw="bg-grid-soft"><div style="width:270px;height:6px;border-radius:3px" tw="bg-green"></div></div>`,
   "</div>",
   label({
     text: "RUN 024 / 6 FLOWS / 48 TASKS",
@@ -672,7 +670,7 @@ const textLayer = [
     y: 850,
   }),
   label({
-    color: palette.greenDark,
+    color: "green-dark",
     text: "SELECTED / FEEDBACK DIGEST",
     width: 320,
     x: 1248,
@@ -680,7 +678,7 @@ const textLayer = [
   }),
 ].join("");
 
-const html = `<div style="position:relative;width:100%;height:100%;overflow:hidden;background:var(--color-canvas);color:var(--color-ink);font-family:var(--font-display)">${illustrationSvg}${sheetTextLayer}${textLayer}</div>`;
+const html = `<div tw="relative w-full h-full overflow-hidden bg-canvas text-ink font-display">${illustrationSvg}${sheetTextLayer}${textLayer}</div>`;
 
 const png = await render(html, {
   css: [theme.css],

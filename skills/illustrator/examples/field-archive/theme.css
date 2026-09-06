@@ -6,11 +6,11 @@
   --color-ink: #20241f;
   --color-graphite: #8a897f;
   --color-rule: #c9c1b0;
-  --color-label: #ddd2b9;
+  --color-annotation: #ddd2b9;
   --color-signal: #c94b3c;
   --color-white: #fffdf7;
-  --font-display: "Noto Sans SC";
-  --font-mono: "JetBrains Mono";
+  --font-display: Noto Sans SC;
+  --font-mono: JetBrains Mono;
   --text-display: 72px;
   --text-display--line-height: 1.02;
   --text-display--font-weight: 650;
@@ -44,4 +44,8 @@
   --tracking-label: 0.11em;
   --tracking-kicker: 0.14em;
   --tracking-footer: 0.04em;
+  --spacing-gutter: 70px;
+  --leading-normal: 1.5;
+  --tracking-optical-meta: 0.13em;
+  --tracking-wide: 0.12em;
 }

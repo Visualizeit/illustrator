@@ -1,10 +1,11 @@
 /* Racing editorial: powder blue, clay orange, measured type, compact performance data. */
 @theme {
   --color-primary: #8db4bc;
+  --color-photo-wash: #8db4bc14;
   --color-secondary: #c8734d;
   --color-paper: #e8e1d6;
   --color-ink: #304f58;
-  --color-body: #66645f;
+  --color-muted-ink: #66645f;
   --color-rule: #c6c1b8;
   --font-display: "Noto Sans SC";
   --font-mono: "JetBrains Mono";
@@ -28,4 +29,17 @@
   --font-weight-meta: 700;
   --font-weight-label: 700;
   --tracking-meta: 0.13em;
+  --tracking-label: 0.14em;
+  --spacing-page-x: 58px;
+  --spacing-page-top: 48px;
+  --spacing-page-bottom: 72px;
+  --spacing-hero: 666px;
+  --spacing-section: 40px;
+  --spacing-detail: 20px;
+  --spacing-metrics-gap: 32px;
+  --spacing-rule: 8px;
+  --spacing-hairline: 2px;
+  --spacing-value-gap: 14px;
+  --spacing-value: 36px;
+  --spacing-label-gap: 6px;
 }

@@ -10,7 +10,7 @@
   "include": [
     "*.config.ts",
     "scripts/**/*.mjs",
-    "skills/**/*.js",
+    "skills/**/*.mjs",
     "tests/**/*.mjs"
   ]
 }

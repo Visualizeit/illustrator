@@ -3,7 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { Renderer } from "@takumi-rs/core";
 import { render } from "takumi-js";
 
-import { loadTheme } from "../theme.js";
+import { loadTheme } from "../theme.mjs";
 
 const canvas = { height: 1000, width: 1600 };
 const outputPath = process.argv[2] ?? new URL("preview.png", import.meta.url);
@@ -23,14 +23,11 @@ const type = {
   title: theme.number("text-title"),
 };
 const palette = {
-  body: theme.color("body"),
   canvas: theme.color("canvas"),
   cobalt: theme.color("cobalt"),
   coral: theme.color("coral"),
   cyan: theme.color("cyan"),
-  ice: theme.color("ice"),
   ink: theme.color("ink"),
-  muted: theme.color("muted"),
   rule: theme.color("rule"),
   violet: theme.color("violet"),
 };
@@ -68,7 +65,12 @@ const upperValues = [72, 69, 76, 74, 82, 79, 87, 84, 92, 89, 95, 91];
 const signalValues = [61, 63, 57, 68, 62, 73, 69, 80, 75, 85, 81, 88];
 const lowerValues = [51, 56, 42, 58, 49, 65, 57, 71, 64, 78, 70, 82];
 const zeroValues = Array.from({ length: months.length }, () => 0);
-const plot = { height: 500, width: 1120, x: 80, y: 320 };
+const plot = {
+  height: 500,
+  width: 1120,
+  x: theme.number("spacing-gutter"),
+  y: 320,
+};
 const detailPlot = { height: 220, width: 250, x: 1270, y: 590 };
 const detailUpperValues = upperValues.slice(-8);
 const detailSignalValues = signalValues.slice(-8);
@@ -85,17 +87,17 @@ const railX = 1240;
 /** @type {(options: { align?: string; color?: string; family?: string; letterSpacing?: number; size?: number; text: string; weight?: number; width?: number; x: number; y: number }) => string} */
 const htmlText = ({
   align = "left",
-  color = palette.ink,
-  family = theme.font("display"),
+  color = "ink",
+  family = "display",
   letterSpacing = 0,
   size = 14,
   text,
-  weight = 500,
+  weight = theme.number("font-weight-medium"),
   width = 320,
   x,
   y,
 }) =>
-  `<div style="position:absolute;left:${x}px;top:${y}px;width:${width}px;color:${color};font-family:${family};font-size:${size}px;font-weight:${weight};line-height:1.15;letter-spacing:${letterSpacing}em;text-align:${align};white-space:nowrap">${text}</div>`;
+  `<div tw="absolute whitespace-nowrap text-${color} font-${family} text-${align}" style="left:${x}px;top:${y}px;width:${width}px;font-size:${size}px;font-weight:${weight};line-height:var(--leading-tight);letter-spacing:${letterSpacing}em">${text}</div>`;
 
 /** @type {(values: number[], targetPlot?: Plot) => Point[]} */
 const seriesPoints = (values, targetPlot = plot) =>
@@ -177,8 +179,8 @@ const xAxisLabels = months
       plot.x + (index / Math.max(months.length - 1, 1)) * plot.width - 24;
     return htmlText({
       align: "center",
-      color: palette.muted,
-      family: theme.font("mono"),
+      color: "muted",
+      family: "mono",
       size: type.meta,
       text: month,
       width: 48,
@@ -192,8 +194,8 @@ const yAxisLabels = [0, 25, 50, 75, 100]
   .map((value) =>
     htmlText({
       align: "right",
-      color: palette.muted,
-      family: theme.font("mono"),
+      color: "muted",
+      family: "mono",
       size: type.meta,
       text: String(value),
       width: 34,
@@ -279,8 +281,8 @@ const svg = [
 
 const textLayer = [
   htmlText({
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     letterSpacing: 0.13,
     size: type.label,
     text: "REFRACTION ATLAS / VOL. 01",
@@ -292,13 +294,13 @@ const textLayer = [
     letterSpacing: -0.05,
     size: type.title,
     text: "MOMENTUM, RANGE & CHANGE",
-    weight: 700,
+    weight: theme.number("font-weight-display"),
     width: 980,
     x: 44,
     y: 78,
   }),
   htmlText({
-    color: palette.body,
+    color: "muted-ink",
     size: type.section,
     text: "THREE CRISP SIGNALS / OVERLAPPING FIELDS / ONE SHARED SCALE",
     width: 620,
@@ -307,8 +309,8 @@ const textLayer = [
   }),
   htmlText({
     align: "right",
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     letterSpacing: 0.08,
     size: type.label,
     text: "REPORT / 2026",
@@ -318,18 +320,18 @@ const textLayer = [
   }),
   htmlText({
     align: "right",
-    family: theme.font("mono"),
+    family: "mono",
     letterSpacing: -0.04,
     size: type.metric,
     text: "12 / MONTHS",
-    weight: 700,
+    weight: theme.number("font-weight-display"),
     width: 260,
     x: 1290,
     y: 96,
   }),
   htmlText({
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     letterSpacing: 0.1,
     size: type.label,
     text: "01 / MOMENTUM FIELD",
@@ -340,15 +342,15 @@ const textLayer = [
   htmlText({
     size: type.statSmall,
     text: "THREE-SIGNAL FIELD",
-    weight: 700,
+    weight: theme.number("font-weight-display"),
     width: 440,
     x: 80,
     y: 254,
   }),
   htmlText({
     align: "right",
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     size: type.meta,
     text: "COBALT / UPPER · VIOLET / SIGNAL · CYAN / LOWER",
     width: 360,
@@ -359,18 +361,18 @@ const textLayer = [
   yAxisLabels,
   htmlText({
     align: "right",
-    color: palette.coral,
-    family: theme.font("mono"),
+    color: "coral",
+    family: "mono",
     size: type.caption,
     text: "TARGET / 80",
     width: 100,
     x: plot.x + plot.width - 100,
     y: targetY - 17,
   }),
-  `<div style="position:absolute;left:${lastUpperPoint.x - 60}px;top:${lastUpperPoint.y - 58}px;width:80px;height:34px;border:1px solid ${palette.rule};border-radius:999px;background:rgba(255,255,255,0.9);box-shadow:7px 9px 0 ${palette.cobalt}12;display:flex;align-items:center;justify-content:center;color:${palette.ink};font-family:var(--font-mono);font-size:var(--text-kicker);font-weight:700">91.0</div>`,
+  `<div tw="absolute flex items-center justify-center font-mono text-kicker flex-row border-rule border bg-label-surface text-ink" style="left:${lastUpperPoint.x - 60}px;top:${lastUpperPoint.y - 58}px;width:80px;height:34px;border-radius:999px;box-shadow:var(--shadow-marker);font-weight:var(--font-weight-display)">91.0</div>`,
   htmlText({
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     letterSpacing: 0.1,
     size: type.label,
     text: "02 / FIELD SUMMARY",
@@ -379,18 +381,18 @@ const textLayer = [
     y: 226,
   }),
   htmlText({
-    family: theme.font("mono"),
+    family: "mono",
     letterSpacing: -0.055,
     size: type.statLarge,
     text: "+24.8%",
-    weight: 700,
+    weight: theme.number("font-weight-display"),
     width: 280,
     x: 1276,
     y: 268,
   }),
   htmlText({
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     size: type.label,
     text: "MOMENTUM",
     width: 160,
@@ -398,18 +400,18 @@ const textLayer = [
     y: 322,
   }),
   htmlText({
-    family: theme.font("mono"),
+    family: "mono",
     letterSpacing: -0.05,
     size: type.statMedium,
     text: "14.2",
-    weight: 700,
+    weight: theme.number("font-weight-display"),
     width: 200,
     x: 1276,
     y: 370,
   }),
   htmlText({
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     size: type.label,
     text: "RANGE WIDTH",
     width: 180,
@@ -417,8 +419,8 @@ const textLayer = [
     y: 415,
   }),
   htmlText({
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     letterSpacing: 0.1,
     size: type.label,
     text: "03 / DETAIL WINDOW",
@@ -427,19 +429,19 @@ const textLayer = [
     y: 474,
   }),
   htmlText({
-    color: palette.ink,
-    family: theme.font("mono"),
+    color: "ink",
+    family: "mono",
     letterSpacing: -0.035,
     size: type.statSmall,
     text: "LAST 8 / SERIES",
-    weight: 700,
+    weight: theme.number("font-weight-display"),
     width: 250,
     x: 1270,
     y: 506,
   }),
   htmlText({
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     size: type.caption,
     text: "T−7",
     width: 70,
@@ -448,8 +450,8 @@ const textLayer = [
   }),
   htmlText({
     align: "right",
-    color: palette.cobalt,
-    family: theme.font("mono"),
+    color: "cobalt",
+    family: "mono",
     size: type.caption,
     text: "NOW / 91",
     width: 90,
@@ -457,8 +459,8 @@ const textLayer = [
     y: detailPlot.y + detailPlot.height + 18,
   }),
   htmlText({
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     size: type.caption,
     text: "THREE SERIES / SAME SCALE",
     width: 250,
@@ -466,8 +468,8 @@ const textLayer = [
     y: detailPlot.y + detailPlot.height + 48,
   }),
   htmlText({
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     size: type.meta,
     text: "SOURCE / SAMPLE DATA · NORMALIZED 0—100",
     width: 430,
@@ -476,8 +478,8 @@ const textLayer = [
   }),
   htmlText({
     align: "right",
-    color: palette.muted,
-    family: theme.font("mono"),
+    color: "muted",
+    family: "mono",
     size: type.meta,
     text: "SOLID STROKES / 2.6PX · FIELD OPACITY / 00—18%",
     width: 430,
@@ -486,7 +488,7 @@ const textLayer = [
   }),
 ].join("");
 
-const html = `<div style="position:relative;width:100%;height:100%;overflow:hidden;background:var(--color-canvas);color:var(--color-ink);font-family:var(--font-display)">${svg}${textLayer}</div>`;
+const html = `<div tw="relative w-full h-full overflow-hidden bg-canvas text-ink font-display">${svg}${textLayer}</div>`;
 const png = await render(html, {
   css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],

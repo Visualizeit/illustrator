@@ -1,0 +1,16 @@
+/* Syntax selection, canvas, typography, and layout for this code presentation. */
+@theme {
+  --syntax-theme: catppuccin-mocha;
+  --color-canvas: #1e1e2e;
+  --color-foreground: #cdd6f4;
+  --color-metadata: #7f849c;
+  --font-display: JetBrains Mono, Noto Sans SC;
+  --font-mono: JetBrains Mono;
+  --spacing-line-number-character: 27px;
+  --text-code: 44px;
+  --leading-code: 1.5;
+  --spacing-page: 72px;
+  --spacing-canvas: 1600px;
+  --spacing-line-number-gap: 28px;
+  --font-weight-code: 400;
+}

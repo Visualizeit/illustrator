@@ -4,10 +4,10 @@
   --color-wash: #55aaa5;
   --color-paper: #f7f4ed;
   --color-ink: #173e3b;
-  --color-body: #426965;
+  --color-muted-ink: #426965;
   --color-metadata: #39706b;
-  --font-display: "Noto Sans SC";
-  --font-mono: "JetBrains Mono";
+  --font-display: Noto Sans SC;
+  --font-mono: JetBrains Mono;
   --text-display: 68px;
   --text-display--line-height: 1.15;
   --text-display--font-weight: 640;
@@ -27,4 +27,6 @@
   --font-weight-body: 390;
   --leading-body: 1.8;
   --tracking-body: 0.035em;
+  --spacing-gutter: 78px;
+  --tracking-subtle: 0.01em;
 }

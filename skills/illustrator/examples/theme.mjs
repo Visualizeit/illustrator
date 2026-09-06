@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 const tokenPattern = /--(?<name>[\w-]+)\s*:\s*(?<value>[^;]+);/gu;
 
 /**
- * Load a bundled Tailwind theme and expose its values for SVG attributes.
+ * Load Tailwind theme CSS and expose tokens for SVG attributes and dimensions.
  * CSS custom properties work in HTML styles, but Takumi does not resolve
  * `var()` in SVG presentation attributes such as `fill` and `stroke`.
  *

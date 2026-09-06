@@ -12,7 +12,8 @@ const skillRoot = fileURLToPath(
 const examplesRoot = path.join(skillRoot, "examples");
 const examplesReferencePath = path.join(skillRoot, "references", "examples.md");
 const noticesPath = path.join(skillRoot, "THIRD_PARTY_NOTICES.md");
-const routedExamplePattern = /^\|[^|\r\n]+\| `(?<exampleName>[^`]+)` \|/gmu;
+const routedExamplePattern =
+  /^\|[^|\r\n]+\|[\t ]+`(?<exampleName>[^`]+)`[\t ]+\|/gmu;
 
 describe("Illustrator examples", () => {
   it("keeps every bundled example reproducible", async () => {
@@ -46,7 +47,7 @@ describe("Illustrator examples", () => {
         exampleDirectories.map(async (exampleDirectory) => {
           const examplePath = path.join(examplesRoot, exampleDirectory.name);
           const files = await readdir(examplePath);
-          const renderPath = path.join(examplePath, "render.js");
+          const renderPath = path.join(examplePath, "render.mjs");
           const previewPath = path.join(examplePath, "preview.png");
           const outputPath = path.join(
             outputDirectory,
@@ -54,7 +55,7 @@ describe("Illustrator examples", () => {
           );
 
           expect(files, `${exampleDirectory.name} artifacts`).toContain(
-            "render.js"
+            "render.mjs"
           );
           expect(files, `${exampleDirectory.name} artifacts`).toContain(
             "preview.png"

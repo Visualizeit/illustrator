@@ -1,30 +1,28 @@
 # Examples
 
-Bundled examples live under `SKILL_ROOT/examples/<slug>/`. Each may contain a reproducible `render.js`, rendered `preview.png`, source material, and a `theme.css` file with compact Tailwind `@theme` tokens.
+Bundled examples are under `SKILL_ROOT/examples/<slug>/`.
 
-## Artifact roles
+Every example renders HTML and defines its colors, typography, and shared spacing in `theme.css`. Edit these tokens when adapting a style. HTML consumes them through `tw`; SVG attributes and calculated dimensions resolve values with `loadTheme`.
 
-Use `render.js` as implementation evidence whenever a concrete rendering question arises. Read only the relevant portion and reuse the technique, not the example's composition.
+| Need                                              | Example               |
+| ------------------------------------------------- | --------------------- |
+| Basic Shiki token mapping                         | `shiki-code-image`    |
+| Code window composition                           | `shiki-code-window`   |
+| Side-by-side code diff                            | `shiki-code-diff`     |
+| Transparent supplied subject and annotations      | `field-archive`       |
+| Cropped supplied photograph                       | `flash-diary`         |
+| Theme-driven Tailwind and flex composition        | `paddock-blue`        |
+| Dominant color field and soft edge treatment      | `chromatic-poster`    |
+| Repeated vector forms                             | `flower-market`       |
+| Structured interface-like SVG illustration        | `grid-operator`       |
+| Data-driven SVG paths and annotations             | `refraction-atlas`    |
+| Editorial cover with stacked system layers        | `system-layers-cover` |
+| Typographic construction and aligned glyph slices | `render-specimen`     |
 
-Treat `theme.css` and its accompanying preview as visual-identity evidence. Form the task-specific visual premise first, then default to one relevant identity example. Inspect more only when the user requests comparison or each example answers a distinct visual question. A named example remains non-binding unless the user explicitly asks to follow its theme or reproduce its identity.
+Each `render.mjs` accepts an output path as its first argument; omitting it overwrites the bundled `preview.png`. Asset paths resolve from the module location, so update them when copying code elsewhere.
 
-For an example without `theme.css`, treat `preview.png` as implementation output that may be inspected while validating the relevant technique. View any preview only when image inspection is available and its rendered appearance would answer a concrete question. Otherwise rely on the routing table and available text artifacts.
+## Adapting Code Examples
 
-## Routing
+The code examples use fixed canvases and unwrapped lines. If wrapping new input, use `whitespace-pre-wrap` with an appropriate `overflow-wrap`, preserve continuation indentation, and show each source line number once. Size the canvas for visual lines rather than source lines.
 
-| Need | Example | Read first |
-| --- | --- | --- |
-| Basic Shiki token mapping | `shiki-code-image` | `render.js` |
-| Code window composition | `shiki-code-window` | `render.js` |
-| Side-by-side code diff | `shiki-code-diff` | `render.js` |
-| Transparent supplied subject and annotations | `field-archive` | `render.js` |
-| Cropped supplied photograph | `flash-diary` | `render.js` |
-| Photograph combined with compact data | `paddock-blue` | `render.js` |
-| Dominant color field and soft edge treatment | `chromatic-poster` | `render.js` |
-| Repeated vector forms | `flower-market` | `render.js` |
-| Structured interface-like SVG illustration | `grid-operator` | `render.js` |
-| Data-driven SVG paths and annotations | `refraction-atlas` | `render.js` |
-| Editorial cover with stacked system layers | `system-layers-cover` | `render.js` |
-| Typographic construction and aligned glyph slices | `render-specimen` | `render.js` |
-
-Read a routed example's `theme.css` when its visual tokens are the concrete subject. Read source material only to study how that input was incorporated.
+The diff example's row mapping is hardcoded; derive it from the actual inputs.

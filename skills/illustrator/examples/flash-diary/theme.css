@@ -6,8 +6,8 @@
   --color-paper: #f7f3ea;
   --color-ink: #171717;
   --color-white: #ffffff;
-  --font-display: "Noto Sans SC";
-  --font-mono: "JetBrains Mono";
+  --font-display: Noto Sans SC;
+  --font-mono: JetBrains Mono;
   --text-display: 96px;
   --text-display--line-height: 0.96;
   --text-display--font-weight: 900;
@@ -31,4 +31,6 @@
   --leading-meta: 1.65;
   --tracking-meta: 0.08em;
   --tracking-kicker: 0.1em;
+  --spacing-gutter: 68px;
+  --tracking-caption: 0.09em;
 }

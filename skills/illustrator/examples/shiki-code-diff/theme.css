@@ -1,0 +1,48 @@
+/* Syntax selection, canvas, typography, and layout for this code presentation. */
+@theme {
+  --syntax-theme: dracula;
+  --color-canvas: #282a36;
+  --color-foreground: #f8f8f2;
+  --color-added: #203c32;
+  --color-added-gutter: #28513f;
+  --color-added-marker: #50fa7b;
+  --color-border: #44475a;
+  --color-hunk: #343746;
+  --color-metadata: #9395a5;
+  --color-panel: #21222c;
+  --color-removed: #4a2834;
+  --color-removed-gutter: #63313f;
+  --color-removed-marker: #ff5555;
+  --color-hunk-label: #bd93f9;
+  --color-close: #ff5f57;
+  --color-minimize: #febc2e;
+  --color-maximize: #28c840;
+  --font-display: JetBrains Mono, Noto Sans SC;
+  --font-mono: JetBrains Mono;
+  --background-image-placeholder: repeating-linear-gradient(
+    135deg,
+    transparent 0px,
+    transparent 8.5px,
+    rgba(147, 149, 165, 0.42) 9px,
+    rgba(147, 149, 165, 0.42) 10px,
+    transparent 10.5px,
+    transparent 14px
+  );
+  --text-code: 28px;
+  --leading-code: 1.5;
+  --spacing-title-bar: 88px;
+  --spacing-column-bar: 58px;
+  --spacing-control: 24px;
+  --spacing-canvas: 2000px;
+  --text-title: 28px;
+  --text-label: 22px;
+  --font-weight-label: 600;
+  --spacing-header-inset: 52px;
+  --spacing-code-inset: 14px;
+  --spacing-line-number-inset: 18px;
+  --spacing-line-number: 66px;
+  --spacing-hairline: 1px;
+  --spacing-divider: 2px;
+  --spacing-page: 24px;
+  --spacing-control-gap: 16px;
+}

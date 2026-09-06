@@ -1,46 +1,27 @@
 ---
 name: illustrator
-description: Create general-purpose illustrations and designed images from natural-language direction, content, code, and supplied images. Use for standalone illustrations, article and social visuals, code images, photo compositions, or any custom visual direction.
+description: Create standalone illustrations, posters, code images, and photo compositions from natural-language direction or supplied content using local rendering code.
 ---
 
 # Illustrator
 
-Generate task-specific rendering code from the relevant workflow and the user's direction. Do not rely on a bundled renderer or CLI.
+Create images with Takumi from HTML strings and theme CSS, using task-specific rendering code or an adapted example.
 
-## Workflows
+Default to theme-driven Tailwind: define colors, typography, and spacing in `@theme`, then reference semantic utilities through `tw`. Use explicit flex rows or columns for content layout. Keep arbitrary values and inline styles for one-off geometry or unsupported features; use absolute positioning for overlays or coordinate-based artwork.
 
-For every image, read [references/visual-direction.md](references/visual-direction.md) before choosing a composition or style.
+Infer visual choices from the task and conversation; defaults and examples are adjustable. Text is optional. Preserve supplied content unless changes are requested, and distinguish assets to include from style references. Apply crops and effects without modifying source files.
 
-Before generating a rendering module, read [references/rendering.md](references/rendering.md) for the installed Takumi contract, defaults, and limits.
+## References
 
-For general illustrations and any composition using supplied images as visual material, read [references/illustration.md](references/illustration.md) before rendering.
+Read as needed:
 
-For code images, read [references/code-image.md](references/code-image.md) before rendering.
-
-Before opening a bundled example, follow the routing and inspection rules in [references/examples.md](references/examples.md). A routed visual example may include a `theme.css` file containing its Tailwind theme tokens.
-
-## Runtime
-
-Treat this Skill directory as `SKILL_ROOT`. Keep runtime dependencies isolated from the user's project; do not add them to the user's project or install them globally.
-
-Before rendering, check the runtime:
-
-```sh
-npm --prefix "$SKILL_ROOT" ls --omit=dev --depth=0
-```
-
-If the check fails, install the locked dependencies:
-
-```sh
-npm --prefix "$SKILL_ROOT" ci --omit=dev --no-audit --no-fund
-```
-
-Require Node.js 20.19 or newer. Use npm for the Skill runtime because it ships with Node.js; do not require the user to install pnpm.
+- [Rendering](references/rendering.md): setup, Takumi API, fonts, images, and verification.
+- [Examples](references/examples.md): implementation and style references.
 
 ## Execution
 
-1. Default to PNG unless the user requests another format or the destination clearly benefits from one.
-2. Use `SKILL_ROOT/tmp/` for generated modules and intermediate artifacts, clean them up after rendering even on failure, and retain only the requested outputs.
-3. Use absolute paths for task inputs and outputs.
-4. Run the generated module with Node.js from `SKILL_ROOT`.
-5. Inspect the rendered image when viewing is available. Revise clipping, overflow, unreadable text, weak contrast, unclear hierarchy, or excessive empty space. When viewing is unavailable, follow the non-visual verification rules in [references/rendering.md](references/rendering.md).
+Treat this directory as `SKILL_ROOT` and keep Skill dependencies isolated here. Use a task-specific `SKILL_ROOT/tmp/` subdirectory for `.mjs` modules so they resolve the bundled packages. Resolve input and output paths independently of the caller's working directory.
+
+Default to PNG. Retain requested outputs and source needed for editing; clean up the task's disposable artifacts, including after failure.
+
+[Verify the output](references/rendering.md#verification) before delivery.

@@ -8,8 +8,8 @@
   --color-coral: #f05a45;
   --color-blue: #315ef5;
   --color-cyan: #35b7a5;
-  --font-display: "Noto Sans SC";
-  --font-mono: "JetBrains Mono";
+  --font-display: Noto Sans SC;
+  --font-mono: JetBrains Mono;
   --text-display: 178px;
   --text-display--line-height: 0.9;
   --text-display--font-weight: 860;
@@ -38,4 +38,14 @@
   --tracking-meta: 0.1em;
   --tracking-label: 0.12em;
   --tracking-kicker: 0.1em;
+  --spacing-gutter: 70px;
+  --font-weight-strong: 650;
+  --leading-label: 1.45;
+  --leading-note: 1.25;
+  --leading-body: 1.55;
+  --leading-meta: 1.65;
+  --tracking-small: 0.08em;
+  --tracking-caption: 0.05em;
+  --tracking-header: 0.15em;
+  --tracking-title: -0.026em;
 }

@@ -2,7 +2,7 @@
 @theme {
   --color-canvas: #ffffff;
   --color-ink: #11131a;
-  --color-body: #4f5664;
+  --color-muted-ink: #4f5664;
   --color-muted: #9298a8;
   --color-rule: #e8eaf0;
   --color-cobalt: #315cf5;
@@ -10,8 +10,9 @@
   --color-cyan: #42c7db;
   --color-coral: #ff6b78;
   --color-ice: #eaf3ff;
-  --font-display: "Noto Sans SC";
-  --font-mono: "JetBrains Mono";
+  --shadow-marker: 7px 9px 0 #315cf512;
+  --font-display: Noto Sans SC;
+  --font-mono: JetBrains Mono;
   --text-display: 58px;
   --text-display--line-height: 1;
   --text-display--font-weight: 700;
@@ -36,4 +37,8 @@
   --font-weight-meta: 700;
   --font-weight-kicker: 700;
   --tracking-meta: 0.1em;
+  --spacing-gutter: 80px;
+  --leading-tight: 1.15;
+  --font-weight-medium: 500;
+  --color-label-surface: rgba(255, 255, 255, 0.9);
 }

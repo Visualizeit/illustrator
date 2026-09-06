@@ -3,7 +3,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { Renderer } from "@takumi-rs/core";
 import { render } from "takumi-js";
 
-import { loadTheme } from "../theme.js";
+import { loadTheme } from "../theme.mjs";
 
 const outputPath = process.argv[2] ?? new URL("preview.png", import.meta.url);
 const renderer = new Renderer();
@@ -29,7 +29,6 @@ const palette = {
   leaf: theme.color("secondary"),
   lilac: theme.color("tertiary"),
   tomato: theme.color("primary"),
-  warmWhite: theme.color("neutral"),
 };
 
 /** @type {(options: { center: string; color: string; left: number; size: number; top: number; turn: number }) => string} */
@@ -55,7 +54,7 @@ const flower = ({ center, color, left, size, top, turn }) => {
 };
 
 const html = [
-  '<div tw="w-full h-full relative overflow-hidden" style="background:var(--color-neutral);color:var(--color-ink);font-family:var(--font-display)">',
+  '<div tw="w-full h-full relative overflow-hidden bg-neutral text-ink font-display">',
   '<svg width="1080" height="1350" viewBox="0 0 1080 1350" style="position:absolute;left:0;top:0;z-index:0">',
   `<rect x="36" y="36" width="1008" height="1278" fill="none" stroke="${palette.ink}" stroke-width="5"/>`,
   '<g stroke-linecap="round" stroke-linejoin="round">',
@@ -91,15 +90,15 @@ const html = [
     turn: -16,
   }),
   "</svg>",
-  '<div style="position:absolute;left:0;top:0;width:1080px;height:1350px;z-index:1">',
-  '<div style="position:absolute;left:76px;top:72px;height:58px;padding:0 24px;display:flex;align-items:center;background:var(--color-butter);border:4px solid var(--color-ink);border-radius:999px;font-family:var(--font-mono);font-size:var(--text-label);font-weight:var(--font-weight-label);letter-spacing:var(--tracking-label)">FLOWER MARKET · NO.07</div>',
-  '<div style="position:absolute;right:72px;top:72px;width:116px;height:116px;display:flex;align-items:center;justify-content:center;background:var(--color-tertiary);border:4px solid var(--color-ink);border-radius:999px;transform:rotate(8deg);font-family:var(--font-mono);font-size:var(--text-price);font-weight:var(--font-weight-label)">¥24</div>',
-  '<div style="position:absolute;left:72px;top:180px;font-size:var(--text-display);font-weight:var(--font-weight-display);line-height:var(--leading-display);letter-spacing:-5px;white-space:pre-wrap">把快乐\n种进今天</div>',
-  '<div style="position:absolute;left:78px;top:430px;font-size:var(--text-body);font-weight:var(--font-weight-body);line-height:var(--leading-body);white-space:pre-wrap">周末花市散步指南\n给普通的一天，加一点鲜艳。</div>',
-  '<div style="position:absolute;left:82px;top:575px;width:290px;height:16px;background:var(--color-primary)"></div>',
-  '<div style="position:absolute;left:82px;top:610px;font-family:var(--font-mono);font-size:var(--text-label);font-weight:var(--font-weight-label);line-height:1.7;letter-spacing:var(--tracking-meta);white-space:pre-wrap">SUN 10:30—17:00\n31.2304° N / 121.4737° E</div>',
-  '<div style="position:absolute;left:70px;bottom:72px;width:450px;padding:22px;background:var(--color-primary);border:4px solid var(--color-ink);transform:rotate(-2deg);color:var(--color-neutral);font-size:var(--text-callout);font-weight:var(--font-weight-callout);line-height:var(--leading-callout);white-space:pre-wrap">PICK A COLOR.\nTAKE HOME SOME JOY.</div>',
-  '<div style="position:absolute;right:74px;bottom:68px;font-family:var(--font-mono);font-size:var(--text-meta);font-weight:var(--font-weight-meta);letter-spacing:var(--tracking-meta)">FRESH CUTS / BRIGHT DAYS</div>',
+  '<div tw="absolute" style="left:0;top:0;width:1080px;height:1350px;z-index:1">',
+  '<div tw="absolute flex items-center bg-butter font-mono text-label tracking-label flex-row border-ink border-4" style="left:76px;top:72px;height:58px;padding:0 24px;border-radius:999px;font-weight:var(--font-weight-label)">FLOWER MARKET · NO.07</div>',
+  '<div tw="absolute right-gutter flex items-center justify-center bg-tertiary font-mono text-price flex-row border-ink border-4" style="top:72px;width:116px;height:116px;border-radius:999px;transform:rotate(8deg);font-weight:var(--font-weight-label)">¥24</div>',
+  '<div tw="absolute left-gutter text-display leading-display whitespace-pre-wrap" style="top:180px;font-weight:var(--font-weight-display);letter-spacing:var(--tracking-optical-display)">把快乐\n种进今天</div>',
+  '<div tw="absolute text-body leading-body whitespace-pre-wrap" style="left:78px;top:430px;font-weight:var(--font-weight-body)">周末花市散步指南\n给普通的一天，加一点鲜艳。</div>',
+  '<div tw="absolute bg-primary" style="left:82px;top:575px;width:290px;height:16px"></div>',
+  '<div tw="absolute font-mono text-label tracking-meta whitespace-pre-wrap" style="left:82px;top:610px;font-weight:var(--font-weight-label);line-height:var(--leading-loose)">SUN 10:30—17:00\n31.2304° N / 121.4737° E</div>',
+  '<div tw="absolute bg-primary text-neutral text-callout leading-callout whitespace-pre-wrap border-ink border-4" style="left:70px;bottom:72px;width:450px;padding:22px;transform:rotate(-2deg);font-weight:var(--font-weight-callout)">PICK A COLOR.\nTAKE HOME SOME JOY.</div>',
+  '<div tw="absolute font-mono text-meta tracking-meta" style="right:74px;bottom:68px;font-weight:var(--font-weight-meta)">FRESH CUTS / BRIGHT DAYS</div>',
   "</div>",
   "</div>",
 ].join("");

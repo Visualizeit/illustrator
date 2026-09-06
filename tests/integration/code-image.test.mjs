@@ -3,48 +3,57 @@ import { fileURLToPath } from "node:url";
 
 import { describe, expect, it } from "vitest";
 
+import {
+  escapeHtml,
+  tokensToHtml,
+} from "../../skills/illustrator/examples/code-html.mjs";
+
 const skillRoot = fileURLToPath(
   new URL("../../skills/illustrator/", import.meta.url)
 );
 const pngSignature = "89504e470d0a1a0a";
 
 describe("code image rendering", () => {
-  it("renders Shiki tokens through Takumi", () => {
-    const generatedModule = `
+  it("escapes markup without changing whitespace or literal entities", () => {
+    expect(escapeHtml('\t  <img title="\'">&amp;\n保持缩进')).toBe(
+      "\t  &lt;img title=&quot;&#39;&quot;&gt;&amp;amp;\n保持缩进"
+    );
+  });
+
+  it("preserves combined syntax styles and fallback colors in HTML", () => {
+    const combinedFontStyle = 1 + 2 + 4 + 8;
+    const html = tokensToHtml(
+      [
+        { content: "<value>", fontStyle: combinedFontStyle, offset: 0 },
+        { color: "#ff0000", content: " & ", offset: 7 },
+      ],
+      "#123456"
+    );
+
+    expect(html).toContain("color:#123456");
+    expect(html).toContain("font-style:italic");
+    expect(html).toContain("font-weight:700");
+    expect(html).toContain("text-decoration:underline line-through");
+    expect(html).toContain(">&lt;value&gt;</span>");
+    expect(html).toContain('<span style="color:#ff0000"> &amp; </span>');
+    expect(tokensToHtml([], "#123456")).toBe("");
+  });
+
+  it("renders Shiki tokens as HTML through the Skill runtime", () => {
+    const generatedModule = String.raw`
       import { readFile } from "node:fs/promises";
       import { Renderer } from "@takumi-rs/core";
       import { codeToTokens } from "shiki";
       import { render } from "takumi-js";
-      import { container, text } from "takumi-js/helpers";
+      import { tokensToHtml } from "./examples/code-html.mjs";
 
-      const source = '// Keep indentation and Chinese comments: 保持缩进\\nconst answer = 42;';
+      const source = "// Keep indentation and Chinese comments: 保持缩进\n\tconst markup = '<img src=\"missing\">&amp;';";
       const highlighted = await codeToTokens(source, {
         lang: "javascript",
         theme: "material-theme-palenight",
       });
 
-      const fontStyleBits = {
-        bold: 2,
-        italic: 1,
-        strikethrough: 8,
-        underline: 4,
-      };
-      const tokenStyle = (token) => {
-        const fontStyle = token.fontStyle ?? 0;
-        const textDecoration = [
-          fontStyle & fontStyleBits.underline ? "underline" : "",
-          fontStyle & fontStyleBits.strikethrough ? "line-through" : "",
-        ].filter(Boolean).join(" ");
-        return {
-          color: token.color,
-          display: "inline",
-          fontStyle: fontStyle & fontStyleBits.italic ? "italic" : undefined,
-          fontWeight: fontStyle & fontStyleBits.bold ? 700 : undefined,
-          textDecoration: textDecoration || undefined,
-        };
-      };
-
-      if (highlighted.tokens[0]?.[0]?.fontStyle !== fontStyleBits.italic) {
+      if (highlighted.tokens[0]?.[0]?.fontStyle !== 1) {
         throw new Error("The syntax theme did not produce the expected italic token");
       }
 
@@ -59,38 +68,13 @@ describe("code image rendering", () => {
         await renderer.registerFont({ data, name, style });
       }
 
-      const codeBlock = container({
-        style: {
-          backgroundColor: highlighted.bg,
-          color: highlighted.fg,
-          display: "flex",
-          flexDirection: "column",
-          fontFamily: "JetBrains Mono, Noto Sans SC",
-          fontSize: 24,
-          height: "100%",
-          lineHeight: 1.5,
-          padding: 32,
-          width: "100%",
-        },
-        children: highlighted.tokens.map((line) =>
-          container({
-            style: {
-              display: "block",
-              overflowWrap: "break-word",
-              whiteSpace: "pre-wrap",
-              width: "100%",
-            },
-            children: line.map((token) =>
-              text({
-                text: token.content,
-                style: tokenStyle(token),
-              })
-            ),
-          })
-        ),
-      });
+      const codeRows = highlighted.tokens.map((line) =>
+        '<div style="min-height:36px;white-space:pre-wrap;overflow-wrap:break-word">' +
+        tokensToHtml(line, highlighted.fg) + '</div>'
+      ).join("");
+      const html = '<div tw="flex flex-col w-full h-full" style="font-family:JetBrains Mono, Noto Sans SC;font-size:24px;line-height:1.5;padding:32px;background:' + highlighted.bg + '">' + codeRows + '</div>';
 
-      const png = await render(codeBlock, {
+      const png = await render(html, {
         format: "png",
         fontFamilies: ["JetBrains Mono", "Noto Sans SC"],
         height: 320,
