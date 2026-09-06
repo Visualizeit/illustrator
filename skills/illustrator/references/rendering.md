@@ -47,13 +47,15 @@ Complex grid sizing, pseudo-elements, filters, masks, blend modes, and advanced 
 
 ## Fonts
 
-| Family | Bundled files under `assets/fonts/` | Coverage |
-| --- | --- | --- |
-| Noto Sans SC | `noto-sans-sc/NotoSansSC-VF.ttf` | Chinese / CJK fallback |
-| Lora | `lora/Lora-VF.ttf`, `lora/Lora-Italic-VF.ttf` | Latin serif |
-| JetBrains Mono | `jetbrains-mono/JetBrainsMono-VF.ttf`, `jetbrains-mono/JetBrainsMono-Italic-VF.ttf` | Latin monospace |
+List bundled font files and their family names:
 
-Add a CJK fallback to Latin-only families for mixed-language text. Missing glyphs can produce boxes without a render error.
+```sh
+node "$SKILL_ROOT/scripts/list-fonts.mjs"
+```
+
+Register selected files with `renderer.registerFont(data)` and use the returned family names in the theme. Use `{ data, name }` to assign distinct aliases to designs sharing a family.
+
+Consult each font's README as needed. For mixed-language text, add a CJK fallback to Latin fonts and check for missing glyphs.
 
 ## Local Images
 
