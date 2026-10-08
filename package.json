@@ -15,8 +15,8 @@
     "validate": "pnpm run check && pnpm run typecheck && pnpm run check:themes && pnpm run test"
   },
   "dependencies": {
-    "@takumi-rs/core": "2.13.6",
-    "takumi-js": "2.13.6"
+    "@takumi-rs/core": "2.14.0",
+    "takumi-js": "2.14.0"
   },
   "devDependencies": {
     "@total-typescript/tsconfig": "1.0.4",
@@ -24,7 +24,7 @@
     "oxfmt": "0.59.0",
     "oxlint": "1.74.0",
     "oxlint-tsgolint": "0.25.0",
-    "shiki": "4.3.1",
+    "shiki": "4.5.0",
     "typescript": "6.0.3",
     "ultracite": "7.9.4",
     "vitest": "4.1.10"

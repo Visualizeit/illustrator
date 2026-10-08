@@ -36,15 +36,15 @@ const fontDefinitions = [
   ],
 ];
 
-await Promise.all(
-  fontDefinitions.map(async ([path, name, style]) =>
-    renderer.registerFont({
-      data: await readFile(new URL(path, import.meta.url)),
-      name,
-      style,
-    })
-  )
-);
+/* eslint-disable no-await-in-loop -- Register faces in order so family resolution stays deterministic. */
+for (const [path, name, style] of fontDefinitions) {
+  await renderer.registerFont({
+    data: await readFile(new URL(path, import.meta.url)),
+    name,
+    style,
+  });
+}
+/* eslint-enable no-await-in-loop */
 
 const beforeSource = `const fibonacci = (n) => {
     if (n < 2) {

@@ -55,6 +55,8 @@ node "$SKILL_ROOT/scripts/list-fonts.mjs"
 
 Register selected files with `renderer.registerFont(data)` and use the returned family names in the theme. Use `{ data, name }` to assign distinct aliases to designs sharing a family.
 
+When registering multiple faces of the same font family, await each registration in a consistent order. Concurrent registration of regular and italic faces can produce different output between runs.
+
 Consult each font's README as needed. For mixed-language text, add a CJK fallback to Latin fonts and check for missing glyphs.
 
 ## Local Images
