@@ -20,7 +20,8 @@ npm --prefix "$SKILL_ROOT" ci --omit=dev --no-audit --no-fund
 - Pass CSS strings or rule objects through `css`; HTML Tailwind utilities use `tw`, not `class` or `className`.
 - `render` outputs PNG, JPEG, WebP, ICO, or raw pixels; `renderSvg` outputs SVG.
 - Set width and height for a fixed canvas; omitted dimensions use content sizing.
-- Register fonts on a `Renderer` from `@takumi-rs/core`, including italic faces when needed. Pass it to `render` with the selected families in `fontFamilies`; there is no `fonts` option.
+- Register fonts on a `Renderer` from `@takumi-rs/core`, including italic faces when needed. Pass it to `render` with the selected families in `fontFamilies`. Alternatively, pass font descriptors or loaders through `fonts`.
+- Use `measure` from `takumi-js` with the same input and options as `render` to inspect layout without painting.
 - PNG has no quality setting. JPEG accepts `quality` from 0 to 100. WebP is lossless when `quality` and `lossless` are both omitted.
 
 For other options, inspect installed declarations under `SKILL_ROOT/node_modules` for `takumi-js`, `@takumi-rs/core`, or `@takumi-rs/helpers`.
@@ -29,7 +30,21 @@ For other options, inspect installed declarations under `SKILL_ROOT/node_modules
 
 Set `flex` with `flex-row` or `flex-col` on content containers, then use `gap`, padding, and alignment utilities to position their children. Grid is appropriate when both rows and columns need shared alignment.
 
-Escape supplied text and attribute values before interpolating them into HTML. Preserve code whitespace with `whitespace-pre` or `whitespace-pre-wrap`; [the code helper](../examples/code-html.mjs) converts Shiki tokens to escaped spans with combined font styles.
+Escape supplied text and attribute values before interpolating them into HTML. Preserve code whitespace with `whitespace-pre` or `whitespace-pre-wrap`; [the code helper](../examples/code-html.mjs) converts Highlights tokens to escaped spans with combined font styles.
+
+Use Highlights' synchronous `codeToTokens` API for code images with line numbers or diff rows. Import a bundled theme object directly, following the [Highlights documentation](https://diffs.com/docs#highlights):
+
+```js
+import { codeToTokens } from "@pierre/highlights";
+import { catppuccinMocha } from "@pierre/highlights/themes";
+
+const highlighted = codeToTokens(source, {
+  lang: "javascript",
+  theme: catppuccinMocha,
+});
+```
+
+Change the imported theme in `render.mjs` to choose syntax colors; `theme.css` controls canvas colors, typography, and layout. Use `isSupportedLanguage` to check user-supplied language names.
 
 Takumi creates a node tree, not a browser DOM. Text-only elements may become text nodes, so DOM child indexes are not stable. Empty decorative elements need explicit dimensions and paint.
 
@@ -62,6 +77,8 @@ Consult each font's README as needed. For mixed-language text, add a CJK fallbac
 ## Local Images
 
 Load local images as bytes into the `images` option under source keys, then use those keys in HTML `src` attributes. Local `file:` URLs are not a reliable input mechanism.
+
+For a photo filling a fixed frame, use a relatively positioned frame and an image with `absolute inset-0 w-full h-full object-cover` so the image fits the frame independently of inline layout.
 
 ## Verification
 

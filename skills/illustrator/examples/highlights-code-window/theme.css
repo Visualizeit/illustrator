@@ -1,6 +1,5 @@
-/* Syntax selection, canvas, typography, and layout for this code presentation. */
+/* Canvas, typography, and layout for this code presentation. */
 @theme {
-  --syntax-theme: catppuccin-latte;
   --color-canvas: #eff1f5;
   --color-foreground: #4c4f69;
   --color-metadata: #9ca0b0;

@@ -64,6 +64,7 @@ const registrationMarkPositions = [
   [42, 858],
   [1558, 858],
 ];
+
 const registrationMarks = registrationMarkPositions
   .map(
     ([x, y]) =>
@@ -74,6 +75,7 @@ const registrationMarks = registrationMarkPositions
 const topTicks = Array.from({ length: 29 }, (_, index) => {
   const x = 70 + index * 51;
   const height = index % 4 === 0 ? 12 : 6;
+
   return `<line x1="${x}" y1="222" x2="${x}" y2="${222 + height}" stroke="${palette.graphite}" stroke-width="1"/>`;
 }).join("");
 
@@ -111,6 +113,7 @@ const swatchColors = [
   ["SIGNAL 03", "blue"],
   ["SIGNAL 04", "cyan"],
 ];
+
 const swatches = swatchColors
   .map(
     ([name, color], index) =>
@@ -181,6 +184,7 @@ const html = [
   `<div tw="absolute right-gutter font-mono text-label text-right text-graphite" style="bottom:34px;font-weight:var(--font-weight-strong);letter-spacing:var(--tracking-label)">DESIGNED IMAGES · LOCALLY RENDERED</div>`,
   "</div>",
 ].join("");
+
 const png = await render(html, {
   css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],

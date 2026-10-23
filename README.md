@@ -148,33 +148,33 @@ npx skills add Visualizeit/illustrator --skill illustrator
 
 ### 代码图片
 
-#### [Shiki Code Diff](./skills/illustrator/examples/shiki-code-diff)
+#### [Highlights Code Diff](./skills/illustrator/examples/highlights-code-diff)
 
 适合演示的左右分栏 Diff，包含语法高亮和清晰的增删区域。
 
 <p align="center">
-  <a href="./skills/illustrator/examples/shiki-code-diff">
-    <img src="./skills/illustrator/examples/shiki-code-diff/preview.png" alt="Shiki Code Diff 示例预览" width="900">
+  <a href="./skills/illustrator/examples/highlights-code-diff">
+    <img src="./skills/illustrator/examples/highlights-code-diff/preview.png" alt="Highlights Code Diff 示例预览" width="900">
   </a>
 </p>
 
-#### [Shiki Code Window](./skills/illustrator/examples/shiki-code-window)
+#### [Highlights Code Window](./skills/illustrator/examples/highlights-code-window)
 
 带有精简文件栏和清晰语法高亮的浅色代码窗口。
 
 <p align="center">
-  <a href="./skills/illustrator/examples/shiki-code-window">
-    <img src="./skills/illustrator/examples/shiki-code-window/preview.png" alt="Shiki Code Window 示例预览" width="900">
+  <a href="./skills/illustrator/examples/highlights-code-window">
+    <img src="./skills/illustrator/examples/highlights-code-window/preview.png" alt="Highlights Code Window 示例预览" width="900">
   </a>
 </p>
 
-#### [Shiki Code Image](./skills/illustrator/examples/shiki-code-image)
+#### [Highlights Code Image](./skills/illustrator/examples/highlights-code-image)
 
 适用于文档、文章和社交媒体的极简深色代码图片。
 
 <p align="center">
-  <a href="./skills/illustrator/examples/shiki-code-image">
-    <img src="./skills/illustrator/examples/shiki-code-image/preview.png" alt="Shiki Code Image 示例预览" width="900">
+  <a href="./skills/illustrator/examples/highlights-code-image">
+    <img src="./skills/illustrator/examples/highlights-code-image/preview.png" alt="Highlights Code Image 示例预览" width="900">
   </a>
 </p>
 
@@ -186,7 +186,7 @@ Copyright 2026 Visualizeit。本项目采用 [Apache License 2.0](./LICENSE)；�
 
 ## 开发
 
-需要 Node.js 20.19 或更高版本，以及 pnpm。
+需要 Node.js 22.18 或更高版本，以及 pnpm。
 
 ```sh
 pnpm install

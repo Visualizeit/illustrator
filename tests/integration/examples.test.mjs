@@ -9,9 +9,11 @@ import { describe, expect, it } from "vitest";
 const skillRoot = fileURLToPath(
   new URL("../../skills/illustrator/", import.meta.url)
 );
+
 const examplesRoot = path.join(skillRoot, "examples");
 const examplesReferencePath = path.join(skillRoot, "references", "examples.md");
 const noticesPath = path.join(skillRoot, "THIRD_PARTY_NOTICES.md");
+
 const routedExamplePattern =
   /^\|[^|\r\n]+\|[\t ]+`(?<exampleName>[^`]+)`[\t ]+\|/gmu;
 
@@ -23,25 +25,30 @@ describe("Illustrator examples", () => {
 
     try {
       const entries = await readdir(examplesRoot, { withFileTypes: true });
+
       const exampleDirectories = entries
         .filter((entry) => entry.isDirectory())
         .toSorted((left, right) => left.name.localeCompare(right.name));
+
       const [examplesReference, thirdPartyNotices] = await Promise.all([
         readFile(examplesReferencePath, "utf-8"),
         readFile(noticesPath, "utf-8"),
       ]);
+
       const exampleNames = exampleDirectories.map((entry) => entry.name);
+
       const routedExampleNames = [
         ...examplesReference.matchAll(routedExamplePattern),
       ]
         .flatMap((match) => {
           const exampleName = match.groups?.exampleName;
+
           return exampleName ? [exampleName] : [];
         })
         .toSorted();
 
       expect(exampleDirectories.length).toBeGreaterThan(0);
-      expect(routedExampleNames).toEqual(exampleNames);
+      expect(routedExampleNames).toStrictEqual(exampleNames);
 
       await Promise.all(
         exampleDirectories.map(async (exampleDirectory) => {
@@ -49,6 +56,7 @@ describe("Illustrator examples", () => {
           const files = await readdir(examplePath);
           const renderPath = path.join(examplePath, "render.mjs");
           const previewPath = path.join(examplePath, "preview.png");
+
           const outputPath = path.join(
             outputDirectory,
             `${exampleDirectory.name}.png`
@@ -88,10 +96,11 @@ describe("Illustrator examples", () => {
             readFile(previewPath),
             readFile(outputPath),
           ]);
+
           expect(
             renderedPreview.equals(expectedPreview),
             `${exampleDirectory.name} preview is stale`
-          ).toBe(true);
+          ).toBeTruthy();
         })
       );
     } finally {

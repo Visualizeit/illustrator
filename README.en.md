@@ -148,33 +148,33 @@ A minimal color-study poster with one dominant field and concise editorial typog
 
 ### Code Images
 
-#### [Shiki Code Diff](./skills/illustrator/examples/shiki-code-diff)
+#### [Highlights Code Diff](./skills/illustrator/examples/highlights-code-diff)
 
 A presentation-ready split diff with syntax highlighting and clear added and removed regions.
 
 <p align="center">
-  <a href="./skills/illustrator/examples/shiki-code-diff">
-    <img src="./skills/illustrator/examples/shiki-code-diff/preview.png" alt="Shiki Code Diff example preview" width="900">
+  <a href="./skills/illustrator/examples/highlights-code-diff">
+    <img src="./skills/illustrator/examples/highlights-code-diff/preview.png" alt="Highlights Code Diff example preview" width="900">
   </a>
 </p>
 
-#### [Shiki Code Window](./skills/illustrator/examples/shiki-code-window)
+#### [Highlights Code Window](./skills/illustrator/examples/highlights-code-window)
 
 A light code window with compact file chrome and readable syntax highlighting.
 
 <p align="center">
-  <a href="./skills/illustrator/examples/shiki-code-window">
-    <img src="./skills/illustrator/examples/shiki-code-window/preview.png" alt="Shiki Code Window example preview" width="900">
+  <a href="./skills/illustrator/examples/highlights-code-window">
+    <img src="./skills/illustrator/examples/highlights-code-window/preview.png" alt="Highlights Code Window example preview" width="900">
   </a>
 </p>
 
-#### [Shiki Code Image](./skills/illustrator/examples/shiki-code-image)
+#### [Highlights Code Image](./skills/illustrator/examples/highlights-code-image)
 
 A minimal dark code image for documentation, articles, and social posts.
 
 <p align="center">
-  <a href="./skills/illustrator/examples/shiki-code-image">
-    <img src="./skills/illustrator/examples/shiki-code-image/preview.png" alt="Shiki Code Image example preview" width="900">
+  <a href="./skills/illustrator/examples/highlights-code-image">
+    <img src="./skills/illustrator/examples/highlights-code-image/preview.png" alt="Highlights Code Image example preview" width="900">
   </a>
 </p>
 
@@ -186,7 +186,7 @@ Using Illustrator does not by itself require attribution on generated images. Bu
 
 ## Development
 
-Requires Node.js 20.19 or newer and pnpm.
+Requires Node.js 22.18 or newer and pnpm.
 
 ```sh
 pnpm install

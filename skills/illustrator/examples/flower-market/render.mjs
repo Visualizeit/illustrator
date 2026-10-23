@@ -13,6 +13,7 @@ const fontDefinitions = [
   ["../../assets/fonts/noto-sans-sc/NotoSansSC-VF.ttf", "Noto Sans SC"],
   ["../../assets/fonts/jetbrains-mono/JetBrainsMono-VF.ttf", "JetBrains Mono"],
 ];
+
 await Promise.all(
   fontDefinitions.map(async ([path, name]) =>
     renderer.registerFont({
@@ -23,6 +24,7 @@ await Promise.all(
 );
 
 const theme = await loadTheme(new URL("theme.css", import.meta.url));
+
 const palette = {
   butter: theme.color("butter"),
   ink: theme.color("ink"),
@@ -36,12 +38,15 @@ const flower = ({ center, color, left, size, top, turn }) => {
   const petalWidth = Math.round(size * 0.38);
   const petalHeight = Math.round(size * 0.52);
   const centerSize = Math.round(size * 0.3);
+
   /** @type {(x: number, y: number, rotate: number) => string} */
   const petal = (x, y, rotate) => {
     const centerX = x + petalWidth / 2;
     const centerY = y + petalHeight / 2;
+
     return `<rect x="${x}" y="${y}" width="${petalWidth}" height="${petalHeight}" rx="${petalWidth / 2}" fill="${color}" transform="rotate(${rotate} ${centerX} ${centerY})"/>`;
   };
+
   const petals = [
     petal(size * 0.31, 0, 0),
     petal(size * 0.58, size * 0.23, 72),
@@ -102,6 +107,7 @@ const html = [
   "</div>",
   "</div>",
 ].join("");
+
 const png = await render(html, {
   css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],

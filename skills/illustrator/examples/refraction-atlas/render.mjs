@@ -10,6 +10,7 @@ const outputPath = process.argv[2] ?? new URL("preview.png", import.meta.url);
 const renderer = new Renderer();
 
 const theme = await loadTheme(new URL("theme.css", import.meta.url));
+
 const type = {
   caption: theme.number("text-caption"),
   kicker: theme.number("text-kicker"),
@@ -22,6 +23,7 @@ const type = {
   statSmall: theme.number("text-stat-small"),
   title: theme.number("text-title"),
 };
+
 const palette = {
   canvas: theme.color("canvas"),
   cobalt: theme.color("cobalt"),
@@ -61,24 +63,29 @@ const months = [
   "NOV",
   "DEC",
 ];
+
 const upperValues = [72, 69, 76, 74, 82, 79, 87, 84, 92, 89, 95, 91];
 const signalValues = [61, 63, 57, 68, 62, 73, 69, 80, 75, 85, 81, 88];
 const lowerValues = [51, 56, 42, 58, 49, 65, 57, 71, 64, 78, 70, 82];
 const zeroValues = Array.from({ length: months.length }, () => 0);
+
 const plot = {
   height: 500,
   width: 1120,
   x: theme.number("spacing-gutter"),
   y: 320,
 };
+
 const detailPlot = { height: 220, width: 250, x: 1270, y: 590 };
 const detailUpperValues = upperValues.slice(-8);
 const detailSignalValues = signalValues.slice(-8);
 const detailLowerValues = lowerValues.slice(-8);
+
 const detailZeroValues = Array.from(
   { length: detailUpperValues.length },
   () => 0
 );
+
 const railX = 1240;
 
 /** @typedef {{ height: number; width: number; x: number; y: number }} Plot */
@@ -111,23 +118,28 @@ const seriesPoints = (values, targetPlot = plot) =>
 /** @type {(points: Point[]) => string} */
 const straightLinePath = (points) => {
   const [firstPoint] = points;
+
   if (!firstPoint) {
     return "";
   }
 
   const commands = [`M${firstPoint.x} ${firstPoint.y}`];
+
   for (const point of points.slice(1)) {
     commands.push(`L${point.x} ${point.y}`);
   }
+
   return commands.join("");
 };
 
 /** @type {(upperSeries: number[], lowerSeries: number[], targetPlot?: Plot) => string} */
 const surfacePath = (upperSeries, lowerSeries, targetPlot = plot) => {
   const upperPath = straightLinePath(seriesPoints(upperSeries, targetPlot));
+
   const lowerPath = straightLinePath(
     seriesPoints(lowerSeries, targetPlot).toReversed()
   );
+
   return `${upperPath}${lowerPath.replace(/^M/u, "L")}Z`;
 };
 
@@ -137,25 +149,31 @@ const lowerLine = straightLinePath(seriesPoints(lowerValues));
 const upperArea = surfacePath(upperValues, zeroValues);
 const signalArea = surfacePath(signalValues, zeroValues);
 const lowerArea = surfacePath(lowerValues, zeroValues);
+
 const detailUpperLine = straightLinePath(
   seriesPoints(detailUpperValues, detailPlot)
 );
+
 const detailSignalLine = straightLinePath(
   seriesPoints(detailSignalValues, detailPlot)
 );
+
 const detailLowerLine = straightLinePath(
   seriesPoints(detailLowerValues, detailPlot)
 );
+
 const detailUpperArea = surfacePath(
   detailUpperValues,
   detailZeroValues,
   detailPlot
 );
+
 const detailSignalArea = surfacePath(
   detailSignalValues,
   detailZeroValues,
   detailPlot
 );
+
 const detailLowerArea = surfacePath(
   detailLowerValues,
   detailZeroValues,
@@ -169,6 +187,7 @@ const plotY = (value, targetPlot = plot) =>
 const gridLines = [0, 25, 50, 75, 100]
   .map((value) => {
     const y = plotY(value);
+
     return `<line x1="${plot.x}" y1="${y}" x2="${plot.x + plot.width}" y2="${y}" stroke="${palette.rule}" stroke-width="1" stroke-dasharray="4 7"/>`;
   })
   .join("");
@@ -177,6 +196,7 @@ const xAxisLabels = months
   .map((month, index) => {
     const x =
       plot.x + (index / Math.max(months.length - 1, 1)) * plot.width - 24;
+
     return htmlText({
       align: "center",
       color: "muted",
@@ -209,37 +229,44 @@ const lastUpperPoint = seriesPoints(upperValues).at(-1) ?? {
   x: plot.x + plot.width,
   y: plot.y,
 };
+
 const lastSignalPoint = seriesPoints(signalValues).at(-1) ?? {
   x: plot.x + plot.width,
   y: plot.y,
 };
+
 const lastLowerPoint = seriesPoints(lowerValues).at(-1) ?? {
   x: plot.x + plot.width,
   y: plot.y,
 };
+
 const lastDetailUpperPoint = seriesPoints(detailUpperValues, detailPlot).at(
   -1
 ) ?? {
   x: detailPlot.x + detailPlot.width,
   y: detailPlot.y,
 };
+
 const lastDetailSignalPoint = seriesPoints(detailSignalValues, detailPlot).at(
   -1
 ) ?? {
   x: detailPlot.x + detailPlot.width,
   y: detailPlot.y,
 };
+
 const lastDetailLowerPoint = seriesPoints(detailLowerValues, detailPlot).at(
   -1
 ) ?? {
   x: detailPlot.x + detailPlot.width,
   y: detailPlot.y,
 };
+
 const targetY = plotY(80);
 
 const detailGridLines = [25, 50, 75, 100]
   .map((value) => {
     const y = plotY(value, detailPlot);
+
     return `<line x1="${detailPlot.x}" y1="${y}" x2="${detailPlot.x + detailPlot.width}" y2="${y}" stroke="${palette.rule}" stroke-width="1" stroke-dasharray="3 6"/>`;
   })
   .join("");
@@ -489,6 +516,7 @@ const textLayer = [
 ].join("");
 
 const html = `<div tw="relative w-full h-full overflow-hidden bg-canvas text-ink font-display">${svg}${textLayer}</div>`;
+
 const png = await render(html, {
   css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],

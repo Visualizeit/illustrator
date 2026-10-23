@@ -34,6 +34,7 @@ const usesThemeUtilities = (themeCss, renderSource, kind, prefixes) => {
 
 const entries = await readdir(examplesRoot, { withFileTypes: true });
 const exampleDirectories = entries.filter((entry) => entry.isDirectory());
+
 const themeResults = await Promise.all(
   exampleDirectories.map(async (directory) => {
     const directoryPath = path.join(examplesRoot, directory.name);
@@ -48,10 +49,12 @@ const themeResults = await Promise.all(
 
     const themePath = path.join(directoryPath, "theme.css");
     const renderPath = path.join(directoryPath, "render.mjs");
+
     const [content, renderSource] = await Promise.all([
       readFile(themePath, "utf-8"),
       readFile(renderPath, "utf-8"),
     ]);
+
     const errors = [];
 
     if (!content.includes("@theme")) {

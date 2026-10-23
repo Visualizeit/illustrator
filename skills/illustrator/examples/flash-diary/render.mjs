@@ -16,6 +16,7 @@ const fontDefinitions = [
   ["../../assets/fonts/noto-sans-sc/NotoSansSC-VF.ttf", "Noto Sans SC"],
   ["../../assets/fonts/jetbrains-mono/JetBrainsMono-VF.ttf", "JetBrains Mono"],
 ];
+
 await Promise.all(
   fontDefinitions.map(async ([path, name]) =>
     renderer.registerFont({
@@ -27,6 +28,7 @@ await Promise.all(
 
 const photo = await readFile(photoPath);
 const theme = await loadTheme(new URL("theme.css", import.meta.url));
+
 const html = [
   '<div tw="relative w-full h-full bg-paper text-ink font-display">',
   '<div tw="absolute bg-white border-ink border-2" style="left:54px;top:54px;width:972px;height:1110px"></div>',
@@ -38,6 +40,7 @@ const html = [
   '<div tw="absolute font-mono text-meta leading-meta tracking-meta whitespace-pre-wrap" style="left:666px;top:1214px;width:360px;font-weight:var(--font-weight-meta)">SUN  15:40\n31.2304° N  /  121.4737° E</div>',
   "</div>",
 ].join("");
+
 const png = await render(html, {
   css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],

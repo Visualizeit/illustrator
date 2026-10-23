@@ -12,9 +12,11 @@ const tokenPattern = /--(?<name>[\w-]+)\s*:\s*(?<value>[^;]+);/gu;
 export const loadTheme = async (url) => {
   const css = await readFile(url, "utf-8");
   const tokens = new Map();
+
   for (const match of css.matchAll(tokenPattern)) {
     const name = match.groups?.name;
     const tokenValue = match.groups?.value;
+
     if (name && tokenValue) {
       tokens.set(name, tokenValue.trim());
     }
@@ -23,9 +25,11 @@ export const loadTheme = async (url) => {
   /** @param {string} name Token name to resolve. */
   const value = (name) => {
     const token = tokens.get(name.replace(/^--/u, ""));
+
     if (token === undefined) {
       throw new Error(`Theme token is missing: --${name.replace(/^--/u, "")}`);
     }
+
     return token;
   };
 

@@ -12,6 +12,7 @@ const outputPath = process.argv[2] ?? new URL("preview.png", import.meta.url);
 const renderer = new Renderer();
 
 const theme = await loadTheme(new URL("theme.css", import.meta.url));
+
 const palette = {
   graphite: theme.color("graphite"),
   ink: theme.color("ink"),
@@ -51,6 +52,7 @@ const registrationMarkPositions = [
   [72, 1278],
   [1008, 1278],
 ];
+
 const registrationMarks = registrationMarkPositions
   .map(
     ([x, y]) =>
@@ -102,6 +104,7 @@ const html = [
   "</div>",
   "</div>",
 ].join("");
+
 const png = await render(html, {
   css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],

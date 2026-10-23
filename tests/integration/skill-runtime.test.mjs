@@ -13,7 +13,7 @@ describe("Illustrator Skill runtime", () => {
     const generatedModule = `
       const [{ render }, { codeToHtml }] = await Promise.all([
         import("takumi-js"),
-        import("shiki")
+        import("@pierre/highlights")
       ]);
 
       if (typeof render !== "function" || typeof codeToHtml !== "function") {
@@ -41,6 +41,7 @@ describe("Illustrator Skill runtime", () => {
         new URL("../../skills/illustrator/package.json", import.meta.url)
       ),
     ]);
+
     const repositoryManifest = JSON.parse(repositoryPackage.toString());
     const skillManifest = JSON.parse(skillPackage.toString());
 
@@ -48,9 +49,8 @@ describe("Illustrator Skill runtime", () => {
       const developmentVersion =
         repositoryManifest.dependencies?.[dependency] ??
         repositoryManifest.devDependencies?.[dependency];
-      expect(developmentVersion, dependency).toBe(
-        skillManifest.dependencies[dependency]
-      );
+
+      expect(developmentVersion).toBe(skillManifest.dependencies[dependency]);
     }
   });
 });

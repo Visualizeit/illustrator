@@ -18,10 +18,12 @@ describe("supplied image composition", () => {
         '<div style="width:100%;height:100%;background:#e11d48;"></div>',
         { height: 96, width: 96 }
       );
+
       const sourcePath = path.join(temporaryDirectory, "source.png");
       await writeFile(sourcePath, sourceImage);
 
       const imageData = await readFile(sourcePath);
+
       const composition = await render(
         `
           <div style="width:100%;height:100%;background:#0f172a;padding:24px;">
@@ -38,7 +40,7 @@ describe("supplied image composition", () => {
         }
       );
 
-      expect([...composition.subarray(0, pngSignature.length)]).toEqual(
+      expect([...composition.subarray(0, pngSignature.length)]).toStrictEqual(
         pngSignature
       );
       expect(composition.byteLength).toBeGreaterThan(pngSignature.length);

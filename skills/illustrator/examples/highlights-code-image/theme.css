@@ -1,6 +1,5 @@
-/* Syntax selection, canvas, typography, and layout for this code presentation. */
+/* Canvas, typography, and layout for this code presentation. */
 @theme {
-  --syntax-theme: catppuccin-mocha;
   --color-canvas: #1e1e2e;
   --color-foreground: #cdd6f4;
   --color-metadata: #7f849c;

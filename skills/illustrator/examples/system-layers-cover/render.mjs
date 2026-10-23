@@ -9,6 +9,7 @@ const canvas = { height: 1400, width: 1400 };
 const outputPath = process.argv[2] ?? new URL("preview.png", import.meta.url);
 const renderer = new Renderer();
 const theme = await loadTheme(new URL("theme.css", import.meta.url));
+
 const type = {
   layerLabel: theme.number("text-layer-label"),
 };
@@ -57,6 +58,7 @@ const layerStackSvg = ({ scale, x, y }) => {
    */
   const layer = (offset, top, front) => {
     const shift = (offset - 52) * 0.4;
+
     return [
       `<polygon points="${x + (20 + shift) * scale},${y + offset * scale} ${x + (510 + shift) * scale},${y + (offset - 34) * scale} ${x + (640 + shift) * scale},${y + (offset + 165) * scale} ${x + (145 + shift) * scale},${y + (offset + 200) * scale}" fill="${top}" stroke="${palette.ink}" stroke-width="${2.2 * scale}"/>`,
       `<polygon points="${x + (145 + shift) * scale},${y + (offset + 200) * scale} ${x + (640 + shift) * scale},${y + (offset + 165) * scale} ${x + (640 + shift) * scale},${y + (offset + 196) * scale} ${x + (145 + shift) * scale},${y + (offset + 231) * scale}" fill="${front}" stroke="${palette.ink}" stroke-width="${2.2 * scale}"/>`,
@@ -90,6 +92,7 @@ const layerLabels = ({ scale, x, y }) => {
   return labels
     .map(([offset, label, color]) => {
       const shift = (offset - 52) * 0.4;
+
       return `<div tw="absolute font-mono text-${color}" style="left:${x + (180 + shift) * scale}px;top:${y + (offset + 199) * scale}px;transform:rotate(-4deg);font-size:${type.layerLabel * scale}px;font-weight:var(--font-weight-layer);letter-spacing:${3.1 * scale}px">${label}</div>`;
     })
     .join("");
@@ -109,6 +112,7 @@ const html = [
   '<div tw="absolute right-gutter font-mono text-label text-graphite" style="bottom:72px;font-weight:var(--font-weight-label);letter-spacing:var(--tracking-label)">FIVE LAYERS / ONE SHELL</div>',
   "</div>",
 ].join("");
+
 const png = await render(html, {
   css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],

@@ -11,6 +11,7 @@ import {
 const skillRoot = fileURLToPath(
   new URL("../../skills/illustrator/", import.meta.url)
 );
+
 const pngSignature = "89504e470d0a1a0a";
 
 describe("code image rendering", () => {
@@ -22,6 +23,7 @@ describe("code image rendering", () => {
 
   it("preserves combined syntax styles and fallback colors in HTML", () => {
     const combinedFontStyle = 1 + 2 + 4 + 8;
+
     const html = tokensToHtml(
       [
         { content: "<value>", fontStyle: combinedFontStyle, offset: 0 },
@@ -30,27 +32,25 @@ describe("code image rendering", () => {
       "#123456"
     );
 
-    expect(html).toContain("color:#123456");
-    expect(html).toContain("font-style:italic");
-    expect(html).toContain("font-weight:700");
-    expect(html).toContain("text-decoration:underline line-through");
-    expect(html).toContain(">&lt;value&gt;</span>");
-    expect(html).toContain('<span style="color:#ff0000"> &amp; </span>');
+    expect(html).toBe(
+      '<span style="color:#123456;font-style:italic;font-weight:700;text-decoration:underline line-through">&lt;value&gt;</span><span style="color:#ff0000"> &amp; </span>'
+    );
     expect(tokensToHtml([], "#123456")).toBe("");
   });
 
-  it("renders Shiki tokens as HTML through the Skill runtime", () => {
+  it("renders Highlights tokens as HTML through the Skill runtime", () => {
     const generatedModule = String.raw`
       import { readFile } from "node:fs/promises";
       import { Renderer } from "@takumi-rs/core";
-      import { codeToTokens } from "shiki";
+      import { codeToTokens } from "@pierre/highlights";
+      import { materialThemePalenight } from "@pierre/highlights/themes";
       import { render } from "takumi-js";
       import { tokensToHtml } from "./examples/code-html.mjs";
 
       const source = "// Keep indentation and Chinese comments: 保持缩进\n\tconst markup = '<img src=\"missing\">&amp;';";
-      const highlighted = await codeToTokens(source, {
+      const highlighted = codeToTokens(source, {
         lang: "javascript",
-        theme: "material-theme-palenight",
+        theme: materialThemePalenight,
       });
 
       if (highlighted.tokens[0]?.[0]?.fontStyle !== 1) {

@@ -10,6 +10,7 @@ const outputPath = process.argv[2] ?? new URL("preview.png", import.meta.url);
 const renderer = new Renderer();
 
 const theme = await loadTheme(new URL("theme.css", import.meta.url));
+
 const type = {
   body: theme.number("text-body"),
   flow: theme.number("text-flow"),
@@ -17,6 +18,7 @@ const type = {
   meta: theme.number("text-meta"),
   task: theme.number("text-task"),
 };
+
 const palette = {
   body: theme.color("muted-ink"),
   canvas: theme.color("canvas"),
@@ -60,26 +62,33 @@ const sheet = {
   x: 700,
   y: 147,
 };
+
 const columnWidths = [128, 228, 112, 144, 164, 180];
 const rowHeight = 62;
 const rowCount = 6;
+
 const sheetWidth =
   sheet.rowHeaderWidth +
   columnWidths.reduce((total, width) => total + width, 0);
+
 const gridY = sheet.y + sheet.formulaBarHeight;
 const dataY = gridY + sheet.columnHeaderHeight;
 const dataHeight = rowHeight * rowCount;
 const tabBarY = dataY + dataHeight;
+
 const sheetHeight =
   sheet.formulaBarHeight + sheet.columnHeaderHeight + dataHeight;
+
 const selectedRowIndex = 3;
 
 /** @type {(columnIndex: number) => number} */
 const getColumnX = (columnIndex) => {
   let x = sheet.x + sheet.rowHeaderWidth;
+
   for (let index = 0; index < columnIndex; index += 1) {
     x += columnWidths[index] ?? 0;
   }
+
   return x;
 };
 
@@ -105,10 +114,12 @@ const columnHeaders = [
   "PROGRESS",
   "RESULT",
 ];
+
 const headerCells = columnHeaders
   .map((header, columnIndex) => {
     const x = getColumnX(columnIndex);
     const width = columnWidths[columnIndex] ?? 0;
+
     return [
       `<rect x="${x}" y="${gridY}" width="${width}" height="${sheet.columnHeaderHeight}" fill="${palette.sheetChrome}" stroke="${palette.grid}" stroke-width="1"/>`,
       svgText({
@@ -128,9 +139,11 @@ const sheetRows = Array.from({ length: rowCount }, (_rowValue, rowIndex) => {
   const y = dataY + rowIndex * rowHeight;
   const isSelectedRow = rowIndex === selectedRowIndex;
   let rowFill = rowIndex % 2 === 0 ? palette.paper : palette.sheetPaper;
+
   if (isSelectedRow) {
     rowFill = palette.sheetActive;
   }
+
   const rowHeader = [
     `<rect x="${sheet.x}" y="${y}" width="${sheet.rowHeaderWidth}" height="${rowHeight}" fill="${isSelectedRow ? palette.sheetHighlight : palette.sheetChrome}" stroke="${palette.grid}" stroke-width="1"/>`,
     svgText({
@@ -143,12 +156,15 @@ const sheetRows = Array.from({ length: rowCount }, (_rowValue, rowIndex) => {
       y: y + rowHeight / 2,
     }),
   ].join("");
+
   const cells = columnWidths
     .map((width, columnIndex) => {
       const x = getColumnX(columnIndex);
+
       return `<rect x="${x}" y="${y}" width="${width}" height="${rowHeight}" fill="${rowFill}" stroke="${palette.gridSoft}" stroke-width="1"/>`;
     })
     .join("");
+
   return `${rowHeader}${cells}`;
 }).join("");
 
@@ -218,11 +234,13 @@ const automationCells = automationRows
     const isQueued = row.state === "QUEUED";
     const stateColor = isReview ? palette.coral : palette.green;
     let stateBackground = palette.sheetStatus;
+
     if (isReview) {
       stateBackground = palette.sheetWarning;
     } else if (isRunning) {
       stateBackground = palette.sheetActive;
     }
+
     const triggerX = getColumnX(0);
     const taskX = getColumnX(1);
     const ownerX = getColumnX(2);
@@ -235,11 +253,13 @@ const automationCells = automationRows
     const triggerStroke = isReview ? palette.coral : palette.green;
     const statusPillWidth = isRunning ? 104 : 86;
     let resultColor = palette.body;
+
     if (isReview) {
       resultColor = palette.coral;
     } else if (isRunning) {
       resultColor = palette.greenDark;
     }
+
     const statusContent = isQueued
       ? `<circle cx="${statusX + 27}" cy="${centerY}" r="5" fill="none" stroke="${palette.body}" stroke-width="2"/><line x1="${statusX + 27}" y1="${centerY - 3}" x2="${statusX + 27}" y2="${centerY}" stroke="${palette.body}" stroke-width="2"/><line x1="${statusX + 27}" y1="${centerY}" x2="${statusX + 30}" y2="${centerY + 2}" stroke="${palette.body}" stroke-width="2"/>`
       : svgText({
@@ -252,6 +272,7 @@ const automationCells = automationRows
           x: statusX + 14 + statusPillWidth / 2,
           y: centerY,
         });
+
     const queuedLabel = isQueued
       ? svgText({
           color: palette.body,
@@ -490,13 +511,16 @@ const sheetRowText = automationRows
     const isSelected = rowIndex === selectedRowIndex;
     let stateColor = "green";
     let resultColor = "muted-ink";
+
     if (isReview) {
       stateColor = "coral";
       resultColor = "coral";
     } else if (isRunning) {
       resultColor = "green-dark";
     }
+
     const statusPillWidth = isRunning ? 104 : 86;
+
     return [
       sheetHtmlText({
         align: "center",

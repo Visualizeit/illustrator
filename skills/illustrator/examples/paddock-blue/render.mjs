@@ -16,6 +16,7 @@ const fontDefinitions = [
   ["../../assets/fonts/noto-sans-sc/NotoSansSC-VF.ttf", "Noto Sans SC"],
   ["../../assets/fonts/jetbrains-mono/JetBrainsMono-VF.ttf", "JetBrains Mono"],
 ];
+
 await Promise.all(
   fontDefinitions.map(async ([path, name]) =>
     renderer.registerFont({
@@ -26,6 +27,7 @@ await Promise.all(
 );
 
 const theme = await loadTheme(new URL("theme.css", import.meta.url));
+
 const metrics = [
   ["327", "KM/H · VMAX"],
   ["13,800", "RPM"],
@@ -36,6 +38,7 @@ const metrics = [
 const metricHtml = metrics
   .map(([value, label], index) => {
     const ruleColor = index === 0 ? "bg-secondary" : "bg-rule";
+
     const valueStyle =
       index === 3 ? "text-metric-small text-secondary" : "text-metric text-ink";
 
@@ -50,10 +53,11 @@ const metricHtml = metrics
   .join("");
 
 const photo = await readFile(photoPath);
+
 const html = [
   '<div tw="flex flex-col w-full h-full px-page-x pt-page-top pb-page-bottom bg-paper text-ink font-display">',
   '<div tw="relative h-hero shrink-0">',
-  '<img src="asset:hero" tw="w-full h-full object-cover object-center"/>',
+  '<img src="asset:hero" tw="absolute inset-0 w-full h-full object-cover object-center"/>',
   '<div tw="absolute inset-0 bg-photo-wash"></div>',
   "</div>",
   '<div tw="flex flex-row h-rule mt-detail shrink-0"><div tw="w-3/5 bg-primary"></div><div tw="flex-1 bg-secondary"></div></div>',
@@ -67,6 +71,7 @@ const html = [
   "</div>",
   "</div>",
 ].join("");
+
 const png = await render(html, {
   css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],

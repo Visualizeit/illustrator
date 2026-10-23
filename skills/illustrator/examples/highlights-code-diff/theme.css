@@ -1,6 +1,5 @@
-/* Syntax selection, canvas, typography, and layout for this code presentation. */
+/* Canvas, typography, and layout for this code presentation. */
 @theme {
-  --syntax-theme: dracula;
   --color-canvas: #282a36;
   --color-foreground: #f8f8f2;
   --color-added: #203c32;

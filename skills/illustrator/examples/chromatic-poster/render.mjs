@@ -13,6 +13,7 @@ const fontDefinitions = [
   ["../../assets/fonts/noto-sans-sc/NotoSansSC-VF.ttf", "Noto Sans SC"],
   ["../../assets/fonts/jetbrains-mono/JetBrainsMono-VF.ttf", "JetBrains Mono"],
 ];
+
 await Promise.all(
   fontDefinitions.map(async ([path, name]) =>
     renderer.registerFont({
@@ -23,6 +24,7 @@ await Promise.all(
 );
 
 const theme = await loadTheme(new URL("theme.css", import.meta.url));
+
 const palette = {
   marrs: theme.color("primary"),
   wash: theme.color("wash"),
@@ -42,6 +44,7 @@ const html = [
   '<div tw="absolute left-gutter text-body leading-body tracking-body whitespace-pre-wrap text-muted-ink" style="top:1122px;width:860px;font-weight:var(--font-weight-body)">比绿松石更深，比水鸭色更静。\n在蓝与绿之间，保留丝绒般的光泽。</div>',
   "</div>",
 ].join("");
+
 const png = await render(html, {
   css: [theme.css],
   fontFamilies: ["Noto Sans SC", "JetBrains Mono"],

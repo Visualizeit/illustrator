@@ -5,9 +5,9 @@
   "license": "Apache-2.0",
   "type": "module",
   "dependencies": {
-    "@takumi-rs/core": "2.14.0",
-    "shiki": "4.5.0",
-    "takumi-js": "2.14.0"
+    "@pierre/highlights": "0.2.0",
+    "@takumi-rs/core": "2.17.1",
+    "takumi-js": "2.17.1"
   },
   "engines": {
     "node": ">=20.19"
